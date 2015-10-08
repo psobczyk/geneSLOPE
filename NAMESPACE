@@ -3,3 +3,7 @@
 export(clumpProcedure)
 export(clumpedSLOPE)
 export(runExample)
+import(bigmemory)
+import(foreach)
+importFrom(adegenet,read.PLINK)
+importFrom(data.table,fread)

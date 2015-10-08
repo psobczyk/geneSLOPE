@@ -14,9 +14,11 @@ LazyData: TRUE
 License: GPL-3
 Depends:
     R (>= 3.2.1),
-    SLOPE,
-    bigmemory,
-    foreach,
-    adegenet
+    SLOPE
+Imports:
+  data.table,
+  bigmemory,
+  foreach,
+  adegenet
 Suggests:
   shiny

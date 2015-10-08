@@ -22,8 +22,8 @@
 #'
 readPLINK <- function(file){
   splittedName <- strsplit(file, "\\.")[[1]]
-  if(tail(splittedName,1)!="ped")
-    error(paste0("Error. ", file, " - .ped file is required."))
+  if(tail(splittedName,1)!="raw")
+    error(paste0("Error. ", file, " - .raw file is required."))
   file = splittedName[1]
   rawFile <- paste0(file, ".raw")
   if(!file.exists(rawFile))
