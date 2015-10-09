@@ -15,9 +15,12 @@ clumpProcedure <- function(y, X, rho = 0.3, pValMax = 0.1){
     stop("Length of y must match
          number of rows in X")
   }
-  pVals <- foreach(i=1:ncol(X), .combine=c) %do% {
-    summary(lm(y~X[,i]))$coefficients[2,4]
-  }
+  suma = sum((y-mean(y))^2)
+  n = length(y) - 2
+  pVals <- apply(X, 2, function(x) pValComp(x,y,n,suma))
+#   pVals <- foreach(i=1:ncol(X), .combine=c) %do% {
+#     summary(lm(y~X[,i]))$coefficients[2,4]
+#   }
 
   a <- order(pVals, decreasing = FALSE)
   notClumped <- rep(TRUE, length(a))
@@ -28,7 +31,7 @@ clumpProcedure <- function(y, X, rho = 0.3, pValMax = 0.1){
   while(any(notClumped & (pVals[a[i]]<pValMax) )){
     idx = a[i]
     if(notClumped[idx]){
-      clump <- apply(X[,notClumped, drop=FALSE], 2, cor, X[,idx])>rho
+      clump <- abs(apply(X[,notClumped, drop=FALSE], 2, cor, X[,idx]))>rho
       clumps[[i]] <- which(notClumped)[clump]
       representatives[[i]] <- idx
       notClumped[ which(notClumped)[clump] ] <- FALSE
