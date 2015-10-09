@@ -12,7 +12,7 @@ distances. Then, SLOPE is performed on data where each clump has
 one representative.
 }
 \details{
-Version: 0.1
+Version: 0.22
 }
 \author{
 Piotr Sobczyk

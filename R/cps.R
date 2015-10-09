@@ -7,10 +7,10 @@
 #'
 #' @docType package
 #' @name cps
-#' @details Version: 0.2
+#' @details Version: 0.22
 #' @importFrom data.table fread
 #' @importFrom adegenet read.PLINK
-#' @importFrom tcltk2 tk_choose.files
+#' @importFrom tcltk tk_choose.files
 #' @import foreach
 #' @import bigmemory
 #' @author Piotr Sobczyk

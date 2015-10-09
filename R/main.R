@@ -1,19 +1,30 @@
+#' GWAS with clumped SLOPE
 #'
+#' Files with phenotype and snps are selected interactively.
 #'
+#' @param phenotypeFile
+#' @param snpFiles
+#' @param pValMax threshold p-value in marginal snp test
+#' @param header logical, whether file with phenotype contains header
+#' @param sep seperator for file with phenotype
 #'
+#' @export
 #' @details Files with SNPs should be of .raw file format
-main <- function(pValMax, header = T, sep = "\t", na.strings = "X", stringsAsFactors = FALSE){
-  phenotypeFile <- tk_choose.files(caption = "Choose file with phenotype")
+main <- function(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.1, header = T, sep = ","){
+  if(is.null(phenotypeFile))
+    phenotypeFile <- tk_choose.files(caption = "Choose file with phenotype")
   phe <- read.table(phenotypeFile, header = header, sep = sep, na.strings = na.strings,
-                    stringsAsFactors = stringsAsFactors)
+                    stringsAsFactors = FALSE)
+  y <- phe[,1]
   Filters=matrix(c(".raw file", ".raw"), nrow=1)
-  snpFiles <- tk_choose.files(caption = "Choose SNP files",
-                              multi = TRUE, filters = Filters,
-                              index = nrow(Filters))
+  if(is.null(snpFiles))
+    snpFiles <- tk_choose.files(caption = "Choose SNP files",
+                                multi = TRUE, filters = Filters,
+                                index = nrow(Filters))
   data_all_files <- NULL
   data_all_files_info <- NULL
   for(file in snpFiles){
-    data_single_file <- cps:::readPLINK2(file)
+    data_single_file <- readPLINK2(file)
     # replace missing values with column mean
     data_single_file$snps <- apply(data_single_file$snps, 2, replace_na_with_mean)
     message("Missing values were replaced by column mean")
@@ -21,8 +32,7 @@ main <- function(pValMax, header = T, sep = "\t", na.strings = "X", stringsAsFac
     nonZeroSd <- apply(data_single_file$snps, 2, sd)!=0
     data_single_file$snps <- data_single_file$snps[,nonZeroSd]
     data_single_file$snpInfo <- data_single_file$snpInfo[nonZeroSd,]
-    message(paste(sum(!nonZeroSd), "variables with zero variance were removed"))
-    d <- apply(data_single_file$snps, 2, replace_na_with_mean)
+    message(paste(sum(!nonZeroSd), "variables with zero variance were removed"))pp
     #filter columns with large p-value
     message(paste("Filtering SNPs based on marginal tests.",
                   "Depending on size of data, this may take few minutes"))
@@ -46,7 +56,10 @@ main <- function(pValMax, header = T, sep = "\t", na.strings = "X", stringsAsFac
   message(paste(length(clumpedSNPs$SNPnumber), "clumps extracted"))
 
   selectedSNPs <- unlist(clumpedSNPs$SNPnumber)[slopeResult$selected]
-  data_all_files_info[selectedSNPs]
+  result <- data_all_files_info[selectedSNPs]
+  filename <- paste0("results_clumpedSlope", format(Sys.time(),  "%y_%m_%y_%H_%M_%S"), ".Rdata")
+  save(result, filename)
+  result
 }
 
 #fast p-value computation for simple marginal lm fit test

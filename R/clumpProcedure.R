@@ -7,7 +7,14 @@
 #' @param X numeric matrix, SNPs
 #' @param rho numeric, minimal correlation between two SNPs to be
 #' classified to the same clump
-clumpProcedure <- function(y, X, rho = 0.3, pValMax = 0.1){
+clumpProcedure <- function(y, X, rho = 0.3, pValMax = 0.1, verbose = TRUE){
+
+  if(verbose){
+    total = ncol(X)
+    # create progress bar
+    pb <- txtProgressBar(min = 0, max = total, style = 3)
+  }
+
   if(rho>=1 | rho <= 0){
     stop("Rho has to be within range (0,1)")
   }
@@ -37,7 +44,11 @@ clumpProcedure <- function(y, X, rho = 0.3, pValMax = 0.1){
       notClumped[ which(notClumped)[clump] ] <- FALSE
     }
     i = i+1
+    if(verbose)
+      setTxtProgressBar(pb, i)
   }
+  if(verbose)
+    close(pb)
   nullClumps <- sapply(representatives, is.null)
   representatives <- representatives[!nullClumps]
   clumps <- clumps[!nullClumps]

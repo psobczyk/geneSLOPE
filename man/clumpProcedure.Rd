@@ -4,7 +4,7 @@
 \alias{clumpProcedure}
 \title{Clumping procedure}
 \usage{
-clumpProcedure(y, X, rho = 0.3, pValMax = 0.1)
+clumpProcedure(y, X, rho = 0.3, pValMax = 0.1, verbose = TRUE)
 }
 \arguments{
 \item{y}{numeric vector, phenotype}

@@ -2,8 +2,10 @@
 
 export(clumpProcedure)
 export(clumpedSLOPE)
+export(main)
 export(runExample)
 import(bigmemory)
 import(foreach)
 importFrom(adegenet,read.PLINK)
 importFrom(data.table,fread)
+importFrom(tcltk,tk_choose.files)
