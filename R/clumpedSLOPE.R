@@ -1,6 +1,5 @@
 #' Clumped SLOPE
 #'
-#' @export
 #' @inheritParams clumpProcedure
 #' @param fdr, False Discovery Rate for SLOPE
 clumpedSLOPE <- function(y, X, rho = 0.3, fdr = 0.2){

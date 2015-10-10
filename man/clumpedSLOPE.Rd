@@ -11,8 +11,7 @@ clumpedSLOPE(y, X, rho = 0.3, fdr = 0.2)
 
 \item{X}{numeric matrix, SNPs}
 
-\item{rho}{numeric, minimal correlation between two SNPs to be
-classified to the same clump}
+\item{rho}{numeric, minimal correlation between two SNPs to be}
 
 \item{fdr,}{False Discovery Rate for SLOPE}
 }

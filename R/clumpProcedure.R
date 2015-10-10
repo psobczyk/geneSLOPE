@@ -2,7 +2,6 @@
 #'
 #' clumping of SNPs as preprocesing for SLOPE in GWAS
 #'
-#' @export
 #' @param y numeric vector, phenotype
 #' @param X numeric matrix, SNPs
 #' @param rho numeric, minimal correlation between two SNPs to be

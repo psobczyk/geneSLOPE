@@ -4,14 +4,16 @@
 \alias{clumpProcedure}
 \title{Clumping procedure}
 \usage{
-clumpProcedure(y, X, rho = 0.3, pValMax = 0.1, verbose = TRUE)
+clumpProcedure(y, X, rho = 0.3, verbose = TRUE)
 }
 \arguments{
 \item{y}{numeric vector, phenotype}
 
 \item{X}{numeric matrix, SNPs}
 
-\item{rho}{numeric, minimal correlation between two SNPs to be
+\item{rho}{numeric, minimal correlation between two SNPs to be}
+
+\item{verbose}{logical, if TRUE (default) progress bar is shown
 classified to the same clump}
 }
 \description{

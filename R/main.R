@@ -12,18 +12,18 @@
 #' @details Files with SNPs should be of .raw file format
 main <- function(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.1, header = T, sep = ","){
   if(is.null(phenotypeFile))
-    phenotypeFile <- tk_choose.files(caption = "Choose file with phenotype")
+    phenotypeFile <- tcltk::tk_choose.files(caption = "Choose file with phenotype")
   phe <- read.table(phenotypeFile, header = header, sep = sep, stringsAsFactors = FALSE)
   y <- phe[,1]
   Filters=matrix(c(".raw file", ".raw"), nrow=1)
   if(is.null(snpFiles))
-    snpFiles <- tk_choose.files(caption = "Choose SNP files",
+    snpFiles <- tcltk::tk_choose.files(caption = "Choose SNP files",
                                 multi = TRUE, filters = Filters,
                                 index = nrow(Filters))
   data_all_files <- NULL
   data_all_files_info <- NULL
   for(file in snpFiles){
-    data_single_file <- readPLINK2(file)
+    data_single_file <- readPLINK(file)
     # replace missing values with column mean
     data_single_file$snps <- apply(data_single_file$snps, 2, replace_na_with_mean)
     message("Missing values were replaced by column mean")
@@ -55,7 +55,7 @@ main <- function(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.1, header = 
   clumpedSNPs <- clumpProcedure(y, data_all_files, rho = 0.3)
   message(paste(length(clumpedSNPs$SNPnumber), "clumps extracted"))
 
-  slopeResult <- SLOPE(clumpedSNPs$SNPs, y)
+  slopeResult <- SLOPE::SLOPE(clumpedSNPs$SNPs, y)
   selectedSNPs <- unlist(clumpedSNPs$SNPnumber)[slopeResult$selected]
   if(is.null(data_all_files_info)){
     result <- colnames(data_all_files)[selectedSNPs]

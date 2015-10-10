@@ -7,12 +7,10 @@
 #'
 #' @docType package
 #' @name cps
-#' @details Version: 0.22
+#' @details Version: 0.23.0
 #' @importFrom data.table fread
-#' @importFrom adegenet read.PLINK
 #' @importFrom tcltk tk_choose.files
-#' @import foreach
-#' @import bigmemory
+#' @importFrom SLOPE SLOPE
 #' @author Piotr Sobczyk
 #'
 #' Maintainer: Piotr Sobczyk \email{Piotr.Sobczyk@@pwr.edu.pl}

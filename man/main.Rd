@@ -8,9 +8,9 @@ main(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.1, header = T,
   sep = ",")
 }
 \arguments{
-\item{phenotypeFile}{}
+\item{phenotypeFile}{file containing phentotype as its first column}
 
-\item{snpFiles}{}
+\item{snpFiles}{vector of filenames with SNPs e.g. different chromosomes}
 
 \item{pValMax}{threshold p-value in marginal snp test}
 
