@@ -13,8 +13,7 @@
 main <- function(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.1, header = T, sep = ","){
   if(is.null(phenotypeFile))
     phenotypeFile <- tk_choose.files(caption = "Choose file with phenotype")
-  phe <- read.table(phenotypeFile, header = header, sep = sep, na.strings = na.strings,
-                    stringsAsFactors = FALSE)
+  phe <- read.table(phenotypeFile, header = header, sep = sep, stringsAsFactors = FALSE)
   y <- phe[,1]
   Filters=matrix(c(".raw file", ".raw"), nrow=1)
   if(is.null(snpFiles))
@@ -32,7 +31,7 @@ main <- function(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.1, header = 
     nonZeroSd <- apply(data_single_file$snps, 2, sd)!=0
     data_single_file$snps <- data_single_file$snps[,nonZeroSd]
     data_single_file$snpInfo <- data_single_file$snpInfo[nonZeroSd,]
-    message(paste(sum(!nonZeroSd), "variables with zero variance were removed"))pp
+    message(paste(sum(!nonZeroSd), "variables with zero variance were removed"))
     #filter columns with large p-value
     message(paste("Filtering SNPs based on marginal tests.",
                   "Depending on size of data, this may take few minutes"))
@@ -52,13 +51,20 @@ main <- function(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.1, header = 
   message("All SNP data sucesfully read")
 
   #clump SNPs to remove highly correlated and to reduce dimenion
+  message(paste("Clumping procedure started on", ncol(data_all_files), "snps"))
   clumpedSNPs <- clumpProcedure(y, data_all_files, rho = 0.3)
   message(paste(length(clumpedSNPs$SNPnumber), "clumps extracted"))
 
+  slopeResult <- SLOPE(clumpedSNPs$SNPs, y)
   selectedSNPs <- unlist(clumpedSNPs$SNPnumber)[slopeResult$selected]
-  result <- data_all_files_info[selectedSNPs]
+  if(is.null(data_all_files_info)){
+    result <- colnames(data_all_files)[selectedSNPs]
+  } else{
+    result <- data_all_files_info[selectedSNPs]
+  }
+
   filename <- paste0("results_clumpedSlope", format(Sys.time(),  "%y_%m_%y_%H_%M_%S"), ".Rdata")
-  save(result, filename)
+  save(result, file=filename)
   result
 }
 
