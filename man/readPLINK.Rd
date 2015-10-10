@@ -2,7 +2,7 @@
 % Please edit documentation in R/readPLINK.R
 \name{readPLINK}
 \alias{readPLINK}
-\title{Reading PLINK .raw files}
+\title{Reading SNPs from one PLINK .raw files}
 \usage{
 readPLINK(file)
 }
@@ -12,8 +12,9 @@ readPLINK(file)
 \value{
 list \itemize{
 \item snps matrix of SNPs
-\item phenotype vector with phenotype values
-\item positions vector with information about SNP positions in chromosome
+\item observationInfo matrix containing non-genetic information including
+ sex and phenotype
+\item snpInfo matrix with information about SNPs names and positions in chromosomes
 }
 }
 \description{
@@ -22,12 +23,11 @@ in plink - see details
 }
 \details{
 \strong{Exporting data from PLINK}
-As stated in documentation for function \code{\link[adegenet]{read.PLINK}},
-to import data to R, it needs to be exported from
+To import data to R, it needs to be exported from
 PLINK using the option "--recodeA" (and NOT "--recodeAD").
-The PLINK command should therefore look like:
+The PLINK command should therefore look like
 \code{plink --file data --recodeA}.
-For more information on this topic, please look at this webpage:
+For more information, please refer to:
 \url{http://pngu.mgh.harvard.edu/~purcell/plink/dataman.shtml}
 }
 
