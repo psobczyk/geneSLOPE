@@ -6,8 +6,9 @@
 #' @param y numeric vector, phenotype
 #' @param X numeric matrix, SNPs
 #' @param rho numeric, minimal correlation between two SNPs to be
+#' @param verbose logical, if TRUE (default) progress bar is shown
 #' classified to the same clump
-clumpProcedure <- function(y, X, rho = 0.3, pValMax = 0.1, verbose = TRUE){
+clumpProcedure <- function(y, X, rho = 0.3, verbose = TRUE){
 
   if(verbose){
     total = ncol(X)
@@ -25,9 +26,6 @@ clumpProcedure <- function(y, X, rho = 0.3, pValMax = 0.1, verbose = TRUE){
   suma = sum((y-mean(y))^2)
   n = length(y) - 2
   pVals <- apply(X, 2, function(x) pValComp(x,y,n,suma))
-#   pVals <- foreach(i=1:ncol(X), .combine=c) %do% {
-#     summary(lm(y~X[,i]))$coefficients[2,4]
-#   }
 
   a <- order(pVals, decreasing = FALSE)
   notClumped <- rep(TRUE, length(a))
@@ -35,7 +33,7 @@ clumpProcedure <- function(y, X, rho = 0.3, pValMax = 0.1, verbose = TRUE){
   representatives <- list()
 
   i <- 1
-  while(any(notClumped & (pVals[a[i]]<pValMax) )){
+  while(any(notClumped)){
     idx = a[i]
     if(notClumped[idx]){
       clump <- abs(apply(X[,notClumped, drop=FALSE], 2, cor, X[,idx]))>rho

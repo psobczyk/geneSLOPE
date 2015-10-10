@@ -2,8 +2,8 @@
 #'
 #' Files with phenotype and snps are selected interactively.
 #'
-#' @param phenotypeFile
-#' @param snpFiles
+#' @param phenotypeFile file containing phentotype as its first column
+#' @param snpFiles vector of filenames with SNPs e.g. different chromosomes
 #' @param pValMax threshold p-value in marginal snp test
 #' @param header logical, whether file with phenotype contains header
 #' @param sep seperator for file with phenotype
@@ -68,16 +68,3 @@ main <- function(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.1, header = 
   result
 }
 
-#fast p-value computation for simple marginal lm fit test
-pValComp <- function(x,y,n,suma){
-  a <- lm.fit(cbind(x,1),y)
-  b <- sum(a$residuals^2)
-  1-pf((suma-b)/b*n,1, n)
-}
-
-
-# Function to replace missing values with mean for that col
-replace_na_with_mean <- function(x) {
-  x_bar <- mean(x, na.rm = TRUE)
-  ifelse(is.na(x), x_bar, x)
-}
