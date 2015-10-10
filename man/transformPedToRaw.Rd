@@ -2,14 +2,17 @@
 % Please edit documentation in R/transformPedToRaw.R
 \name{transformPedToRaw}
 \alias{transformPedToRaw}
-\title{Transformin .ped to .raw using plink command line}
+\title{Transforming .ped to .raw using PLINK executable}
 \usage{
-transformPedToRaw(file)
+transformPedToRaw(plinkExec = NULL, file)
 }
 \arguments{
-\item{file,}{character, name of .raw file}
+\item{plinkExec}{path to PLINK executable}
+
+\item{file}{name of .ped file}
 }
 \description{
-Transformin .ped to .raw using plink command line
+Performs PLINK in command line to transform .ped
+into R compatible .raw file.
 }
 
