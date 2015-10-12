@@ -1,0 +1,52 @@
+library(shiny)
+
+shinyUI(fluidPage(
+
+  tags$head(
+    tags$style(HTML("
+      .shiny-output-error-validation {
+        color: red;
+      }
+    "))
+  ),
+
+  titlePanel(h1("GWAS with SLOPE", align = "center", style="color:#317eac")),
+
+  column(4, wellPanel(
+    fileInput("fileY",
+              label = 'Choose file with phenotype',
+              accept=c('.phe')),
+    checkboxInput('header', 'Header', TRUE),
+    radioButtons('sep', label = 'Separator',
+                 c(Comma=',', Semicolon=';', Tab='\t'), ','),
+    tags$hr()
+    ),
+    conditionalPanel(
+      condition = "output.phenotypeOk",
+      fileInput("file", label = 'Choose .raw file with snps',
+                accept=c('*.raw','text/csv'), multiple = TRUE),
+      helpText("Max size is 50Mb"),
+      h5("After setting p-value", align="center"),
+      h4("CLICK 'Run'", align = "center", style = "color:blue; font-si16pt"),
+      actionButton("go", "Run", icon = icon("youtube-play"), width = "100%"),
+      sliderInput("pValCutoff",
+                  label = "P value cutoff",
+                  min = 0, max = 1,
+                  value = 0.1),
+      helpText("P-value for initial snp screening"),
+      downloadButton('downloadData', 'Download important snps')
+    ),
+    tags$hr(),
+    textOutput("phenotypeOk")
+  ),
+
+  column(5,
+         conditionalPanel("output.phenotypeOk",
+                          h4("Head of phenotype data"),
+                          tableOutput("summary"),
+                          h4("GWAS results. Important snps"),
+                          dataTableOutput("slopeTable")
+         )
+  )
+))
+

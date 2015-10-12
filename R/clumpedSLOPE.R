@@ -26,6 +26,10 @@ clumpedSLOPE <- function(y, X, rho = 0.3, fdr = 0.2, verbose = TRUE){
   }
   X <- apply(X, 2, replace_na_with_mean)
   message("Missing values were replaced by column mean")
+  nonZeroSd <- apply(X, 2, sd)!=0
+  X <- X[,nonZeroSd]
+  message(paste(sum(!nonZeroSd), "variables with zero variance were removed"))
+
 
   clumpedSNPs <- clumpProcedure(y, X, rho, verbose)
   X2 <- clumpedSNPs$SNPs
