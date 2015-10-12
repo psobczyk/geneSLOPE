@@ -2,9 +2,9 @@
 % Please edit documentation in R/clumpedSLOPE.R
 \name{clumpedSLOPE}
 \alias{clumpedSLOPE}
-\title{Clumped SLOPE}
+\title{GWAS with SLOPE}
 \usage{
-clumpedSLOPE(y, X, rho = 0.3, fdr = 0.2)
+clumpedSLOPE(y, X, rho = 0.3, fdr = 0.2, verbose = TRUE)
 }
 \arguments{
 \item{y}{numeric vector, phenotype}
@@ -14,8 +14,22 @@ clumpedSLOPE(y, X, rho = 0.3, fdr = 0.2)
 \item{rho}{numeric, minimal correlation between two SNPs to be}
 
 \item{fdr,}{False Discovery Rate for SLOPE}
+
+\item{verbose}{logical, if TRUE (default) progress bar is shown
+classified to the same clump}
+}
+\value{
+data.frame with two columns \itemize{
+\item snpName names of selected snps
+\item snpNumber column numbers of selected snps in input matrix X
+}
 }
 \description{
-Clumped SLOPE
+Performs GWAS with SLOPE on data already read into R
+}
+\examples{
+\donttest{
+clumpedSLOPE(y, SNPs)
+}
 }
 

@@ -12,7 +12,12 @@ distances. Then, SLOPE is performed on data where each clump has
 one representative.
 }
 \details{
-Version: 0.23.0
+Version: 0.25.0
+}
+\examples{
+\donttest{
+clumpedSLOPE(y, SNPs)
+}
 }
 \author{
 Piotr Sobczyk

@@ -7,12 +7,15 @@
 #'
 #' @docType package
 #' @name cps
-#' @details Version: 0.24.0
+#' @details Version: 0.25.0
 #' @importFrom data.table fread
 #' @importFrom tcltk tk_choose.files
 #' @importFrom SLOPE SLOPE
 #' @author Piotr Sobczyk
 #'
 #' Maintainer: Piotr Sobczyk \email{Piotr.Sobczyk@@pwr.edu.pl}
-#'
+#' @examples
+#' \donttest{
+#' clumpedSLOPE(y, SNPs)
+#' }
 NULL

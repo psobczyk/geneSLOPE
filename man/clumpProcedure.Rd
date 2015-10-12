@@ -17,6 +17,6 @@ clumpProcedure(y, X, rho = 0.3, verbose = TRUE)
 classified to the same clump}
 }
 \description{
-clumping of SNPs as preprocesing for SLOPE in GWAS
+Clumping of SNPs as preprocesing for SLOPE in GWAS
 }
 

@@ -11,12 +11,34 @@ vignette: >
 
 ## Clumping Procedure for SLOPE
 
-## Example data
+## Running clumped SLOPE on examplary data
 
-First let us perform clumping
+If you have **large dataset in files**, we recommend you load
+them with **function main.R**, which will perform whole GWAS
+automatically.
+
+```{r}
+library(cps)
+pheFile <- system.file("extdata", "plinkPhenotypeExample.phe", package = "cps")
+pheFile
+snpsFile <- system.file("extdata", "plinkDataExample.raw", package = "cps")
+snpsFile
+main(phenotypeFile = pheFile, snpFiles = snpsFile, pValMax = 0.1)
+```
+
+#### Calling SLOPE for data pre-loaded in R
+
+You can call SLOPE, clumping will be done automatically
+
+```{r}
+clumpedSLOPE(y, SNPs, rho = 0.3, fdr = 0.1)
+```
+
+
+#### Performing clumping alone
 
 ```{r, results='hide'}
-clumpingResult <- cps:::clumpProcedure(cps::y, cps::SNPs)
+clumpingResult <- clumpProcedure(cps::y, cps::SNPs)
 ```
 
 ```{r}

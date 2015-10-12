@@ -1,7 +1,8 @@
 #' Clumping procedure
 #'
-#' clumping of SNPs as preprocesing for SLOPE in GWAS
+#' Clumping of SNPs as preprocesing for SLOPE in GWAS
 #'
+#' @export
 #' @param y numeric vector, phenotype
 #' @param X numeric matrix, SNPs
 #' @param rho numeric, minimal correlation between two SNPs to be
@@ -10,7 +11,9 @@
 clumpProcedure <- function(y, X, rho = 0.3, verbose = TRUE){
 
   if(verbose){
-    total = ncol(X)
+    message("Clumping procedure has started. Depending on
+            size of your data this may take several minutes.")
+    total = sqrt(ncol(X))
     # create progress bar
     pb <- txtProgressBar(min = 0, max = total, style = 3)
   }
@@ -42,19 +45,34 @@ clumpProcedure <- function(y, X, rho = 0.3, verbose = TRUE){
     }
     i = i+1
     if(verbose)
-      setTxtProgressBar(pb, i)
+      setTxtProgressBar(pb, sqrt(i))
   }
   if(verbose)
     close(pb)
   nullClumps <- sapply(representatives, is.null)
   representatives <- representatives[!nullClumps]
   clumps <- clumps[!nullClumps]
-  result <- list(
-    SNPs = X[,unlist(representatives)],
-    SNPnumber = representatives,
-    SNPclumps = clumps
-  )
+  result <- structure(
+    list( SNPs = X[,unlist(representatives)],
+          SNPnumber = representatives,
+          SNPclumps = clumps),
+    class="clumpingResult")
   return(result)
 }
 
+#' Print clumpingResult class object
+#'
+#' @param x clumpingResult class object
+#' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
+#' @export
+#' @keywords internal
+print.clumpingResult <- function(x, ...){
+  cat("Object of class clumpingResult\n")
+  cat("$SNPs: Matrix\n")
+  cat("\t", nrow(x$SNPs), " observations\n")
+  cat("\t", ncol(x$SNPs), " snps\n")
+  cat("$SNPnumber: list with snp representatives for clumps \n")
+  cat("\t[", paste(head(x$SNPnumber), collapse=","), "..., ]\n")
+  cat("$SNPclumps: list of vector, number of snps in clumps\n")
+}
 

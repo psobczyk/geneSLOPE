@@ -52,7 +52,7 @@ main <- function(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.1, header = 
 
   #clump SNPs to remove highly correlated and to reduce dimenion
   message(paste("Clumping procedure started on", ncol(data_all_files), "snps"))
-  clumpedSNPs <- clumpProcedure(y, data_all_files, rho = 0.3)
+  clumpedSNPs <- clumpProcedure(y, data_all_files, rho = 0.3, verbose = FALSE)
   message(paste(length(clumpedSNPs$SNPnumber), "clumps extracted"))
 
   slopeResult <- SLOPE::SLOPE(clumpedSNPs$SNPs, y)

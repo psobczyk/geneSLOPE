@@ -1,8 +1,19 @@
-#' Clumped SLOPE
+#' GWAS with SLOPE
 #'
+#' Performs GWAS with SLOPE on data already read into R
+#'
+#' @export
 #' @inheritParams clumpProcedure
 #' @param fdr, False Discovery Rate for SLOPE
-clumpedSLOPE <- function(y, X, rho = 0.3, fdr = 0.2){
+#' @return data.frame with two columns \itemize{
+#' \item snpName names of selected snps
+#' \item snpNumber column numbers of selected snps in input matrix X
+#' }
+#' @examples
+#' \donttest{
+#' clumpedSLOPE(y, SNPs)
+#' }
+clumpedSLOPE <- function(y, X, rho = 0.3, fdr = 0.2, verbose = TRUE){
   if(rho>=1 | rho <= 0){
     stop("Rho has to be within range (0,1)")
   }
@@ -13,14 +24,18 @@ clumpedSLOPE <- function(y, X, rho = 0.3, fdr = 0.2){
     stop("Length of y must match
          number of rows in X")
   }
-  # filter all snps with no information
-  clumpedSNPs <- clumpProcedure(y, X, 0.3)
+  X <- apply(X, 2, replace_na_with_mean)
+  message("Missing values were replaced by column mean")
+
+  clumpedSNPs <- clumpProcedure(y, X, rho, verbose)
   X2 <- clumpedSNPs$SNPs
 
-  slopeResult <- SLOPE(X = X2, y = y, fdr = 0.05)
+  slopeResult <- SLOPE(X = X2, y = y, fdr = fdr)
 
   selectedSNPs <- unlist(clumpedSNPs$SNPnumber)[slopeResult$selected]
-
-  selectedSNPs
+  selectedSNPs <- sort(selectedSNPs)
+  cSLOPEResult <- data.frame(snpName=colnames(SNPs)[selectedSNPs],
+                             snpNumber=selectedSNPs)
+  cSLOPEResult
 }
 
