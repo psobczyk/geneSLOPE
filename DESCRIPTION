@@ -1,17 +1,16 @@
 Package: cps
 Type: Package
 Title: Genome Wide Association Study with SLOPE
-Version: 0.23.0
-Date: 2015-10-10
+Version: 0.24.0
+Date: 2015-10-12
 Author: Piotr Sobczyk
 Maintainer: Piotr Sobczyk <piotr.sobczyk@pwr.edu.pl>
 Description: Genome-wide association study performed with SLOPE.
   In first step, SNPs are clumped according to their correlations and
   distances. Then, SLOPE is performed on data where each clump has
   one representative.
-License: What license is it under?
+License: License: GPL-3
 LazyData: TRUE
-License: GPL-3
 Depends:
     R (>= 3.2.1),
     SLOPE
@@ -19,4 +18,7 @@ Imports:
   data.table,
   tcltk
 Suggests:
-  shiny
+  shiny,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

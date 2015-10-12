@@ -1,0 +1,24 @@
+---
+title: "Tutorial for GWAS with SLOPE"
+author: "Piotr Sobczyk"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Tutorial for GWAS with SLOPE}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Clumping Procedure for SLOPE
+
+## Example data
+
+First let us perform clumping
+
+```{r, results='hide'}
+clumpingResult <- cps:::clumpProcedure(cps::y, cps::SNPs)
+```
+
+```{r}
+clumpingResult
+```
