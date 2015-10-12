@@ -7,7 +7,7 @@
 #'
 #' @docType package
 #' @name cps
-#' @details Version: 0.26.1
+#' @details Version: 0.26.2
 #' @importFrom data.table fread
 #' @importFrom tcltk tk_choose.files
 #' @importFrom SLOPE SLOPE
@@ -17,5 +17,8 @@
 #' @examples
 #' \donttest{
 #' clumpedSLOPE(y, SNPs)
+#' }
+#' \donttest{
+#' runExample()
 #' }
 NULL
