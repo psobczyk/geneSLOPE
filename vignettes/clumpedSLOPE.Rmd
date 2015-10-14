@@ -9,38 +9,62 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-## Clumping Procedure for SLOPE
-
 ## Running clumped SLOPE on examplary data
 
 If you have **large dataset in files**, we recommend you load
 them with **function main.R**, which will perform whole GWAS
 automatically.
 
-```{r}
+```{r, results='hide', message=FALSE}
 library(cps)
 pheFile <- system.file("extdata", "plinkPhenotypeExample.phe", package = "cps")
-pheFile
 snpsFile <- system.file("extdata", "plinkDataExample.raw", package = "cps")
-snpsFile
-main(phenotypeFile = pheFile, snpFiles = snpsFile, pValMax = 0.1)
 ```
+
+```{r}
+main(phenotypeFile = pheFile, snpFiles = snpsFile, pValMax = 0.1, 
+     rho = 0.3, fdr = 0.2, verbose = FALSE)
+```
+
+Output, important snps, is automatically written in csv file on the disk.
+
+There are three numerical parameters that influence result
+
+* *pValMax* is the threshold p-value for marginal test. When data is loaded to R,
+initial screening of snps is performed. For every snp, test for coefficient in simple linear regression model *lm(phenotype~snp)* is performed. All snps with p-value larger than pValMax are discarded. Setting this parameter to too large will significantly increase number of snps on which clumping procedure will be performed. This may cause two technical threats
+    * Computer might run out of RAM memory
+    * Clumping procedure might take a lot of time
+* *rho* is threshold for correlation between snps in clumping procedure. For given snp, every that is correlated with it at least at level *rho* will be clumped together. Setting this parameter too high (say 0.7) will cause SLOPE to work on highly correlated snps which might affect its accuracy
+* *fdr* false discover rate for SLOPE procedure. The higher FDR is, more variables will be accepted to the model. Contrary, small fdr yields more conservative models
+
+We set verbose to FALSE to suppress progress bar. 
 
 #### Calling SLOPE for data pre-loaded in R
 
 You can call SLOPE, clumping will be done automatically
 
 ```{r}
-clumpedSLOPE(y, SNPs, rho = 0.3, fdr = 0.1)
+clumpedSLOPE(y, SNPs, rho = 0.3, fdr = 0.1, verbose = FALSE)
 ```
 
+As before, we set verbose to FALSE to supress progress bar.
 
 #### Performing clumping alone
 
 ```{r, results='hide'}
-clumpingResult <- clumpProcedure(cps::y, cps::SNPs)
+clumpingResult <- clumpProcedure(cps::y, cps::SNPs, verbose = FALSE)
 ```
 
 ```{r}
 clumpingResult
 ```
+
+## Running GWAS with SLOPE using shiny
+
+To run shiny application just type in your command line:
+
+```{r, eval=FALSE}
+gui_cps()
+```
+
+Please note that at the moment all .raw files are simulatanously uploaded which might cause your computer to run out of RAM memory. 

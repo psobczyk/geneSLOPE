@@ -5,6 +5,8 @@
 #' @param phenotypeFile file containing phentotype as its first column
 #' @param snpFiles vector of filenames with SNPs e.g. different chromosomes
 #' @param pValMax threshold p-value in marginal snp test
+#' @param rho threshold value of correlation for snp clumping
+#' @param fdr False Discovery Rate for SLOPE procedure
 #' @param header logical, whether file with phenotype contains header
 #' @param sep seperator for file with phenotype
 #' @param verbose if TRUE (default) progress bar and info messages shall
@@ -13,6 +15,7 @@
 #' @export
 #' @details Files with SNPs should be of .raw file format
 main <- function(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.1,
+                 rho = 0.3, fdr = 0.1,
                  header = T, sep = ",", verbose = TRUE){
   if(is.null(phenotypeFile))
     phenotypeFile <- tcltk::tk_choose.files(caption = "Choose file with phenotype")
@@ -55,10 +58,10 @@ main <- function(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.1,
 
   #clump SNPs to remove highly correlated and to reduce dimenion
   message(paste("Clumping procedure started on", ncol(data_all_files), "snps"))
-  clumpedSNPs <- clumpProcedure(y, data_all_files, rho = 0.3, verbose = verbose)
+  clumpedSNPs <- clumpProcedure(y, data_all_files, rho = rho, verbose = verbose)
   message(paste(length(clumpedSNPs$SNPnumber), "clumps extracted"))
 
-  slopeResult <- SLOPE::SLOPE(clumpedSNPs$SNPs, y)
+  slopeResult <- SLOPE::SLOPE(clumpedSNPs$SNPs, y, fdr = fdr)
   selectedSNPs <- unlist(clumpedSNPs$SNPnumber)[slopeResult$selected]
   if(is.null(data_all_files_info)){
     result <- colnames(data_all_files)[selectedSNPs]

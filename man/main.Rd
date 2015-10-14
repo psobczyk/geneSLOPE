@@ -4,8 +4,8 @@
 \alias{main}
 \title{GWAS with clumped SLOPE}
 \usage{
-main(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.1, header = T,
-  sep = ",", verbose = TRUE)
+main(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.1, rho = 0.3,
+  fdr = 0.1, header = T, sep = ",", verbose = TRUE)
 }
 \arguments{
 \item{phenotypeFile}{file containing phentotype as its first column}
@@ -13,6 +13,10 @@ main(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.1, header = T,
 \item{snpFiles}{vector of filenames with SNPs e.g. different chromosomes}
 
 \item{pValMax}{threshold p-value in marginal snp test}
+
+\item{rho}{threshold value of correlation for snp clumping}
+
+\item{fdr}{False Discovery Rate for SLOPE procedure}
 
 \item{header}{logical, whether file with phenotype contains header}
 
