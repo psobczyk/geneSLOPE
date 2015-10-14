@@ -34,7 +34,7 @@ shinyServer(function(input, output) {
     data_all_files <- NULL
     for(p in 1:nrow(input$file)){
       data_single_file <- cps:::readPLINK(DataSets[[p, 'datapath']])
-      data_single_file$snps <- apply(data_single_file$snps, 2, replace_na_with_mean)
+      data_single_file$snps <- apply(data_single_file$snps, 2, cps:::replace_na_with_mean)
       message("Missing values were replaced by column mean")
       #remove all SNPs with no variablity
       nonZeroSd <- apply(data_single_file$snps, 2, sd)!=0
@@ -48,7 +48,7 @@ shinyServer(function(input, output) {
       suma = sum((y-mean(y))^2)
       n = length(y) - 2
       pVals <- apply(data_single_file$snps, 2,
-                     function(x) pValComp(x,y,n,suma))
+                     function(x) cps:::pValComp(x,y,n,suma))
       data_single_file$snps <- data_single_file$snps[,pVals<input$pValCutoff]
       data_all_files <- cbind(data_all_files, data_single_file$snps)
     }
