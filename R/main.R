@@ -7,10 +7,13 @@
 #' @param pValMax threshold p-value in marginal snp test
 #' @param header logical, whether file with phenotype contains header
 #' @param sep seperator for file with phenotype
+#' @param verbose if TRUE (default) progress bar and info messages shall
+#' be displayed
 #'
 #' @export
 #' @details Files with SNPs should be of .raw file format
-main <- function(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.1, header = T, sep = ","){
+main <- function(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.1,
+                 header = T, sep = ",", verbose = TRUE){
   if(is.null(phenotypeFile))
     phenotypeFile <- tcltk::tk_choose.files(caption = "Choose file with phenotype")
   phe <- read.table(phenotypeFile, header = header, sep = sep, stringsAsFactors = FALSE)
@@ -52,7 +55,7 @@ main <- function(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.1, header = 
 
   #clump SNPs to remove highly correlated and to reduce dimenion
   message(paste("Clumping procedure started on", ncol(data_all_files), "snps"))
-  clumpedSNPs <- clumpProcedure(y, data_all_files, rho = 0.3, verbose = FALSE)
+  clumpedSNPs <- clumpProcedure(y, data_all_files, rho = 0.3, verbose = verbose)
   message(paste(length(clumpedSNPs$SNPnumber), "clumps extracted"))
 
   slopeResult <- SLOPE::SLOPE(clumpedSNPs$SNPs, y)

@@ -5,7 +5,7 @@
 \title{GWAS with clumped SLOPE}
 \usage{
 main(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.1, header = T,
-  sep = ",")
+  sep = ",", verbose = TRUE)
 }
 \arguments{
 \item{phenotypeFile}{file containing phentotype as its first column}
@@ -17,6 +17,9 @@ main(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.1, header = T,
 \item{header}{logical, whether file with phenotype contains header}
 
 \item{sep}{seperator for file with phenotype}
+
+\item{verbose}{if TRUE (default) progress bar and info messages shall
+be displayed}
 }
 \description{
 Files with phenotype and snps are selected interactively.

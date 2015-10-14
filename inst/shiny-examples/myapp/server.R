@@ -8,7 +8,7 @@
 library(shiny)
 library(cps)
 
-options(shiny.maxRequestSize=50*1024^2)
+options(shiny.maxRequestSize=300*1024^2)
 
 shinyServer(function(input, output) {
 
