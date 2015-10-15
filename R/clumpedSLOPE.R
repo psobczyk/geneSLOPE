@@ -33,11 +33,11 @@ clumpedSLOPE <- function(y, X, rho = 0.3, fdr = 0.2, lambda="gaussian",
   if(sum(!nonZeroSd)>0)
     message(paste(sum(!nonZeroSd), "variables with zero variance were removed"))
 
-
   clumpedSNPs <- clumpProcedure(y, X, rho, verbose)
   X2 <- clumpedSNPs$SNPs
 
-  slopeResult <- SLOPE(X = X2, y = y, fdr = fdr, lambda = lambda)
+  slopeResult <- SLOPE(X = X2, y = y, fdr = fdr,
+                       lambda = lambda[1:ncol(X2)])
 
   selectedSNPs <- unlist(clumpedSNPs$SNPnumber)[slopeResult$selected]
   selectedSNPs <- sort(selectedSNPs)

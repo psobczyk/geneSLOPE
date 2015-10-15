@@ -32,8 +32,10 @@ shinyServer(function(input, output) {
       need(DataSets != "", "Please upload snp data")
     )
     data_all_files <- NULL
+    number.snps <- 0
     for(p in 1:nrow(input$file)){
       data_single_file <- cps:::readPLINK(DataSets[[p, 'datapath']])
+      number.snps <- number.snps + ncol(data_single_file$snps)
       data_single_file$snps <- apply(data_single_file$snps, 2, cps:::replace_na_with_mean)
       message("Missing values were replaced by column mean")
       #remove all SNPs with no variablity
@@ -52,20 +54,25 @@ shinyServer(function(input, output) {
       data_single_file$snps <- data_single_file$snps[,pVals<input$pValCutoff]
       data_all_files <- cbind(data_all_files, data_single_file$snps)
     }
-    data_all_files
+    list(data=data_all_files,
+         number.snps=number.snps)
   })
 
   output$summary <- renderText({
     paste("Phenotype data loaded.", nrow(phenotype()), "observations.")
   })
 
-  slopeResult <- reactive({
+  slopeResult <- eventReactive(input$go, {
     y <- phenotype()[,1]
-    X <- data()
+    X <- data()$data
     validate(
-      need(dim(X) == length(y), "Please upload snp data")
+      need(nrow(X) == length(y), "Please upload snp data")
     )
-    clumpedSLOPE(y, X)
+    lambda = SLOPE::create_lambda(n = nrow(X), p = data()$number.snps,
+                                  fdr = input$fdr, method = "gaussian")
+    clumpedSLOPE(y = y, X = X, rho = input$rho, fdr = input$fdr,
+                 lambda = lambda[1:ncol(X)],
+                 verbose = FALSE)
   })
 
   output$slopeTable <- renderDataTable({
