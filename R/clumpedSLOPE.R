@@ -5,6 +5,7 @@
 #' @export
 #' @inheritParams clumpProcedure
 #' @param fdr, False Discovery Rate for SLOPE
+#' @param lambda lambda for SLOPE. See
 #' @return data.frame with two columns \itemize{
 #' \item snpName names of selected snps
 #' \item snpNumber column numbers of selected snps in input matrix X
@@ -13,7 +14,8 @@
 #' \donttest{
 #' clumpedSLOPE(y, SNPs)
 #' }
-clumpedSLOPE <- function(y, X, rho = 0.3, fdr = 0.2, verbose = TRUE){
+clumpedSLOPE <- function(y, X, rho = 0.3, fdr = 0.2, lambda="gaussian",
+                         verbose = TRUE){
   if(rho>=1 | rho <= 0){
     stop("Rho has to be within range (0,1)")
   }
@@ -28,13 +30,14 @@ clumpedSLOPE <- function(y, X, rho = 0.3, fdr = 0.2, verbose = TRUE){
   message("Missing values were replaced by column mean")
   nonZeroSd <- apply(X, 2, sd)!=0
   X <- X[,nonZeroSd]
-  message(paste(sum(!nonZeroSd), "variables with zero variance were removed"))
+  if(sum(!nonZeroSd)>0)
+    message(paste(sum(!nonZeroSd), "variables with zero variance were removed"))
 
 
   clumpedSNPs <- clumpProcedure(y, X, rho, verbose)
   X2 <- clumpedSNPs$SNPs
 
-  slopeResult <- SLOPE(X = X2, y = y, fdr = fdr)
+  slopeResult <- SLOPE(X = X2, y = y, fdr = fdr, lambda = lambda)
 
   selectedSNPs <- unlist(clumpedSNPs$SNPnumber)[slopeResult$selected]
   selectedSNPs <- sort(selectedSNPs)

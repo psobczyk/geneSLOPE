@@ -4,7 +4,8 @@
 \alias{clumpedSLOPE}
 \title{GWAS with SLOPE}
 \usage{
-clumpedSLOPE(y, X, rho = 0.3, fdr = 0.2, verbose = TRUE)
+clumpedSLOPE(y, X, rho = 0.3, fdr = 0.2, lambda = "gaussian",
+  verbose = TRUE)
 }
 \arguments{
 \item{y}{numeric vector, phenotype}
@@ -14,6 +15,8 @@ clumpedSLOPE(y, X, rho = 0.3, fdr = 0.2, verbose = TRUE)
 \item{rho}{numeric, minimal correlation between two SNPs to be}
 
 \item{fdr,}{False Discovery Rate for SLOPE}
+
+\item{lambda}{lambda for SLOPE. See}
 
 \item{verbose}{logical, if TRUE (default) progress bar is shown
 classified to the same clump}

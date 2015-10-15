@@ -7,10 +7,11 @@
 #'
 #' @docType package
 #' @name cps
-#' @details Version: 0.26.6
+#' @details Version: 0.26.7
 #' @importFrom data.table fread
 #' @importFrom tcltk tk_choose.files
 #' @importFrom SLOPE SLOPE
+#' @importFrom SLOPE create_lambda
 #' @author Piotr Sobczyk
 #'
 #' Maintainer: Piotr Sobczyk \email{Piotr.Sobczyk@@pwr.edu.pl}

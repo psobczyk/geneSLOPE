@@ -4,7 +4,7 @@
 \alias{main}
 \title{GWAS with clumped SLOPE}
 \usage{
-main(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.1, rho = 0.3,
+main(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.05, rho = 0.5,
   fdr = 0.1, header = T, sep = ",", verbose = TRUE)
 }
 \arguments{
@@ -26,7 +26,14 @@ main(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.1, rho = 0.3,
 be displayed}
 }
 \description{
-Files with phenotype and snps are selected interactively.
+Function performes Genome Wide Association Study (GWAS) using SLOPE.
+In first step, user provides files with phenotype and snps as either
+vector of strings or interactively via dialog window.
+In second step, data is read and snps are initially screened using
+threshold p-value provided by the user.
+In third step, clumping procedure is performed. Highly correlated
+(that is stronger than parameter \emph{rho}) snps are clustered.
+In last step, SLOPE is performed on representative of each clump.
 }
 \details{
 Files with SNPs should be of .raw file format
