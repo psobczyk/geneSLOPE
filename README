@@ -1,0 +1,15 @@
+To do:
+
+1. SNPs number should refer to original X matrix.
+
+* How to deal with the fact we have different chromosomes?
+* Maybe a pair (file, column)?
+
+2. lazy upload for shiny
+3. Documentation
+    * reference to paper
+    * add other authors
+4. Vignette
+    * more about procedure
+5. change pacakge name
+6. change main() function name
