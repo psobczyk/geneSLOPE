@@ -1,6 +1,6 @@
 #' Clumping procedure
 #'
-#' Clumping of SNPs as preprocesing for SLOPE in GWAS
+#' Clumping of SNPs. Can be used as a preprocesing tool for using SLOPE in GWAS
 #'
 #' @export
 #' @param y numeric vector, phenotype

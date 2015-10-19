@@ -1,11 +1,15 @@
 #' GWAS with SLOPE
 #'
-#' Performs GWAS with SLOPE on data already read into R
+#' Performs GWAS with SLOPE on given snp matrix and phenotype.
+#' At first clumping procedure is performed. Highly correlated
+#' (that is stronger than parameter \emph{rho}) snps are clustered.
+#' Then SLOPE is used on snp matrix which contains
+#' one representative for each clump.
 #'
 #' @export
 #' @inheritParams clumpProcedure
 #' @param fdr, False Discovery Rate for SLOPE
-#' @param lambda lambda for SLOPE. See
+#' @param lambda lambda for SLOPE. See \code{\link[SLOPE]{create_lambda}}
 #' @return data.frame with two columns \itemize{
 #' \item snpName names of selected snps
 #' \item snpNumber column numbers of selected snps in input matrix X

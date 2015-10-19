@@ -16,7 +16,7 @@ clumpedSLOPE(y, X, rho = 0.3, fdr = 0.2, lambda = "gaussian",
 
 \item{fdr,}{False Discovery Rate for SLOPE}
 
-\item{lambda}{lambda for SLOPE. See}
+\item{lambda}{lambda for SLOPE. See \code{\link[SLOPE]{create_lambda}}}
 
 \item{verbose}{logical, if TRUE (default) progress bar is shown
 classified to the same clump}
@@ -28,7 +28,11 @@ data.frame with two columns \itemize{
 }
 }
 \description{
-Performs GWAS with SLOPE on data already read into R
+Performs GWAS with SLOPE on given snp matrix and phenotype.
+At first clumping procedure is performed. Highly correlated
+(that is stronger than parameter \emph{rho}) snps are clustered.
+Then SLOPE is used on snp matrix which contains
+one representative for each clump.
 }
 \examples{
 \donttest{

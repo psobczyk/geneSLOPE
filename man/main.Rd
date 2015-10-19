@@ -26,14 +26,17 @@ main(phenotypeFile = NULL, snpFiles = NULL, pValMax = 0.05, rho = 0.5,
 be displayed}
 }
 \description{
-Function performes Genome Wide Association Study (GWAS) using SLOPE.
-In first step, user provides files with phenotype and snps as either
-vector of strings or interactively via dialog window.
-In second step, data is read and snps are initially screened using
-threshold p-value provided by the user.
-In third step, clumping procedure is performed. Highly correlated
+Performes Genome-wide Association study (GWAS) using SLOPE.
+In the first step, user chooses files with phenotype and snps
+interactively via dialog window. Optionaly file names can be
+given as parameters \emph{phenotypeFile} and \emph{snpFiles}.
+In second step, data is read and snps undergo initial screening.
+All snps with p-value bigger than the threshold (parameter \emph{pValMax})
+are discarded.
+In the third step, clumping procedure is performed. Highly correlated
 (that is stronger than parameter \emph{rho}) snps are clustered.
-In last step, SLOPE is performed on representative of each clump.
+In the fourth and last step, SLOPE is performed on snp matrix which contains
+one representative for each clump.
 }
 \details{
 Files with SNPs should be of .raw file format

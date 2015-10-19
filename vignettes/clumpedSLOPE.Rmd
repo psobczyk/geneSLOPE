@@ -22,8 +22,8 @@ snpsFile <- system.file("extdata", "plinkDataExample.raw", package = "cps")
 ```
 
 ```{r}
-main(phenotypeFile = pheFile, snpFiles = snpsFile, pValMax = 0.1, 
-     rho = 0.3, fdr = 0.2, verbose = FALSE)
+main(phenotypeFile = pheFile, snpFiles = snpsFile, pValMax = 0.05, 
+     rho = 0.5, fdr = 0.1, verbose = FALSE)
 ```
 
 Output, important snps, is automatically written in csv file on the disk.
@@ -41,7 +41,7 @@ We set verbose to FALSE to suppress progress bar.
 
 #### Calling SLOPE for data pre-loaded in R
 
-You can call SLOPE, clumping will be done automatically
+You can call clumped SLOPE directly. Clumping procedure will be done automatically. 
 
 ```{r}
 clumpedSLOPE(y, SNPs, rho = 0.3, fdr = 0.1, verbose = FALSE)
