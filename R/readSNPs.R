@@ -37,7 +37,7 @@ readSNPs <- function(file, y, pValMax = 0.05, chunk.size = 5e4, verbose = TRUE){
   suma = sum((y-mean(y))^2)
   n = length(y) - 2
   message("Reading and screening data. Depending on data size this might take
-           several minutes")
+          several minutes")
   while(!done)
   {
     temp = data.table::fread(file,skip=(chunk-1)*chunk.size+1,nrow=chunk.size,
@@ -64,7 +64,7 @@ readSNPs <- function(file, y, pValMax = 0.05, chunk.size = 5e4, verbose = TRUE){
     selectedSnpsNumbers <- c(selectedSnpsNumbers,
                              2*(chunk-1)*chunk.size+which(smallPVals))
     SNPinfo <- SNPinfo[,smallPVals]
-    X_info <- cbind(X_info, SNPinfo)
+    X_info <- rbind(X_info, t(SNPinfo))
     if(verbose) message(paste(chunk*chunk.size, "SNPs processed"))
     chunk = chunk + 1
     if(ncol(temp)/2<chunk.size) done = TRUE

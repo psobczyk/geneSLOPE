@@ -58,7 +58,7 @@ clumpProcedure <- function(y, X, rho = 0.3, verbose = TRUE){
           SNPclumps = clumps),
     class="clumpingResult")
   return(result)
-}
+  }
 
 #' Print clumpingResult class object
 #'
@@ -71,7 +71,7 @@ print.clumpingResult <- function(x, ...){
   cat("$X: Matrix\n")
   cat("\t", nrow(x$X), " observations\n")
   cat("\t", ncol(x$X), " snps\n")
-  cat("$X_info: information about SNPs")
+  cat("$X_info: information about SNPs\n")
   cat("$SNPnumber: list with snp representatives for clumps \n")
   cat("\t[", paste(head(x$SNPnumber), collapse=","), "..., ]\n")
   cat("$SNPclumps: list of vector, number of snps in clumps\n")
@@ -141,7 +141,7 @@ clumpProcedure2 <- function(screenResult, rho = 0.3, verbose = TRUE){
   if(verbose){
     message("Clumping procedure has started. Depending on
             size of your data this may take several minutes.")
-    total = sqrt(ncol(X))
+    total = sqrt(ncol(screenResult$X))
     # create progress bar
     pb <- txtProgressBar(min = 0, max = total, style = 3)
   }
@@ -155,7 +155,7 @@ clumpProcedure2 <- function(screenResult, rho = 0.3, verbose = TRUE){
   }
   suma = sum((screenResult$y-mean(screenResult$y))^2)
   n = length(screenResult$y) - 2
-  pVals <- apply(X, 2, function(x) pValComp(x,screenResult$y,n,suma))
+  pVals <- apply(screenResult$X, 2, function(x) pValComp(x,screenResult$y,n,suma))
 
   a <- order(pVals, decreasing = FALSE)
   notClumped <- rep(TRUE, length(a))
@@ -181,8 +181,8 @@ clumpProcedure2 <- function(screenResult, rho = 0.3, verbose = TRUE){
   representatives <- representatives[!nullClumps]
   clumps <- clumps[!nullClumps]
   result <- structure(
-    list( X = X[,unlist(representatives)],
-          X_all = X,
+    list( X = screenResult$X[,unlist(representatives)],
+          X_all = screenResult$X,
           y = screenResult$y,
           X_info = screenResult$X_info,
           SNPnumber = representatives,
@@ -193,4 +193,4 @@ clumpProcedure2 <- function(screenResult, rho = 0.3, verbose = TRUE){
           pValMax = screenResult$pValMax),
     class="clumpingResult")
   return(result)
-}
+  }

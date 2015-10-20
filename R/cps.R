@@ -7,7 +7,7 @@
 #'
 #' @docType package
 #' @name cps
-#' @details Version: 0.28.0
+#' @details Version: 0.28.1
 #' @importFrom data.table fread
 #' @importFrom tcltk tk_choose.files
 #' @importFrom SLOPE SLOPE
