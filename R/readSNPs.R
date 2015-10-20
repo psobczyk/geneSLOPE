@@ -65,7 +65,7 @@ readSNPs <- function(file, y, pValMax = 0.05, chunk.size = 5e4, verbose = TRUE){
                              2*(chunk-1)*chunk.size+which(smallPVals))
     SNPinfo <- SNPinfo[,smallPVals]
     X_info <- cbind(X_info, SNPinfo)
-    message(paste(chunk*chunk.size, "SNPs processed"))
+    if(verbose) message(paste(chunk*chunk.size, "SNPs processed"))
     chunk = chunk + 1
     if(ncol(temp)/2<chunk.size) done = TRUE
   }
