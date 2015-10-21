@@ -4,7 +4,7 @@
 \alias{readBigSNPs}
 \title{read data with bigmemory package}
 \usage{
-readBigSNPs(filename, y, pValMax = 0.05, ncores = 1)
+readBigSNPs(pedFile, mapFile, y, pValMax = 0.05)
 }
 \description{
 read data with bigmemory package

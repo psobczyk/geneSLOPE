@@ -4,7 +4,7 @@
 \alias{print.screeningResult}
 \title{Print screeningResult class object}
 \usage{
-\method{print}{screeningResult}(x, ...)
+print.screeningResult(x, ...)
 }
 \arguments{
 \item{x}{screeningResult class object}

@@ -4,7 +4,7 @@
 \alias{print.clumpingResult}
 \title{Print clumpingResult class object}
 \usage{
-\method{print}{clumpingResult}(x, ...)
+print.clumpingResult(x, ...)
 }
 \arguments{
 \item{x}{clumpingResult class object}

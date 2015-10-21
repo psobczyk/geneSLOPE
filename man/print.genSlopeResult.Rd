@@ -4,7 +4,7 @@
 \alias{print.genSlopeResult}
 \title{Print genSlopeResult class object}
 \usage{
-\method{print}{genSlopeResult}(x, ...)
+print.genSlopeResult(x, ...)
 }
 \arguments{
 \item{x}{genSlopeResult class object}
