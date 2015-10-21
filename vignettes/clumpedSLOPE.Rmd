@@ -14,7 +14,7 @@ vignette: >
 ```{r, results='hide', message=FALSE}
 library(cps)
 pheFile <- system.file("extdata", "plinkPhenotypeExample.phe", package = "cps")
-snpsFile <- system.file("extdata", "plinkDataExample.tped", package = "cps")
+snpsFile <- system.file("extdata", "plinkDataExample.raw", package = "cps")
 ```
 
 ```{r, eval=FALSE}
