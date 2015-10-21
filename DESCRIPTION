@@ -1,7 +1,7 @@
 Package: cps
 Type: Package
 Title: Genome-wide Association Study with SLOPE
-Version: 0.28.2
+Version: 0.28.3
 Date: 2015-10-20
 Author: Piotr Sobczyk
 Maintainer: Piotr Sobczyk <piotr.sobczyk@pwr.edu.pl>
@@ -17,7 +17,9 @@ Depends:
 Imports:
   data.table,
   tcltk,
-  ggplot2
+  ggplot2,
+  doMC,
+  bigmemory
 Suggests:
   shiny,
   knitr,

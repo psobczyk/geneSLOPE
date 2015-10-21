@@ -7,12 +7,14 @@
 #'
 #' @docType package
 #' @name cps
-#' @details Version: 0.28.2
+#' @details Version: 0.28.3
 #' @importFrom data.table fread
 #' @importFrom tcltk tk_choose.files
 #' @importFrom SLOPE SLOPE
 #' @importFrom SLOPE create_lambda
 #' @import ggplot2
+#' @import doMC
+#' @import bigmemory
 #' @author Piotr Sobczyk
 #'
 #' Maintainer: Piotr Sobczyk \email{Piotr.Sobczyk@@pwr.edu.pl}
