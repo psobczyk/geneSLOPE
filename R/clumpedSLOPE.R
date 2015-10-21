@@ -86,13 +86,15 @@ genSLOPE <- function(clumpingResult, fdr = 0.1, lambda="gaussian", verbose = TRU
   slopeResult <- SLOPE::SLOPE(X = clumpingResult$X, y = clumpingResult$y,
                               fdr = fdr, lambda = lambda)
 
-  ############## DANGER ###################
-  slopeResult$selected <- c(1, 40, 120)
-  ############## DANGER ###################
+#   ############## DANGER ###################
+#   slopeResult$selected <- c(1, 40, 120)
+#   ############## DANGER ###################
   selectedSNPs <- unlist(clumpingResult$SNPnumber)[slopeResult$selected]
   selectedSNPs <- sort(selectedSNPs)
 
   X_selected <- clumpingResult$X_all[,selectedSNPs]
+  if(length(selectedSNPs)==0)
+    X_selected <- rep(1, length(clumpingResult$y))
   # refitting linear model
   lm.fit.summary <- summary(lm(clumpingResult$y~X_selected))
 
@@ -103,6 +105,7 @@ genSLOPE <- function(clumpingResult, fdr = 0.1, lambda="gaussian", verbose = TRU
           R2 = lm.fit.summary$r.squared,
           selectedSNPs = selectedSNPs,
           selectedClumps = clumpingResult$SNPclumps[slopeResult$selected],
+          lambda = lambda,
           y = clumpingResult$y,
           X_clumps = clumpingResult$X,
           X_all = clumpingResult$X_all,
@@ -128,8 +131,10 @@ print.genSlopeResult <- function(x, ...){
   cat("\t", nrow(x$X), " observations\n")
   cat("\t", ncol(x$X), " snps\n")
   cat("$effects: effect size for selected snps\n")
-  cat("$R2: R squared for fitted km model\n")
+  cat("$R2: R squared for fitted lm model\n")
   cat("$selectedSNPs: SNPs selected by SLOPE\n")
+  cat("$selectedClumps: clumps that contain SNPs selected by SLOPE\n")
+  cat("$lambda: lambdas used by SLOPE\n")
   cat("$y: Phenotype\n")
   cat("$X_clump: Matrix after clumping\n")
   cat("$X_all: Matrix before clumping\n")
