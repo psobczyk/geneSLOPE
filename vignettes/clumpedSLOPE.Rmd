@@ -9,24 +9,77 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-## Running clumped SLOPE on examplary data
-
-If you have **large dataset in files**, we recommend you load
-them with **function main.R**, which will perform whole GWAS
-automatically.
+## Tutorial on performing GWAS with SLOPE
 
 ```{r, results='hide', message=FALSE}
 library(cps)
 pheFile <- system.file("extdata", "plinkPhenotypeExample.phe", package = "cps")
-snpsFile <- system.file("extdata", "plinkDataExample.raw", package = "cps")
+snpsFile <- system.file("extdata", "plinkDataExample.tped", package = "cps")
 ```
 
 ```{r}
-main(phenotypeFile = pheFile, snpFiles = snpsFile, pValMax = 0.05, 
-     rho = 0.5, fdr = 0.1, verbose = FALSE)
+phe <- readPhenotype(filename = "../phenotype.csv", sep=";")
 ```
 
-Output, important snps, is automatically written in csv file on the disk.
+Now we can read in snp data. We assume that snps were previously exported from PLINK
+as **transposed** matrix. To do that use PLINK command
+
+**plink --file data --recode12 --transposed --out temp}**
+
+where data is you name of .ped file. Depending on data size this make take some time.
+As data is very large, snps are filtered with their marginal test p-value.
+All snps which p-values are large than threshold *pValMax* will be truncated.
+
+```{r, warning=FALSE}
+screening <- readSNPs("../plink.tped", phe$y, pValMax = 0.05, chunk.size = 2e4)
+```
+
+User can check what is result of screening
+
+```{r}
+summary(screening)
+```
+
+Next step is clumping. Highly correlated snps will be clustered. When *rho*
+decreases so does number of clumps; however, clumps are getting larger.
+
+```{r}
+clumping <- clumpProcedure2(screening, rho = 0.3)
+```
+
+What is the result of clumping?
+
+```{r}
+summary(clumping)
+```
+
+We can also plot our results
+
+```{r}
+plot(clumping)
+```
+
+If we are interested in specific genome we can "zoom it"
+
+```{r}
+plot(clumping, 2)
+```
+
+
+Last step of analysis is using SLOPE
+
+```{r}
+slope.result <- genSLOPE(clumping, fdr=0.1)
+```
+
+As before one can plot and summarize results
+
+```{r}
+summary(slope.result)
+plot(slope.result)
+```
+
+#### Detailed description of parameters
 
 There are three numerical parameters that influence result
 
@@ -38,33 +91,3 @@ initial screening of snps is performed. For every snp, test for coefficient in s
 * *fdr* false discover rate for SLOPE procedure. The higher FDR is, more variables will be accepted to the model. Contrary, small fdr yields more conservative models
 
 We set verbose to FALSE to suppress progress bar. 
-
-#### Calling SLOPE for data pre-loaded in R
-
-You can call clumped SLOPE directly. Clumping procedure will be done automatically. 
-
-```{r}
-clumpedSLOPE(y, SNPs, rho = 0.3, fdr = 0.1, verbose = FALSE)
-```
-
-As before, we set verbose to FALSE to supress progress bar.
-
-#### Performing clumping alone
-
-```{r, results='hide'}
-clumpingResult <- clumpProcedure(cps::y, cps::SNPs, verbose = FALSE)
-```
-
-```{r}
-clumpingResult
-```
-
-## Running GWAS with SLOPE using shiny
-
-To run shiny application just type in your command line:
-
-```{r, eval=FALSE}
-gui_cps()
-```
-
-Please note that at the moment all .raw files are simulatanously uploaded which might cause your computer to run out of RAM memory. 
