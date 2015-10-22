@@ -13,16 +13,27 @@ readBigSNPs <- function(rawFile, mapFile, y, pValMax=0.05){
   selectedSNPs <- NULL
 
   x_info <- read.table(mapFile)
-  x_info <- x_info[rep(1:nrow(x_info), each=2),]
   x <- read.big.matrix(filename = rawFile, sep=" ", header = TRUE,
-                       type='double', shared = TRUE)
+                       type='double', shared=FALSE)
   numberOfSnps <- ncol(x)
-  x <- apply(x, 2, cps:::replace_na_with_mean)
-  p <- apply(x, 2, function(snp){
-    if(any(is.na(snp)))
+
+  means <- colmean(x, na.rm=TRUE)
+  temp <- NULL
+  for(i in 1:nrow(x)){
+    temp <- which(is.na(x[i,]))
+    x[i,temp] <- means[temp]
+  }
+
+  d2 <- ncol(x)
+  x <- as.matrix(x)
+  x2 <- Matrix(x, sparse = TRUE)
+
+  p <- apply(x2[,-c(1:6)], 2, function(snp){
+    if(any(is.na(temp)))
        return(1)
-    cps:::pValComp(snp, y, n, suma)
+    cps:::pValComp(temp, y, n, suma)
   })
+
   x <- x[,p<pValMax]
 
   result <- structure( list(
