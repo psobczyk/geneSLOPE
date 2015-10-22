@@ -114,3 +114,81 @@ summary.screeningResult <- function(x, ...){
   cat(x$numberOfSnps, " SNPs were screened\n")
   cat(ncol(x$X), " snps had p-value under threshold in marginal test\n")
 }
+
+
+#' Reading SNPs from one PLINK .tped and .tfam files
+#'
+#' Reading PLINK files that were previously suitably tranformed
+#' in plink - see details
+#'
+#' @export
+#' @param file name of .tped file
+#' @param y phenotype
+#' @param pValMax p-value threshold value used for screening
+#' @param chunk.size size of chunk. The bigger the chunk the faster function works but
+#' computer might run out of RAM
+#' @param verbose should info be present
+#' @return list \itemize{
+#' \item X matrix of filtered SNPs
+#' \item y phenotype
+#' \item X_info SNPs info
+#' \item numberOfSnps number of snps read from .tped file
+#' \item pValMax p-value threshold value used for screening
+#' }
+#'
+#' @details \strong{Exporting data from PLINK}
+#' To import data to R, it needs to be exported from
+#' PLINK using the option "--recode12 --transposed"
+#' The PLINK command should therefore look like
+#' \code{plink --file data --recode12 --transposed --out temp}.
+#' For more information, please refer to:
+#' \url{http://pngu.mgh.harvard.edu/~purcell/plink/dataman.shtml}
+#'
+readSNPsNew <- function(file, y, pValMax = 0.05, chunk.size = 1e2, verbose = TRUE){
+  done = FALSE
+  chunk = 1
+  numberOfSnps <- 0
+  selectedSnpsNumbers <- NULL
+  X <- NULL
+  X_info <- NULL
+  y <- unname(y)
+  suma = sum((y-mean(y))^2)
+  n = length(y) - 2
+  message("Reading and screening data. Depending on data size this might take
+          several minutes")
+  while(!done)
+  {
+    temp = as.data.frame(data.table::fread(file,skip=(chunk-1)*chunk.size+1,nrow=chunk.size,
+                             header = FALSE))
+    SNPinfo <- t(temp[, (1:6)])
+    SNPinfo <- SNPinfo[,rep(1:ncol(SNPinfo), each=2)]
+    temp <- Matrix(as.matrix(temp[, -(1:6)]), sparse=TRUE)
+    if(chunk==1)
+      X <- Matrix(0, nrow=0, ncol=ncol(temp), sparse=TRUE)
+    X <- rBind(X, temp)
+    if(verbose) message(paste(chunk*chunk.size, " observations processed"))
+    chunk = chunk + 1
+    if(nrow(temp)<chunk.size) done = TRUE
+  }
+  numberOfSnps <- ncol(X)
+  # temp <- apply(temp, 2, cps:::replace_na_with_mean)
+  pVals <- apply(X, 2,
+                 function(x)
+                   cps:::pValComp(cps:::replace_na_with_mean(x),y,n,suma))
+  smallPVals <- pVals<pValMax
+  X <- X[,smallPVals]
+
+  selectedSnpsNumbers <- which(smallPVals)
+  # X_info <- X_info[,smallPVals]
+
+  #returning screening result
+  result <- structure( list(
+    X = X,
+    y = y,
+    X_info = X_info,
+    numberOfSnps = numberOfSnps,
+    selectedSnpsNumbers = selectedSnpsNumbers,
+    pValMax = pValMax),
+    class="screeningResult")
+  return(result)
+}

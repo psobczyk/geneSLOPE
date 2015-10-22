@@ -4,7 +4,7 @@
 \alias{summary.screeningResult}
 \title{Summary screeningResult class object}
 \usage{
-\method{summary}{screeningResult}(x, ...)
+summary.screeningResult(x, ...)
 }
 \arguments{
 \item{x}{screeningResult class object}

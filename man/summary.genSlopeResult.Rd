@@ -4,7 +4,7 @@
 \alias{summary.genSlopeResult}
 \title{Summary genSlopeResult class object}
 \usage{
-\method{summary}{genSlopeResult}(x, ...)
+summary.genSlopeResult(x, ...)
 }
 \arguments{
 \item{x}{genSlopeResult class object}

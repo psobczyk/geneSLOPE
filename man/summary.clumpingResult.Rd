@@ -4,7 +4,7 @@
 \alias{summary.clumpingResult}
 \title{Summary clumpingResult class object}
 \usage{
-\method{summary}{clumpingResult}(x, ...)
+summary.clumpingResult(x, ...)
 }
 \arguments{
 \item{x}{clumpingResult class object}
