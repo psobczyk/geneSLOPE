@@ -2,7 +2,7 @@
 #'
 #' @export
 #'
-readBigSNPs <- function(rawFile, mapFile, y, pValMax=0.05){
+readBigSNPs <- function(rawFile, mapFile, y, pValMax=0.05, chunk_size=1e3){
 #   rawFile = "../wgas1.raw"
 #   mapFile = "../wgas1.map"
 #   y <- cps::y
@@ -24,22 +24,41 @@ readBigSNPs <- function(rawFile, mapFile, y, pValMax=0.05){
     x[i,temp] <- means[temp]
   }
 
-  d2 <- ncol(x)
-  x <- as.matrix(x)
-  x2 <- Matrix(x, sparse = TRUE)
+  d2 <- ncol(x) - 6
+  chunk=1
+  p <- NULL
+  x2 <- matrix(0, nrow=nrow(x), ncol=chunk_size)
+  for(i in 1:floor(d2/chunk_size)){
+    x2 <- x[,(7+(chunk-1)*chunk_size):(chunk*chunk_size+6)]
+    p <- c(p, apply(x2, 2, function(snp){
+      cps:::pValComp(snp, y, n, suma)
+    }))
+    rm(x2)
+    print(chunk)
+    chunk = chunk + 1
+  }
 
-  p <- apply(x2[,-c(1:6)], 2, function(snp){
-    if(any(is.na(temp)))
-       return(1)
-    cps:::pValComp(temp, y, n, suma)
-  })
+  x2 <- x[,(7+(chunk-1)*chunk_size):ncol(x)]
+  p <- c(p, apply(x2, 2, function(snp){
+    cps:::pValComp(snp, y, n, suma)
+  }))
+  rm(x2)
 
-  x <- x[,p<pValMax]
+#   x <- as.matrix(x)
+#   x2 <- Matrix(x, sparse = TRUE)
+#
+#   p <- apply(x2[,-c(1:6)], 2, function(snp){
+#     if(any(is.na(temp)))
+#        return(1)
+#     cps:::pValComp(temp, y, n, suma)
+#   })
+
+  x <- x[,6+which(p<pValMax)]
 
   result <- structure( list(
     X = x,
     y = y,
-    X_info = x_info[p<pValMax,],
+    X_info = x_info,#[p<pValMax,],
     numberOfSnps = numberOfSnps,
     selectedSnpsNumbers = which(p<pValMax),
     pValMax = pValMax),
