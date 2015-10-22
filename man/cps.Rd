@@ -12,7 +12,7 @@ distances. Then, SLOPE is performed on data where each clump has
 one representative.
 }
 \details{
-Version: 0.28.4
+Version: 0.29.0
 }
 \examples{
 \donttest{

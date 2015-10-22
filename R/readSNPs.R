@@ -94,9 +94,9 @@ print.screeningResult <- function(x, ...){
   cat("\t", ncol(x$X), " snps\n")
   cat("$y: a vector containing phenotype \n")
   cat("$X_info: : Matrix of SNPs info\n")
-  cat("\t", nrow(x$X_info), " Info categories\n")
-  cat("\t", ncol(x$X_info), " snps\n")
-  cat("$numberOfSnps: Number of SNPs in .tped file\n")
+  cat("\t", ncol(x$X_info), " Info categories\n")
+  cat("\t", nrow(x$X_info), " snps\n")
+  cat("$numberOfSnps: Number of SNPs in data file\n")
   cat("$selectedSnpsNumbers: Column numbers of selected SNPs in original X matrix\n")
   cat("$pValMax: p-value threshold value used for screening\n")
 }
