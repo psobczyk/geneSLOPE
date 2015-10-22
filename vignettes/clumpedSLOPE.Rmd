@@ -14,67 +14,69 @@ vignette: >
 ```{r, results='hide', message=FALSE}
 library(cps)
 pheFile <- system.file("extdata", "plinkPhenotypeExample.phe", package = "cps")
+mapFile <- system.file("extdata", "plinkMapExample.map", package = "cps")
 snpsFile <- system.file("extdata", "plinkDataExample.raw", package = "cps")
 ```
 
-```{r, eval=FALSE}
-phe <- readPhenotype(filename = "../phenotype.csv", sep=";")
+```{r}
+phe <- readPhenotype(filename = pheFile, sep=";")
 ```
 
 Now we can read in snp data. We assume that snps were previously exported from PLINK
 as **transposed** matrix. To do that use PLINK command
 
-**plink --file data --recode12 --transposed --out temp}**
+**plink --file input --recodeAD --out output}**
 
-where data is you name of .ped file. Depending on data size this make take some time.
+where *input* is you name of .ped file. 
+Depending on data size reading SNPs may take some time.
 As data is very large, snps are filtered with their marginal test p-value.
-All snps which p-values are large than threshold *pValMax* will be truncated.
+All snps which p-values are larger than threshold *pValMax* will be truncated.
 
-```{r, warning=FALSE, eval=FALSE}
-screening <- readSNPs("../plink.tped", phe$y, pValMax = 0.05, chunk.size = 2e4)
+```{r, warning=FALSE}
+screening <- readBigSNPs(snpsFile, mapFile, phe$y, pValMax = 0.05, chunk_size = 1e2)
 ```
 
 User can check what is result of screening
 
-```{r, eval=FALSE}
+```{r}
 summary(screening)
 ```
 
 Next step is clumping. Highly correlated snps will be clustered. When *rho*
 decreases so does number of clumps; however, clumps are getting larger.
 
-```{r, eval=FALSE}
-clumping <- clumpProcedure2(screening, rho = 0.3)
+```{r}
+clumping <- clumpProcedure2(screening, rho = 0.3, verbose = FALSE)
 ```
 
 What is the result of clumping?
 
-```{r, eval=FALSE}
+```{r}
 summary(clumping)
 ```
 
 We can also plot our results
 
-```{r, eval=FALSE}
+```{r, warning=FALSE, fig.height=7, fig.width=7}
 plot(clumping)
 ```
 
 If we are interested in specific genome we can "zoom it"
 
-```{r, eval=FALSE}
+```{r, warning=FALSE, fig.height=6, fig.width=6}
 plot(clumping, 2)
 ```
 
 
 Last step of analysis is using SLOPE
 
-```{r, eval=FALSE}
+```{r}
 slope.result <- genSLOPE(clumping, fdr=0.1)
 ```
 
 As before one can plot and summarize results
 
-```{r, eval=FALSE}
+```{r, warning = FALSE, fig.height=7, fig.width=7}
 summary(slope.result)
 plot(slope.result)
 ```
