@@ -46,7 +46,7 @@ Next step is clumping. Highly correlated snps will be clustered. When *rho*
 decreases so does number of clumps; however, clumps are getting larger.
 
 ```{r}
-clumping <- clumpProcedure2(screening, rho = 0.3, verbose = FALSE)
+clumping <- clumpProcedure(screening, rho = 0.3, verbose = FALSE)
 ```
 
 What is the result of clumping?

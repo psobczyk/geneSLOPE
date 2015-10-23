@@ -14,10 +14,7 @@ genSLOPE(clumpingResult, fdr = 0.1, lambda = "gaussian", verbose = TRUE)
 \item{clumpProcedure}{}
 }
 \value{
-data.frame with two columns \itemize{
-\item snpName names of selected snps
-\item snpNumber column numbers of selected snps in input matrix X
-}
+object of class \code{\link{genSlopeResult}}
 }
 \description{
 Performs GWAS with SLOPE on given snp matrix and phenotype.
@@ -27,8 +24,8 @@ Then SLOPE is used on snp matrix which contains
 one representative for each clump.
 }
 \examples{
-\donttest{
-clumpedSLOPE(y, SNPs)
+\dontrun{
+slope.result <- genSLOPE(clumping, fdr=0.1)
 }
 }
 

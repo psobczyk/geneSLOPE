@@ -4,19 +4,20 @@
 \alias{clumpProcedure}
 \title{Clumping procedure}
 \usage{
-clumpProcedure(y, X, rho = 0.3, verbose = TRUE)
+clumpProcedure(screenResult, rho = 0.3, verbose = TRUE)
 }
 \arguments{
-\item{y}{numeric vector, phenotype}
-
-\item{X}{numeric matrix, SNPs}
+\item{screenResult}{object of class screenResult}
 
 \item{rho}{numeric, minimal correlation between two SNPs to be}
 
 \item{verbose}{logical, if TRUE (default) progress bar is shown
 classified to the same clump}
 }
+\value{
+object of class \code{\link{clumpingResult}}
+}
 \description{
-Clumping of SNPs. Can be used as a preprocesing tool for using SLOPE in GWAS
+Clumping of SNPs previously read and screened by \code{\link{readSNPs}}
 }
 

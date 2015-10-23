@@ -7,69 +7,14 @@
 #' one representative for each clump.
 #'
 #' @export
-#' @inheritParams clumpProcedure
-#' @param fdr, False Discovery Rate for SLOPE
-#' @param lambda lambda for SLOPE. See \code{\link[SLOPE]{create_lambda}}
-#' @return data.frame with two columns \itemize{
-#' \item snpName names of selected snps
-#' \item snpNumber column numbers of selected snps in input matrix X
-#' }
-#' @examples
-#' \donttest{
-#' clumpedSLOPE(y, SNPs)
-#' }
-clumpedSLOPE <- function(y, X, rho = 0.3, fdr = 0.2, lambda="gaussian",
-                         verbose = TRUE){
-  if(rho>=1 | rho <= 0){
-    stop("Rho has to be within range (0,1)")
-  }
-  if(fdr>=1 | fdr <= 0){
-    stop("FDR has to be within range (0,1)")
-  }
-  if(length(y) != nrow(X)){
-    stop("Length of y must match
-         number of rows in X")
-  }
-  X <- apply(X, 2, replace_na_with_mean)
-  message("Missing values were replaced by column mean")
-  nonZeroSd <- apply(X, 2, sd)!=0
-  X <- X[,nonZeroSd]
-  if(sum(!nonZeroSd)>0)
-    message(paste(sum(!nonZeroSd), "variables with zero variance were removed"))
-
-  clumpedSNPs <- clumpProcedure(y, X, rho, verbose)
-  X2 <- clumpedSNPs$SNPs
-
-  slopeResult <- SLOPE(X = X2, y = y, fdr = fdr,
-                       lambda = lambda[1:ncol(X2)])
-
-  selectedSNPs <- unlist(clumpedSNPs$SNPnumber)[slopeResult$selected]
-  selectedSNPs <- sort(selectedSNPs)
-  cSLOPEResult <- data.frame(snpName=colnames(SNPs)[selectedSNPs],
-                             snpNumber=selectedSNPs)
-  cSLOPEResult
-  }
-
-
-#' GWAS with SLOPE
-#'
-#' Performs GWAS with SLOPE on given snp matrix and phenotype.
-#' At first clumping procedure is performed. Highly correlated
-#' (that is stronger than parameter \emph{rho}) snps are clustered.
-#' Then SLOPE is used on snp matrix which contains
-#' one representative for each clump.
-#'
-#' @export
 #' @param clumpProcedure
 #' @param fdr, False Discovery Rate for SLOPE
 #' @param lambda lambda for SLOPE. See \code{\link[SLOPE]{create_lambda}}
-#' @return data.frame with two columns \itemize{
-#' \item snpName names of selected snps
-#' \item snpNumber column numbers of selected snps in input matrix X
-#' }
+#' @return object of class \code{\link{genSlopeResult}}
+#'
 #' @examples
-#' \donttest{
-#' clumpedSLOPE(y, SNPs)
+#' \dontrun{
+#' slope.result <- genSLOPE(clumping, fdr=0.1)
 #' }
 genSLOPE <- function(clumpingResult, fdr = 0.1, lambda="gaussian", verbose = TRUE){
   if(fdr>=1 | fdr <= 0){
@@ -86,9 +31,6 @@ genSLOPE <- function(clumpingResult, fdr = 0.1, lambda="gaussian", verbose = TRU
   slopeResult <- SLOPE::SLOPE(X = clumpingResult$X, y = clumpingResult$y,
                               fdr = fdr, lambda = lambda)
 
-#   ############## DANGER ###################
-#   slopeResult$selected <- c(1, 40, 120)
-#   ############## DANGER ###################
   selectedSNPs <- unlist(clumpingResult$SNPnumber)[slopeResult$selected]
   selectedSNPs <- sort(selectedSNPs)
 
