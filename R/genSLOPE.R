@@ -49,11 +49,11 @@ genSLOPE <- function(clumpingResult, fdr = 0.1, lambda="gaussian", verbose = TRU
           selectedClumps = clumpingResult$SNPclumps[slopeResult$selected],
           lambda = lambda,
           y = clumpingResult$y,
-          X_clumps = clumpingResult$X,
-          X_all = clumpingResult$X_all,
-          X_info = clumpingResult$X_info,
           clumpRepresentatives = clumpingResult$SNPnumber,
           clumps = clumpingResult$SNPclumps,
+          X_info = clumpingResult$X_info,
+          X_clumps = clumpingResult$X,
+          X_all = clumpingResult$X_all,
           selectedSnpsNumbers = clumpingResult$selectedSnpsNumbersScreening[selectedSNPs],
           numberOfSnps = clumpingResult$numberOfSnps,
           pValMax = clumpingResult$pValMax),
@@ -115,7 +115,7 @@ plot.genSlopeResult <- function(x, chromosomeNumber=NULL, ...){
   granice <- aggregate(plot.data$snp, list(plot.data$chromosome), max)
   granice$x <- c(0,head(cumsum(granice$x),-1))
   for(i in unique(plot.data$chromosome)){
-    plot.data$snp[plot.data$chromosome==i] <- granice$x[i] +
+    plot.data$snp[plot.data$chromosome==i] <- granice$x[which(granice$Group.1==i)] +
       plot.data$snp[plot.data$chromosome==i]
   }
   representatives = which(unlist(x$selectedClumps) %in% unlist(x$selectedSNPs))

@@ -11,6 +11,21 @@ vignette: >
 
 ## Tutorial on performing GWAS with SLOPE
 
+This tutorial will guide you on performing GWAS with SLOPE in three simple steps.
+
+#### Reading the data
+
+You need to provide paths to three files:
+
+1. Phenotype file. By default this file is assumed to have six column. The
+last one contains phenotype. For details see documentation of function
+*readPhenotype*
+2. .map file with information about snps. This file is not required, but is highly
+recommended. Especially if you want to plot analysis results
+3. .raw file with snps. We assume that snps were previously exported from PLINK with command 
+**plink -\-file input -\-recodeAD -\-out output**  
+where *input* is you name of .ped file. 
+
 ```{r, results='hide', message=FALSE}
 library(cps)
 pheFile <- system.file("extdata", "plinkPhenotypeExample.phe", package = "cps")
@@ -22,25 +37,25 @@ snpsFile <- system.file("extdata", "plinkDataExample.raw", package = "cps")
 phe <- readPhenotype(filename = pheFile, sep=";")
 ```
 
-Now we can read in snp data. We assume that snps were previously exported from PLINK
-as **transposed** matrix. To do that use PLINK command
-
-**plink --file input --recodeAD --out output}**
-
-where *input* is you name of .ped file. 
-Depending on data size reading SNPs may take some time.
+When you have phenotype you can move to reading snp data. 
+Depending on data size reading SNPs may long time.
 As data is very large, snps are filtered with their marginal test p-value.
 All snps which p-values are larger than threshold *pValMax* will be truncated.
 
 ```{r, warning=FALSE}
-screening <- readBigSNPs(snpsFile, mapFile, phe$y, pValMax = 0.05, chunk_size = 1e2)
+screening <- readBigSNPs(snpsFile, mapFile, phe$y, pValMax = 0.05, chunk_size = 1e2,
+                         verbose=FALSE)
 ```
+
+Parameter *verbose=FALSE* suppresses progress bar. Default value is *TRUE*.
 
 User can check what is result of screening
 
 ```{r}
 summary(screening)
 ```
+
+#### Clumping highly correlated genes
 
 Next step is clumping. Highly correlated snps will be clustered. When *rho*
 decreases so does number of clumps; however, clumps are getting larger.
@@ -67,6 +82,7 @@ If we are interested in specific genome we can "zoom it"
 plot(clumping, 2)
 ```
 
+#### Running SLOPE on result of clumping procedure
 
 Last step of analysis is using SLOPE
 
@@ -92,4 +108,3 @@ initial screening of snps is performed. For every snp, test for coefficient in s
 * *rho* is threshold for correlation between snps in clumping procedure. For given snp, every that is correlated with it at least at level *rho* will be clumped together. Setting this parameter too high (say 0.7) will cause SLOPE to work on highly correlated snps which might affect its accuracy
 * *fdr* false discover rate for SLOPE procedure. The higher FDR is, more variables will be accepted to the model. Contrary, small fdr yields more conservative models
 
-We set verbose to FALSE to suppress progress bar. 

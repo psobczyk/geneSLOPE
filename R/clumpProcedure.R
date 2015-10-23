@@ -56,12 +56,12 @@ clumpProcedure <- function(screenResult, rho = 0.3, verbose = TRUE){
   clumps <- clumps[!nullClumps]
   result <- structure(
     list( X = screenResult$X[,unlist(representatives)],
-          X_all = screenResult$X,
           y = screenResult$y,
-          X_info = screenResult$X_info,
           SNPnumber = representatives,
           SNPclumps = clumps,
+          X_info = screenResult$X_info,
           selectedSnpsNumbers = screenResult$selectedSnpsNumbers[unlist(representatives)],
+          X_all = screenResult$X,
           numberOfSnps = screenResult$numberOfSnps,
           selectedSnpsNumbersScreening = screenResult$selectedSnpsNumbers,
           pValMax = screenResult$pValMax),
@@ -81,10 +81,12 @@ print.clumpingResult <- function(x, ...){
   cat("$X: Matrix\n")
   cat("\t", nrow(x$X), " observations\n")
   cat("\t", ncol(x$X), " snps\n")
-  cat("$X_info: information about SNPs\n")
+  cat("$y: vector with phenotype")
   cat("$SNPnumber: list with snp representatives for clumps \n")
   cat("\t[", paste(head(x$SNPnumber), collapse=","), "..., ]\n")
   cat("$SNPclumps: list of vector, number of snps in clumps\n")
+  cat("$X_info: information about SNPs\n")
+  cat("$selectedSnpsNumbers: ")
 }
 
 #' Summary clumpingResult class object
@@ -117,7 +119,7 @@ plot.clumpingResult <- function(x, chromosomeNumber=NULL, ...){
     granice <- aggregate(plot.data$snp, list(plot.data$chromosome), max)
     granice$x <- c(0,head(cumsum(granice$x),-1))
     for(i in unique(plot.data$chromosome)){
-      plot.data$snp[plot.data$chromosome==i] <- granice$x[i] +
+      plot.data$snp[plot.data$chromosome==i] <- granice$x[which(granice$Group.1==i)] +
         plot.data$snp[plot.data$chromosome==i]
     }
     representatives = which(unlist(x$SNPclumps) %in% unlist(x$SNPnumber))
