@@ -9,7 +9,7 @@ Description: Genome-wide association study performed with SLOPE.
   In first step, SNPs are clumped according to their correlations and
   distances. Then, SLOPE is performed on data where each clump has
   one representative.
-License: License: GPL-3
+License: GPL-3
 LazyData: TRUE
 Depends:
     R (>= 3.2.1),

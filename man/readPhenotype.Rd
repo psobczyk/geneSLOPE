@@ -9,6 +9,12 @@ readPhenotype(filename, sep = ",", header = FALSE,
 }
 \arguments{
 \item{filename}{name of file with phenotype}
+
+\item{sep}{field seperator in file}
+
+\item{header}{does first row of file contain variables names}
+
+\item{stringAsFactors}{should character vectors be converted to factors?}
 }
 \value{
 list \itemize{

@@ -9,6 +9,9 @@
 #'
 #' @export
 #' @param filename name of file with phenotype
+#' @param sep field seperator in file
+#' @param header does first row of file contain variables names
+#' @param stringAsFactors should character vectors be converted to factors?
 #'
 #' @return list \itemize{
 #' \item y phenotype

@@ -8,7 +8,7 @@
 #' @param mapFile name of .map file
 #' @param y phenotype
 #' @param pValMax p-value threshold value used for screening
-#' @param chunk.size size of chunk. The bigger the chunk the faster function works but
+#' @param chunk_size size of chunk. The bigger the chunk the faster function works but
 #' computer might run out of RAM
 #' @param verbose if TRUE (default) information about progress is printed
 #' @return object of class \code{\link{screeningResult}}
@@ -66,7 +66,7 @@ readBigSNPs <- function(rawFile, mapFile="", y, pValMax=0.05, chunk_size=1e3,
   for(i in 1:total){
     x2 <- x[,(7+(chunk-1)*chunk_size):(chunk*chunk_size+6)]
     p <- c(p, apply(x2, 2, function(snp){
-      cps:::pValComp(snp, y, n, suma)
+      pValComp(snp, y, n, suma)
     }))
     rm(x2)
     if(verbose) setTxtProgressBar(pb, i)

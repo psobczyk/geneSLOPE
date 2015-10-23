@@ -15,3 +15,39 @@
 #' @seealso \code{\link{clumpingResult}} \code{\link{readBigSNPs}}
 #' @name screeningResult
 NULL
+
+#' Print screeningResult class object
+#'
+#' @param x screeningResult class object
+#' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
+#' @export
+#'
+#' @method print screeningResult
+print.screeningResult <- function(x, ...){
+  cat("Object of class screeningResult\n")
+  cat("$X: Matrix of SNPs\n")
+  cat("\t", nrow(x$X), " observations\n")
+  cat("\t", ncol(x$X), " snps\n")
+  cat("$y: a vector containing phenotype \n")
+  cat("$X_info: : Matrix of SNPs info\n")
+  cat("\t", ncol(x$X_info), " Info categories\n")
+  cat("\t", nrow(x$X_info), " snps\n")
+  cat("$numberOfSnps: Number of SNPs in data file\n")
+  cat("$selectedSnpsNumbers: Column numbers of selected SNPs in original X matrix\n")
+  cat("$pValMax: p-value threshold value used for screening\n")
+}
+
+
+#' Summary screeningResult class object
+#'
+#' @param object screeningResult class object
+#' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
+#' @export
+#'
+#' @method summary screeningResult
+summary.screeningResult <- function(object, ...){
+  cat("Object of class screeningResult\n")
+  cat(nrow(object$X), " observations\n")
+  cat(object$numberOfSnps, " SNPs were screened\n")
+  cat(ncol(object$X), " snps had p-value under threshold in marginal test\n")
+}

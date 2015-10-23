@@ -16,10 +16,10 @@ readBigSNPs(rawFile, mapFile = "", y, pValMax = 0.05, chunk_size = 1000,
 
 \item{pValMax}{p-value threshold value used for screening}
 
-\item{verbose}{if TRUE (default) information about progress is printed}
-
-\item{chunk.size}{size of chunk. The bigger the chunk the faster function works but
+\item{chunk_size}{size of chunk. The bigger the chunk the faster function works but
 computer might run out of RAM}
+
+\item{verbose}{if TRUE (default) information about progress is printed}
 }
 \value{
 object of class \code{\link{screeningResult}}

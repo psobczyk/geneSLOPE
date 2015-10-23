@@ -81,40 +81,6 @@ readSNPs <- function(file, y, pValMax = 0.05, chunk.size = 5e4, verbose = TRUE){
   return(result)
 }
 
-#' Print screeningResult class object
-#'
-#' @param x screeningResult class object
-#' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
-#' @export
-#' @keywords internal
-print.screeningResult <- function(x, ...){
-  cat("Object of class screeningResult\n")
-  cat("$X: Matrix of SNPs\n")
-  cat("\t", nrow(x$X), " observations\n")
-  cat("\t", ncol(x$X), " snps\n")
-  cat("$y: a vector containing phenotype \n")
-  cat("$X_info: : Matrix of SNPs info\n")
-  cat("\t", ncol(x$X_info), " Info categories\n")
-  cat("\t", nrow(x$X_info), " snps\n")
-  cat("$numberOfSnps: Number of SNPs in data file\n")
-  cat("$selectedSnpsNumbers: Column numbers of selected SNPs in original X matrix\n")
-  cat("$pValMax: p-value threshold value used for screening\n")
-}
-
-
-#' Summary screeningResult class object
-#'
-#' @param x screeningResult class object
-#' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
-#' @export
-#' @keywords internal
-summary.screeningResult <- function(x, ...){
-  cat("Object of class screeningResult\n")
-  cat(nrow(x$X), " observations\n")
-  cat(x$numberOfSnps, " SNPs were screened\n")
-  cat(ncol(x$X), " snps had p-value under threshold in marginal test\n")
-}
-
 
 #' Reading SNPs from one PLINK .tped and .tfam files
 #'
@@ -174,7 +140,7 @@ readSNPsNew <- function(file, y, pValMax = 0.05, chunk.size = 1e2, verbose = TRU
   # temp <- apply(temp, 2, cps:::replace_na_with_mean)
   pVals <- apply(X, 2,
                  function(x)
-                   cps:::pValComp(cps:::replace_na_with_mean(x),y,n,suma))
+                   pValComp(replace_na_with_mean(x),y,n,suma))
   smallPVals <- pVals<pValMax
   X <- X[,smallPVals]
 
