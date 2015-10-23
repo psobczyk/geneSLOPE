@@ -4,8 +4,7 @@
 \alias{clumpingResult}
 \title{clumpingResult class}
 \description{
-A result of procedure for snp clumping produced by \code{clumpProcedure} and
-\code{clumpProcedure2}.
+A result of procedure for snp clumping produced by \code{clumpProcedure}
 }
 \details{
 Always a named list of ten elements
@@ -27,6 +26,6 @@ matrix refer to selected clump representatives
 }
 }
 \seealso{
-\code{\link{screeningResult}} \code{\link{clumpProcedure2}}
+\code{\link{screeningResult}} \code{\link{clumpProcedure}}
 }
 

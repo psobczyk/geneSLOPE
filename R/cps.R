@@ -7,7 +7,7 @@
 #'
 #' @docType package
 #' @name cps
-#' @details Version: 0.29.3
+#' @details Version: 0.29.4
 #' @importFrom data.table fread
 #' @importFrom SLOPE SLOPE
 #' @importFrom SLOPE create_lambda

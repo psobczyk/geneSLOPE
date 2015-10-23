@@ -22,7 +22,7 @@ readBigSNPs(rawFile, mapFile = "", y, pValMax = 0.05, chunk_size = 1000,
 computer might run out of RAM}
 }
 \value{
-object of class screeningResult
+object of class \code{\link{screeningResult}}
 }
 \description{
 Reading PLINK files that were previously suitably tranformed

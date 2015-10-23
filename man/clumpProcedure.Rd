@@ -18,6 +18,6 @@ classified to the same clump}
 object of class \code{\link{clumpingResult}}
 }
 \description{
-Clumping of SNPs previously read and screened by \code{\link{readSNPs}}
+Clumping of SNPs previously read and screened by \code{\link{readBigSNPs}}
 }
 

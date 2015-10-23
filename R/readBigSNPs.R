@@ -11,7 +11,7 @@
 #' @param chunk.size size of chunk. The bigger the chunk the faster function works but
 #' computer might run out of RAM
 #' @param verbose if TRUE (default) information about progress is printed
-#' @return object of class screeningResult
+#' @return object of class \code{\link{screeningResult}}
 #'
 #' @details \strong{Exporting data from PLINK}
 #' To import data to R, it needs to be exported from

@@ -1,7 +1,6 @@
 #' clumpingResult class
 #'
-#' A result of procedure for snp clumping produced by \code{clumpProcedure} and
-#' \code{clumpProcedure2}.
+#' A result of procedure for snp clumping produced by \code{clumpProcedure}
 #'
 #' @details Always a named list of ten elements
 #' \enumerate{
@@ -20,6 +19,6 @@
 #' \code{X_info} matrix refer to SNPs that are input in clumping procedure
 #' \item \code{pValMax} p-value used in screening procedure
 #' }
-#' @seealso \code{\link{screeningResult}} \code{\link{clumpProcedure2}}
+#' @seealso \code{\link{screeningResult}} \code{\link{clumpProcedure}}
 #' @name clumpingResult
 NULL

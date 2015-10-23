@@ -1,6 +1,6 @@
 #' Clumping procedure
 #'
-#' Clumping of SNPs previously read and screened by \code{\link{readSNPs}}
+#' Clumping of SNPs previously read and screened by \code{\link{readBigSNPs}}
 #'
 #' @export
 #' @param screenResult object of class screenResult
