@@ -23,15 +23,6 @@
 #'
 readBigSNPs <- function(rawFile, mapFile="", y, pValMax=0.05, chunk_size=1e3,
                         verbose = TRUE){
-#   rawFile = "../wgas1.raw"
-#   mapFile = "../wgas1.map"
-#   y <- cps::y
-#   pValMax=0.05
-  y <- unname(y)
-  suma = sum((y-mean(y))^2)
-  n = length(y) - 2
-  selectedSNPs <- NULL
-
   if(file.exists(mapFile)){
     x_info <- read.table(mapFile)
   } else {
@@ -44,6 +35,15 @@ readBigSNPs <- function(rawFile, mapFile="", y, pValMax=0.05, chunk_size=1e3,
   numberOfSnps <- ncol(x) - 6
   if(verbose) message("Data sucesfully read")
 
+  # see if dimensions match
+  if(length(y) != nrow(x))
+    stop("Length of phenotype y must match number of rows in matrix of SNPs")
+
+
+  if(!is.null(x_info) & (nrow(x_info) != numberOfSnps))
+    stop("Number of SNPs from .map and .raw data do not match")
+
+
   means <- colmean(x, na.rm=TRUE)
   temp <- NULL
   for(i in 1:nrow(x)){
@@ -52,11 +52,13 @@ readBigSNPs <- function(rawFile, mapFile="", y, pValMax=0.05, chunk_size=1e3,
   }
   if(verbose) message("Missing values imputation completed")
 
-  d2 <- ncol(x) - 6
+  suma = sum((y-mean(y))^2)
+  n = length(y) - 2
+  selectedSNPs <- NULL
   chunk=1
   p <- NULL
   x2 <- matrix(0, nrow=nrow(x), ncol=chunk_size)
-  total <- floor(d2/chunk_size)
+  total <- floor(numberOfSnps/chunk_size)
   if(verbose){
     message("SNPs screening:")
     pb <- txtProgressBar(min = 0, max = total, style = 3)
@@ -67,13 +69,11 @@ readBigSNPs <- function(rawFile, mapFile="", y, pValMax=0.05, chunk_size=1e3,
       cps:::pValComp(snp, y, n, suma)
     }))
     rm(x2)
-    if(verbose)
-      setTxtProgressBar(pb, i)
-    # if(verbose) message(paste(chunk*chunk_size, " SNPs screened"))
+    if(verbose) setTxtProgressBar(pb, i)
     chunk = chunk + 1
   }
-  if(verbose)
-    close(pb)
+  if(verbose) close(pb)
+  #last chunk
   if(ncol(x)>(7+(chunk-1)*chunk_size)){
     x2 <- x[,(7+(chunk-1)*chunk_size):ncol(x)]
     p <- c(p, apply(x2, 2, function(snp){
@@ -81,15 +81,6 @@ readBigSNPs <- function(rawFile, mapFile="", y, pValMax=0.05, chunk_size=1e3,
     }))
     rm(x2)
   }
-
-#   x <- as.matrix(x)
-#   x2 <- Matrix(x, sparse = TRUE)
-#
-#   p <- apply(x2[,-c(1:6)], 2, function(snp){
-#     if(any(is.na(temp)))
-#        return(1)
-#     cps:::pValComp(temp, y, n, suma)
-#   })
 
   x <- x[,6+which(p<pValMax)]
 

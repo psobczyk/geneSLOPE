@@ -7,7 +7,7 @@
 #'
 #' @docType package
 #' @name cps
-#' @details Version: 0.29.1
+#' @details Version: 0.29.2
 #' @importFrom data.table fread
 #' @importFrom tcltk tk_choose.files
 #' @importFrom SLOPE SLOPE
@@ -20,9 +20,14 @@
 #' Maintainer: Piotr Sobczyk \email{Piotr.Sobczyk@@pwr.edu.pl}
 #' @examples
 #' \donttest{
-#' clumpedSLOPE(y, SNPs)
+#' pheFile <- system.file("extdata", "plinkPhenotypeExample.phe", package = "cps")
+#' mapFile <- system.file("extdata", "plinkMapExample.map", package = "cps")
+#' snpsFile <- system.file("extdata", "plinkDataExample.raw", package = "cps")
+#' screening <- readBigSNPs(snpsFile, mapFile, phe$y, pValMax = 0.05, chunk_size = 1e2)
+#' clumping <- clumpProcedure2(screening, rho = 0.3, verbose = FALSE)
+#' slope.result <- genSLOPE(clumping, fdr=0.1)
 #' }
-#' \donttest{
+#' \dontrun{
 #' runExample()
 #' }
 NULL
