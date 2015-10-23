@@ -17,74 +17,49 @@ shinyServer(function(input, output) {
     validate(
       need(name != "", "Please upload phenotype data")
     )
-    phenotype <- read.table(name$datapath, header = input$header,
-                                     sep = ",", stringsAsFactors = FALSE)
-    phenotype
+    readPhenotype(name$datapath, sep=input$sep, header = input$header)
   })
 
   output$phenotypeOk <- reactive({
-    ncol(phenotype())
+    length(phenotype()$y)
   })
 
-  data <- eventReactive(input$go, {
-    DataSets <- input$file
+  screening <- eventReactive(input$go, {
+    DataSet <- input$file
+    Map <- input$map.file
     validate(
-      need(DataSets != "", "Please upload snp data")
+      need(DataSet != "", "Please upload snp data")
     )
-    data_all_files <- NULL
-    number.snps <- 0
-    for(p in 1:nrow(input$file)){
-      data_single_file <- cps:::readPLINK(DataSets[[p, 'datapath']])
-      number.snps <- number.snps + ncol(data_single_file$snps)
-      data_single_file$snps <- apply(data_single_file$snps, 2, cps:::replace_na_with_mean)
-      message("Missing values were replaced by column mean")
-      #remove all SNPs with no variablity
-      nonZeroSd <- apply(data_single_file$snps, 2, sd)!=0
-      data_single_file$snps <- data_single_file$snps[,nonZeroSd]
-      data_single_file$snpInfo <- data_single_file$snpInfo[nonZeroSd,]
-      message(paste(sum(!nonZeroSd), "variables with zero variance were removed"))
-      #filter columns with large p-value
-      message(paste("Filtering SNPs based on marginal tests.",
-                    "Depending on size of data, this may take few minutes"))
-      # super optimized p-value computation
-      suma = sum((y-mean(y))^2)
-      n = length(y) - 2
-      pVals <- apply(data_single_file$snps, 2,
-                     function(x) cps:::pValComp(x,y,n,suma))
-      data_single_file$snps <- data_single_file$snps[,pVals<input$pValCutoff]
-      data_all_files <- cbind(data_all_files, data_single_file$snps)
-    }
-    list(data=data_all_files,
-         number.snps=number.snps)
+    readBigSNPs(DataSet$datapath, Map$datapath, y = phenotype()$y,
+                pValMax = input$pValCutoff, chunk_size = 1e2, verbose = FALSE)
   })
 
   output$summary <- renderText({
-    paste("Phenotype data loaded.", nrow(phenotype()), "observations.")
+    paste("Phenotype data loaded.", length(phenotype()$y), "observations.")
+  })
+
+  clumping <-  eventReactive(input$go, {
+    clumpProcedure(screening(), input$rho, verbose = FALSE)
   })
 
   slopeResult <- eventReactive(input$go, {
-    y <- phenotype()[,1]
-    X <- data()$data
-    validate(
-      need(nrow(X) == length(y), "Please upload snp data")
-    )
-    lambda = SLOPE::create_lambda(n = nrow(X), p = data()$number.snps,
-                                  fdr = input$fdr, method = "gaussian")
-    clumpedSLOPE(y = y, X = X, rho = input$rho, fdr = input$fdr,
-                 lambda = lambda[1:ncol(X)],
-                 verbose = FALSE)
+    genSLOPE(clumping(), input$fdr, verbose = FALSE)
   })
 
-  output$slopeTable <- renderDataTable({
-    slopeResult()
+  output$clumpSummary <- renderPrint({
+    summary(clumping())
+  })
+
+  output$slopePlot <- renderPlot({
+    plot(slopeResult())
   })
 
   output$downloadData <- downloadHandler(
     filename = function() {
-      paste0("results_clumpedSlope", format(Sys.time(),  "%y_%m_%y_%H_%M_%S"), ".csv")
+      paste0("results_genSlope", format(Sys.time(),  "%y_%m_%y_%H_%M_%S"), ".csv")
     },
     content = function(file) {
-      write.csv(slopeResult(), file, row.names = FALSE)
+      write.csv(slopeResult()$X, file, row.names = FALSE)
     }
   )
 })

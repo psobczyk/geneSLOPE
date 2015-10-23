@@ -16,16 +16,18 @@ shinyUI(fluidPage(
     fileInput("fileY",
               label = 'Choose file with phenotype',
               accept=c('.phe')),
-    checkboxInput('header', 'Header', TRUE),
+    checkboxInput('header', 'Header', FALSE),
     radioButtons('sep', label = 'Separator',
-                 c(Comma=',', Semicolon=';', Tab='\t'), ','),
+                 c(Semicolon=';', Comma=',', Tab='\t'), ';'),
     tags$hr()
     ),
     conditionalPanel(
       condition = "output.phenotypeOk",
       fileInput("file", label = 'Choose .raw file with snps',
                 accept=c('*.raw','text/csv'), multiple = TRUE),
-      helpText("Max size is 50Mb"),
+      helpText("Max size is 300Mb"),
+      fileInput("map.file", label = 'Choose .map file with snp info',
+                accept=c('*.map'), multiple = TRUE),
       h5("After setting p-value", align="center"),
       h4("CLICK 'Run'", align = "center", style = "color:blue; font-si16pt"),
       actionButton("go", "Run", icon = icon("youtube-play"), width = "100%"),
@@ -42,7 +44,7 @@ shinyUI(fluidPage(
       sliderInput("rho",
                   label = "Correlation",
                   min = 0, max = 1,
-                  value = 0.5),
+                  value = 0.3),
       helpText("Correlation threshold for snps clustering"),
       downloadButton('downloadData', 'Download important snps')
     ),
@@ -54,8 +56,10 @@ shinyUI(fluidPage(
          conditionalPanel("output.phenotypeOk",
                           h4("Head of phenotype data"),
                           tableOutput("summary"),
+                          h4("Clumping results"),
+                          verbatimTextOutput("clumpSummary"),
                           h4("GWAS results. Important snps"),
-                          dataTableOutput("slopeTable")
+                          plotOutput("slopePlot")
          )
   )
 ))
