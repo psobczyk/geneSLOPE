@@ -4,10 +4,10 @@
 \alias{summary.genSlopeResult}
 \title{Summary genSlopeResult class object}
 \usage{
-\method{summary}{genSlopeResult}(x, ...)
+\method{summary}{genSlopeResult}(object, ...)
 }
 \arguments{
-\item{x}{genSlopeResult class object}
+\item{object}{genSlopeResult class object}
 
 \item{...}{Further arguments to be passed to or from other methods. They are ignored in this function.}
 }

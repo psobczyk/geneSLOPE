@@ -61,15 +61,15 @@ print.genSlopeResult <- function(x, ...){
 
 #' Summary genSlopeResult class object
 #'
-#' @param x genSlopeResult class object
+#' @param object genSlopeResult class object
 #' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
 #' @export
 #'
 #' @method summary genSlopeResult
-summary.genSlopeResult <- function(x, ...){
+summary.genSlopeResult <- function(object, ...){
   cat("Object of class genSlopeResult\n")
-  cat(length(x$selectedSNPs), " snps selected\n")
-  cat("R2 of fitted model ", x$R2)
+  cat(length(object$selectedSNPs), " snps selected\n")
+  cat("R2 of fitted model ", object$R2)
 }
 
 

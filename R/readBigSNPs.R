@@ -77,7 +77,7 @@ readBigSNPs <- function(rawFile, mapFile="", y, pValMax=0.05, chunk_size=1e3,
   if(ncol(x)>(7+(chunk-1)*chunk_size)){
     x2 <- x[,(7+(chunk-1)*chunk_size):ncol(x)]
     p <- c(p, apply(x2, 2, function(snp){
-      cps:::pValComp(snp, y, n, suma)
+      pValComp(snp, y, n, suma)
     }))
     rm(x2)
   }
