@@ -28,13 +28,13 @@ where *input* is you name of .ped file.
 
 ```{r, results='hide', message=FALSE}
 library(cps)
-pheFile <- system.file("extdata", "plinkPhenotypeExample.phe", package = "cps")
+famFile <- system.file("extdata", "plinkPhenotypeExample.fam", package = "cps")
 mapFile <- system.file("extdata", "plinkMapExample.map", package = "cps")
 snpsFile <- system.file("extdata", "plinkDataExample.raw", package = "cps")
 ```
 
 ```{r}
-phe <- readPhenotype(filename = pheFile, sep=";")
+phe <- readPhenotype(filename = famFile, sep=";")
 ```
 
 When you have phenotype you can move to reading snp data. 

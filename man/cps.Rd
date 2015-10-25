@@ -12,13 +12,14 @@ distances. Then, SLOPE is performed on data where each clump has
 one representative.
 }
 \details{
-Version: 0.29.6
+Version: 0.29.7
 }
 \examples{
 \donttest{
-pheFile <- system.file("extdata", "plinkPhenotypeExample.phe", package = "cps")
+famFile <- system.file("extdata", "plinkPhenotypeExample.fam", package = "cps")
 mapFile <- system.file("extdata", "plinkMapExample.map", package = "cps")
 snpsFile <- system.file("extdata", "plinkDataExample.raw", package = "cps")
+phe <- readPhenotype(filename = famFile, sep=";")
 screening <- readBigSNPs(snpsFile, mapFile, phe$y, pValMax = 0.05, chunk_size = 1e2)
 clumping <- clumpProcedure2(screening, rho = 0.3, verbose = FALSE)
 slope.result <- genSLOPE(clumping, fdr=0.1)

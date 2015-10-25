@@ -18,7 +18,7 @@ shinyUI(fluidPage(
               accept=c('.phe')),
     checkboxInput('header', 'Header', FALSE),
     radioButtons('sep', label = 'Separator',
-                 c(Semicolon=';', Comma=',', Tab='\t'), ';'),
+                 c(Space=' ', Semicolon=';', Comma=',', Tab='\t'), ' '),
     tags$hr()
     ),
     conditionalPanel(

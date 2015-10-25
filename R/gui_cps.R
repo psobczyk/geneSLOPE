@@ -6,7 +6,7 @@
 #' @return null
 #' @export
 gui_cps <- function() {
-  appDir <- system.file("shiny-examples", "myapp", package = "cps")
+  appDir <- system.file("shiny-examples", "genSLOPE_gui", package = "cps")
   if (appDir == "") {
     stop("Could not find example directory. Try re-installing `cps`.", call. = FALSE)
   }

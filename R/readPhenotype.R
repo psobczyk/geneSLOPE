@@ -1,11 +1,12 @@
 #' Reading phenotype
 #'
-#' Reading phenotype info. It is assumed that first column
-#' is family id (FID), second is individual id (IID), \
+#' Reading phenotype info. It is assumed, that data comes in .fam file
+#' First column is family id (FID), second is individual id (IID),
 #' third is Paternal individual ID (PAT),
 #' fourth is  Maternal individual ID (MAT), fifth is SEX
 #' and six and last is PHENOTYPE
-#' If file has only for columns, then it is assumed that PAT and MAT are missing.
+#' If file has only four columns, then it is assumed that PAT and MAT are missing.
+#' If there is only one column, then it is assumed that only phenotype is provided.
 #'
 #' @export
 #' @param filename name of file with phenotype
@@ -18,7 +19,7 @@
 #' \item y_info other observation info
 #' }
 #'
-readPhenotype <- function(filename, sep=",", header=FALSE, stringAsFactors=FALSE){
+readPhenotype <- function(filename, sep=" ", header=FALSE, stringAsFactors=FALSE){
   phe.data <- data.table::fread(input = filename, header = header, sep = sep,
                     stringsAsFactors = stringAsFactors)
   phe.data <- as.data.frame(phe.data)
