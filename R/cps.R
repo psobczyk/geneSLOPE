@@ -7,12 +7,11 @@
 #'
 #' @docType package
 #' @name cps
-#' @details Version: 0.29.8
+#' @details Version: 0.30.0
 #' @importFrom SLOPE SLOPE
 #' @importFrom SLOPE create_lambda
 #' @import ggplot2
-#' @import bigmemory
-#' @import biganalytics
+#' @importFrom bigmemory read.big.matrix
 #' @author Piotr Sobczyk
 #'
 #' Maintainer: Piotr Sobczyk \email{Piotr.Sobczyk@@pwr.edu.pl}

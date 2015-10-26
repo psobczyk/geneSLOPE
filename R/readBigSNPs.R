@@ -40,17 +40,10 @@ readBigSNPs <- function(rawFile, mapFile="", y, pValMax=0.05, chunk_size=1e3,
     stop("Length of phenotype y must match number of rows in matrix of SNPs")
 
 
-  if(!is.null(x_info) & (nrow(x_info) != numberOfSnps))
-    stop("Number of SNPs from .map and .raw data do not match")
-
-
-  means <- colmean(x, na.rm=TRUE)
-  temp <- NULL
-  for(i in 1:nrow(x)){
-    temp <- which(is.na(x[i,]))
-    x[i,temp] <- means[temp]
+  if(!is.null(x_info)){
+    if(nrow(x_info) != numberOfSnps)
+      stop("Number of SNPs from .map and .raw data do not match")
   }
-  if(verbose) message("Missing values imputation completed")
 
   suma = sum((y-mean(y))^2)
   n = length(y) - 2
@@ -66,6 +59,7 @@ readBigSNPs <- function(rawFile, mapFile="", y, pValMax=0.05, chunk_size=1e3,
   for(i in 1:total){
     x2 <- x[,(7+(chunk-1)*chunk_size):(chunk*chunk_size+6)]
     p <- c(p, apply(x2, 2, function(snp){
+      snp[is.na(snp)] <- mean(snp, na.rm = TRUE)
       pValComp(snp, y, n, suma)
     }))
     rm(x2)
@@ -77,12 +71,19 @@ readBigSNPs <- function(rawFile, mapFile="", y, pValMax=0.05, chunk_size=1e3,
   if(ncol(x)>(7+(chunk-1)*chunk_size)){
     x2 <- x[,(7+(chunk-1)*chunk_size):ncol(x)]
     p <- c(p, apply(x2, 2, function(snp){
+      snp[is.na(snp)] <- mean(snp, na.rm = TRUE)
       pValComp(snp, y, n, suma)
     }))
     rm(x2)
   }
 
   x <- x[,6+which(p<pValMax)]
+  means <- colMeans(x, na.rm = TRUE)
+  temp <- vector(length=ncol(x))
+  for(i in 1:nrow(x)){
+    temp <- which(is.na(x[i,]))
+    x[i,temp] <- means[temp]
+  }
 
   result <- structure( list(
     X = x,
