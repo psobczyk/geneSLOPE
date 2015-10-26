@@ -20,9 +20,8 @@
 #' }
 #'
 readPhenotype <- function(filename, sep=" ", header=FALSE, stringAsFactors=FALSE){
-  phe.data <- data.table::fread(input = filename, header = header, sep = sep,
-                    stringsAsFactors = stringAsFactors)
-  phe.data <- as.data.frame(phe.data)
+  phe.data <- read.table(file = filename, header = header, sep = sep,
+                         stringsAsFactors = stringAsFactors)
   if(ncol(phe.data)==6){
     y = phe.data[,6]
     y_info = phe.data[,c(1,2,5)]

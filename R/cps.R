@@ -7,8 +7,7 @@
 #'
 #' @docType package
 #' @name cps
-#' @details Version: 0.29.7
-#' @importFrom data.table fread
+#' @details Version: 0.29.8
 #' @importFrom SLOPE SLOPE
 #' @importFrom SLOPE create_lambda
 #' @import ggplot2
