@@ -17,10 +17,7 @@ readPhenotype(filename, sep = " ", header = FALSE,
 \item{stringAsFactors}{should character vectors be converted to factors?}
 }
 \value{
-list \itemize{
-\item y phenotype
-\item y_info other observation info
-}
+object of class phenotypeData
 }
 \description{
 Reading phenotype info. It is assumed, that data comes in .fam file

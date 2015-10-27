@@ -30,8 +30,8 @@ shinyServer(function(input, output) {
     validate(
       need(DataSet != "", "Please upload snp data")
     )
-    readSNPs(DataSet$datapath, Map$datapath, y = phenotype()$y,
-                pValMax = input$pValCutoff, chunk_size = 1e2, verbose = FALSE)
+    readSNPs(DataSet$datapath, Map$datapath, phenotype = phenotype(),
+                pValMax = input$pValCutoff, chunkSize = 1e2, verbose = FALSE)
   })
 
   output$summary <- renderText({

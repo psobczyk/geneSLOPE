@@ -11,6 +11,7 @@
 #' \item \code{selectedSnpsNumbers} Contains information on which rows of \code{X_info}
 #' matrix refer to snps that passed screening
 #' \item \code{pValMax} p-value used in screening procedure
+#' \item \code{phenotypeInfo} matrix with observations info
 #' }
 #' @seealso \code{\link{clumpingResult}} \code{\link{readSNPs}}
 #' @name screeningResult
@@ -34,7 +35,8 @@ print.screeningResult <- function(x, ...){
   cat("\t", nrow(x$X_info), " snps\n")
   cat("$numberOfSnps: Number of SNPs in data file\n")
   cat("$selectedSnpsNumbers: Column numbers of selected SNPs in original X matrix\n")
-  cat("$pValMax: p-value threshold value used for screening\n")
+  cat("$pValMax: numeric, p-value threshold value used for screening\n")
+  cat("$phenotypeInfo: data.frame\n")
 }
 
 

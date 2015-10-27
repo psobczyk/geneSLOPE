@@ -14,10 +14,7 @@
 #' @param header does first row of file contain variables names
 #' @param stringAsFactors should character vectors be converted to factors?
 #'
-#' @return list \itemize{
-#' \item y phenotype
-#' \item y_info other observation info
-#' }
+#' @return object of class phenotypeData
 #'
 readPhenotype <- function(filename, sep=" ", header=FALSE, stringAsFactors=FALSE){
   phe.data <- read.table(file = filename, header = header, sep = sep,
@@ -38,7 +35,7 @@ readPhenotype <- function(filename, sep=" ", header=FALSE, stringAsFactors=FALSE
   #returning phenotype data
   result <- structure( list(
     y = y,
-    y_info = y_info),
+    yInfo = y_info),
     class="phenotypeData")
   return(result)
 }

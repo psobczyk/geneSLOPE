@@ -6,9 +6,9 @@
 #' @export
 #' @param rawFile name of .raw file
 #' @param mapFile name of .map file
-#' @param y phenotype
+#' @param phenotype numeric vector or an object of class \code{\link{phenotypeData}}
 #' @param pValMax p-value threshold value used for screening
-#' @param chunk_size size of chunk. The bigger the chunk the faster function works but
+#' @param chunkSize size of chunk. The bigger the chunk the faster function works but
 #' computer might run out of RAM
 #' @param verbose if TRUE (default) information about progress is printed
 #' @return object of class \code{\link{screeningResult}}
@@ -21,7 +21,7 @@
 #' For more information, please refer to:
 #' \url{http://pngu.mgh.harvard.edu/~purcell/plink/dataman.shtml}
 #'
-readSNPs <- function(rawFile, mapFile="", y, pValMax=0.05, chunk_size=1e3,
+readSNPs <- function(rawFile, mapFile="", phenotype, pValMax=0.05, chunkSize=1e3,
                         verbose = TRUE){
   if(file.exists(mapFile)){
     x_info <- read.table(mapFile)
@@ -29,6 +29,15 @@ readSNPs <- function(rawFile, mapFile="", y, pValMax=0.05, chunk_size=1e3,
     x_info <- NULL
     message(".map file not found")
   }
+
+  if(class(phenotype)=="phenotypeData"){
+    phenotypeInfo <- phenotype$yInfo
+    y <- phenotype$y
+  } else{
+    y <- phenotype
+    phenotypeInfo <- NULL
+  }
+
 
   x <- read.big.matrix(filename = rawFile, sep=" ", header = TRUE,
                        type='double', shared=FALSE)
@@ -50,14 +59,14 @@ readSNPs <- function(rawFile, mapFile="", y, pValMax=0.05, chunk_size=1e3,
   selectedSNPs <- NULL
   chunk=1
   p <- NULL
-  x2 <- matrix(0, nrow=nrow(x), ncol=chunk_size)
-  total <- floor(numberOfSnps/chunk_size)
+  x2 <- matrix(0, nrow=nrow(x), ncol=chunkSize)
+  total <- floor(numberOfSnps/chunkSize)
   if(verbose){
     message("SNPs screening:")
     pb <- txtProgressBar(min = 0, max = total, style = 3)
   }
   for(i in 1:total){
-    x2 <- x[,(7+(chunk-1)*chunk_size):(chunk*chunk_size+6)]
+    x2 <- x[,(7+(chunk-1)*chunkSize):(chunk*chunkSize+6)]
     p <- c(p, apply(x2, 2, function(snp){
       snp[is.na(snp)] <- mean(snp, na.rm = TRUE)
       pValComp(snp, y, n, suma)
@@ -69,8 +78,8 @@ readSNPs <- function(rawFile, mapFile="", y, pValMax=0.05, chunk_size=1e3,
   }
   if(verbose) close(pb)
   #last chunk
-  if(ncol(x)>(7+(chunk-1)*chunk_size)){
-    x2 <- x[,(7+(chunk-1)*chunk_size):ncol(x)]
+  if(ncol(x)>(7+(chunk-1)*chunkSize)){
+    x2 <- x[,(7+(chunk-1)*chunkSize):ncol(x)]
     p <- c(p, apply(x2, 2, function(snp){
       snp[is.na(snp)] <- mean(snp, na.rm = TRUE)
       pValComp(snp, y, n, suma)
@@ -92,7 +101,8 @@ readSNPs <- function(rawFile, mapFile="", y, pValMax=0.05, chunk_size=1e3,
     X_info = x_info,#[p<pValMax,],
     numberOfSnps = numberOfSnps,
     selectedSnpsNumbers = which(p<pValMax),
-    pValMax = pValMax),
+    pValMax = pValMax,
+    phenotypeInfo=phenotypeInfo),
     class="screeningResult")
   return(result)
 }

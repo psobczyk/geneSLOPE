@@ -16,6 +16,7 @@ Always a named list of ten elements
 \item \code{selectedSnpsNumbers} Contains information on which rows of \code{X_info}
 matrix refer to snps that passed screening
 \item \code{pValMax} p-value used in screening procedure
+\item \code{phenotypeInfo} matrix with observations info
 }
 }
 \seealso{
