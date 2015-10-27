@@ -1,6 +1,6 @@
 #' screeningResult class
 #'
-#' A result of procedure for snp clumping produced by \code{readBigSNPs}
+#' A result of procedure for snp clumping produced by \code{\link{readSNPs}}
 #'
 #' @details Always a named list of ten elements
 #' \enumerate{
@@ -12,7 +12,7 @@
 #' matrix refer to snps that passed screening
 #' \item \code{pValMax} p-value used in screening procedure
 #' }
-#' @seealso \code{\link{clumpingResult}} \code{\link{readBigSNPs}}
+#' @seealso \code{\link{clumpingResult}} \code{\link{readSNPs}}
 #' @name screeningResult
 NULL
 

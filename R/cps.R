@@ -7,7 +7,7 @@
 #'
 #' @docType package
 #' @name cps
-#' @details Version: 0.30.0
+#' @details Version: 0.30.1
 #' @importFrom SLOPE SLOPE
 #' @importFrom SLOPE create_lambda
 #' @import ggplot2
@@ -21,7 +21,7 @@
 #' mapFile <- system.file("extdata", "plinkMapExample.map", package = "cps")
 #' snpsFile <- system.file("extdata", "plinkDataExample.raw", package = "cps")
 #' phe <- readPhenotype(filename = famFile, sep=";")
-#' screening <- readBigSNPs(snpsFile, mapFile, phe$y, pValMax = 0.05, chunk_size = 1e2)
+#' screening <- readSNPs(snpsFile, mapFile, phe$y, pValMax = 0.05, chunk_size = 1e2)
 #' clumping <- clumpProcedure2(screening, rho = 0.3, verbose = FALSE)
 #' slope.result <- genSLOPE(clumping, fdr=0.1)
 #' }

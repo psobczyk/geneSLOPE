@@ -21,7 +21,7 @@
 #' For more information, please refer to:
 #' \url{http://pngu.mgh.harvard.edu/~purcell/plink/dataman.shtml}
 #'
-readBigSNPs <- function(rawFile, mapFile="", y, pValMax=0.05, chunk_size=1e3,
+readSNPs <- function(rawFile, mapFile="", y, pValMax=0.05, chunk_size=1e3,
                         verbose = TRUE){
   if(file.exists(mapFile)){
     x_info <- read.table(mapFile)
@@ -63,6 +63,7 @@ readBigSNPs <- function(rawFile, mapFile="", y, pValMax=0.05, chunk_size=1e3,
       pValComp(snp, y, n, suma)
     }))
     rm(x2)
+    gc()
     if(verbose) setTxtProgressBar(pb, i)
     chunk = chunk + 1
   }

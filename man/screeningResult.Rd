@@ -4,7 +4,7 @@
 \alias{screeningResult}
 \title{screeningResult class}
 \description{
-A result of procedure for snp clumping produced by \code{readBigSNPs}
+A result of procedure for snp clumping produced by \code{\link{readSNPs}}
 }
 \details{
 Always a named list of ten elements
@@ -19,6 +19,6 @@ matrix refer to snps that passed screening
 }
 }
 \seealso{
-\code{\link{clumpingResult}} \code{\link{readBigSNPs}}
+\code{\link{clumpingResult}} \code{\link{readSNPs}}
 }
 

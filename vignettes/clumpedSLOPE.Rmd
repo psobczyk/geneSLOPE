@@ -43,7 +43,7 @@ As data is very large, snps are filtered with their marginal test p-value.
 All snps which p-values are larger than threshold *pValMax* will be truncated.
 
 ```{r, warning=FALSE}
-screening <- readBigSNPs(snpsFile, mapFile, phe$y, pValMax = 0.05, chunk_size = 1e2,
+screening <- readSNPs(snpsFile, mapFile, phe$y, pValMax = 0.05, chunk_size = 1e2,
                          verbose=FALSE)
 ```
 
