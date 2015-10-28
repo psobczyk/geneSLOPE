@@ -7,7 +7,7 @@
 #'
 #' @docType package
 #' @name cps
-#' @details Version: 0.30.4
+#' @details Version: 0.30.5
 #' @importFrom SLOPE SLOPE
 #' @importFrom SLOPE create_lambda
 #' @import ggplot2

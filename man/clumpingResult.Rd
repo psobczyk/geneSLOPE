@@ -22,6 +22,7 @@ matrix refer to selected clump representatives
 \item \code{numberOfSnps} Number of SNPs in input for screening procedure
 \item \code{selectedSnpsNumbersScreening} Contains information on which rows of
 \code{X_info} matrix refer to SNPs that are input in clumping procedure
+\item \code{pVals} p-values from marginal tests
 \item \code{pValMax} p-value used in screening procedure
 }
 }

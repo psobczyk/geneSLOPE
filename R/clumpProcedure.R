@@ -64,6 +64,7 @@ clumpProcedure <- function(screenResult, rho = 0.3, verbose = TRUE){
           X_all = screenResult$X,
           numberOfSnps = screenResult$numberOfSnps,
           selectedSnpsNumbersScreening = screenResult$selectedSnpsNumbers,
+          pVals = screenResult$pVals,
           pValMax = screenResult$pValMax),
     class="clumpingResult")
   return(result)

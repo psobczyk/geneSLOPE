@@ -17,6 +17,7 @@
 #' \item \code{numberOfSnps} Number of SNPs in input for screening procedure
 #' \item \code{selectedSnpsNumbersScreening} Contains information on which rows of
 #' \code{X_info} matrix refer to SNPs that are input in clumping procedure
+#' \item \code{pVals} p-values from marginal tests
 #' \item \code{pValMax} p-value used in screening procedure
 #' }
 #' @seealso \code{\link{screeningResult}} \code{\link{clumpProcedure}}
@@ -41,6 +42,7 @@ print.clumpingResult <- function(x, ...){
   cat("$SNPclumps: list of vector, number of snps in clumps\n")
   cat("$X_info: information about SNPs\n")
   cat("$selectedSnpsNumbers: ")
+  cat("$pVals: numeric vector of p-values")
 }
 
 #' Summary clumpingResult class object
@@ -68,9 +70,9 @@ summary.clumpingResult <- function(object, ...){
 #' @keywords internal
 plot.clumpingResult <- function(x, chromosomeNumber=NULL, ...){
   if(!is.null(x$X_info)){
-    plot.data <- data.frame(cbind(chromosome=as.numeric(x$X_info[unlist(x$SNPclumps),1]),
-                                  snp=as.numeric(x$X_info[unlist(x$SNPclumps),3]),
-                                  val=2.0))
+    plot.data <- data.frame(cbind(chromosome=as.numeric(x$X_info[x$selectedSnpsNumbersScreening[unlist(x$SNPclumps)],1]),
+                                  snp=as.numeric(x$X_info[x$selectedSnpsNumbersScreening[unlist(x$SNPclumps)],3]),
+                                  val=-log(x$pVals[x$selectedSnpsNumbersScreening[unlist(x$SNPclumps)]])))
     granice <- aggregate(plot.data$snp, list(plot.data$chromosome), max)
     granice$x <- c(0,head(cumsum(granice$x),-1))
     for(i in unique(plot.data$chromosome)){
@@ -78,35 +80,40 @@ plot.clumpingResult <- function(x, chromosomeNumber=NULL, ...){
         plot.data$snp[plot.data$chromosome==i]
     }
     representatives = which(unlist(x$SNPclumps) %in% unlist(x$SNPnumber))
-    plot.data$val[representatives] <- 4
     if(!is.null(chromosomeNumber))
       plot.data <- subset(plot.data, plot.data$chromosome==chromosomeNumber)
-    plot.data <- plot.data[order(plot.data$chromosome, plot.data$snp),]
-    representatives <- which(plot.data$val==4)
     ggplot(plot.data) + geom_point(aes(x=snp, y=val, colour = "red", size = 6),
                                    data=plot.data[representatives,]) +
       geom_segment(aes(x=snp, xend=snp, y=0, yend=val, alpha=val/4)) +
-      ylab("") + scale_y_continuous(breaks=NULL) +
+      ylab("") + scale_y_continuous("Marginal test p-value", breaks=-log(0.1^(1:5)),
+                                    labels=0.1^(1:5)) +
       xlab("Genome") + scale_x_continuous(breaks=granice$x, labels=granice$Group.1) +
       scale_alpha_continuous(guide=FALSE) +
       scale_color_discrete(guide=FALSE) +
       scale_size_area(guide=FALSE) +
-      theme(panel.background=element_blank())
+      theme(panel.background=element_blank(),
+            panel.grid.major.y=element_line(colour = "grey80"),
+            panel.grid.minor.y=element_line(colour = "grey90"),
+            panel.grid.major.x=element_blank(),
+            panel.grid.minor.x=element_blank())
   } else {
-    plot.data <- data.frame(cbind(snp=x$selectedSnpsNumbersScreening,
-                                  val=2.0))
+    plot.data <- data.frame(cbind(snp=x$selectedSnpsNumbersScreening[unlist(x$SNPclumps)],
+                                  val=-log(x$pVals[x$selectedSnpsNumbersScreening[unlist(x$SNPclumps)]])))
     representatives = which(x$selectedSnpsNumbersScreening %in% x$selectedSnpsNumbers)
-    plot.data$val[representatives] <- 4
-    representatives <- which(plot.data$val==4)
     ggplot(plot.data) + geom_point(aes(x=snp, y=val, colour = "red", size = 6),
                                    plot.data[representatives,]) +
       geom_segment(aes(x=snp, xend=snp, y=0, yend=val, alpha=val/4)) +
-      ylab("") + scale_y_continuous(breaks=NULL) +
+      ylab("") + scale_y_continuous("Marginal test p-value", breaks=-log(0.1^(1:5)),
+                                    labels=0.1^(1:5)) +
       xlab("SNP number") +
       scale_alpha_continuous(guide=FALSE) +
       scale_color_discrete(guide=FALSE) +
       scale_size_area(guide=FALSE) +
-      theme(panel.background=element_blank())
+      theme(panel.background=element_blank(),
+            panel.grid.major.y=element_line(colour = "grey80"),
+            panel.grid.minor.y=element_line(colour = "grey90"),
+            panel.grid.major.x=element_blank(),
+            panel.grid.minor.x=element_blank())
   }
 
 }

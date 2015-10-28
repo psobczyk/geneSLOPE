@@ -79,7 +79,7 @@ plot(clumping)
 If we are interested in specific genome we can "zoom it"
 
 ```{r, warning=FALSE, fig.height=6, fig.width=6}
-plot(clumping, 2)
+plot(clumping, 1)
 ```
 
 #### Running SLOPE on result of clumping procedure

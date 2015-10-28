@@ -7,6 +7,7 @@
 #' \item \code{X} matrix of snps that passed screening
 #' \item \code{y} phenotype
 #' \item \code{X_info} SNP info from .map file
+#' \item \code{pVals} p-values from marginal tests
 #' \item \code{numberOfSnps} Number of SNPs in input for screening procedure
 #' \item \code{selectedSnpsNumbers} Contains information on which rows of \code{X_info}
 #' matrix refer to snps that passed screening
@@ -33,6 +34,7 @@ print.screeningResult <- function(x, ...){
   cat("$X_info: : Matrix of SNPs info\n")
   cat("\t", ncol(x$X_info), " Info categories\n")
   cat("\t", nrow(x$X_info), " snps\n")
+  cat("$pVals: numeric vector of p-values")
   cat("$numberOfSnps: Number of SNPs in data file\n")
   cat("$selectedSnpsNumbers: Column numbers of selected SNPs in original X matrix\n")
   cat("$pValMax: numeric, p-value threshold value used for screening\n")
