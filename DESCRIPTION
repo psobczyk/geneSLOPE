@@ -1,7 +1,7 @@
 Package: geneSLOPE
 Type: Package
 Title: Genome-wide Association Study with SLOPE
-Version: 0.31.0
+Version: 0.32.0
 Date: 2015-10-28
 Author: Piotr Sobczyk
 Maintainer: Piotr Sobczyk <piotr.sobczyk@pwr.edu.pl>
@@ -20,5 +20,6 @@ Imports:
 Suggests:
   shiny,
   knitr,
-  rmarkdown
+  rmarkdown,
+    testthat
 VignetteBuilder: knitr

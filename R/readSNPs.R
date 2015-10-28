@@ -23,6 +23,11 @@
 #'
 readSNPs <- function(rawFile, mapFile="", phenotype, pValMax=0.05, chunkSize=1e3,
                         verbose = TRUE){
+  if(tail(strsplit(rawFile, "\\.")[[1]], 1) != "raw")
+    stop(paste("Wrong file extension in", rawFile, ".raw file is required"))
+
+  if(!file.exists(rawFile)) stop(paste("File", rawFile, "not found"))
+
   if(file.exists(mapFile)){
     x_info <- read.table(mapFile)
   } else {
@@ -38,6 +43,14 @@ readSNPs <- function(rawFile, mapFile="", phenotype, pValMax=0.05, chunkSize=1e3
     phenotypeInfo <- NULL
   }
 
+  if(pValMax<=0 | pValMax>=1)
+    stop("parameter pValMax has to be between 0 and 1")
+
+  if(chunkSize<=0)
+    stop("parameter chunkSize has to be positive")
+
+  if(chunkSize<10)
+    warning("chunkSize smaller than 10 might cause program running slow")
 
   x <- read.big.matrix(filename = rawFile, sep=" ", header = TRUE,
                        type='double', shared=FALSE)
