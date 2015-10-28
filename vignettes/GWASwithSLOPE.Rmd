@@ -27,7 +27,7 @@ recommended. Especially if you want to plot analysis results
 where *input* is you name of .ped file. 
 
 ```{r, results='hide', message=FALSE}
-library(cps)
+library(geneSLOPE)
 famFile <- system.file("extdata", "plinkPhenotypeExample.fam", package = "cps")
 mapFile <- system.file("extdata", "plinkMapExample.map", package = "cps")
 snpsFile <- system.file("extdata", "plinkDataExample.raw", package = "cps")

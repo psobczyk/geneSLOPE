@@ -5,10 +5,10 @@
 #'
 #' @return null
 #' @export
-gui_cps <- function() {
-  appDir <- system.file("shiny-examples", "genSLOPE_gui", package = "cps")
+gui_geneSLOPE <- function() {
+  appDir <- system.file("shiny-examples", "genSLOPE_gui", package = "geneSLOPE")
   if (appDir == "") {
-    stop("Could not find example directory. Try re-installing `cps`.", call. = FALSE)
+    stop("Could not find example directory. Try re-installing `geneSLOPE`.", call. = FALSE)
   }
 
   shiny::runApp(appDir, display.mode = "normal")

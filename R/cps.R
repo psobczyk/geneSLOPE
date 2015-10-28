@@ -1,29 +1,42 @@
 #' Genome Wide Association Study with SLOPE
 #'
-#' Genome-wide association study performed with SLOPE.
-#' In first step, SNPs are clumped according to their correlations and
-#' distances. Then, SLOPE is performed on data where each clump has
-#' one representative.
+#' Package geneSLOPE performes Genome-wide association study with SLOPE.
+#' This study is split into three steps.
+#' \itemize{
+#' \item In the first step data is read using \pkg{\link{bigmemory}} package and immediatly
+#' screened using marginal tests for each SNP
+#' \item SNPs are clumped using correlations
+#' \item SLOPE is performed on data where each clump has
+#' one representative (therefore we ensure that variables in linear model
+#' are not strognly correlated)
+#' }
+#'
 #'
 #' @docType package
-#' @name cps
-#' @details Version: 0.30.5
+#' @name geneSLOPE
+#' @details Version: 0.31.0
 #' @importFrom SLOPE SLOPE
 #' @importFrom SLOPE create_lambda
 #' @import ggplot2
 #' @importFrom bigmemory read.big.matrix
-#' @author Piotr Sobczyk
+#' @author Malgorzata Bogdan, Damian Brzyski, Christine Peterson, Chiara Sabatti,
+#' Piotr Sobczyk
 #'
 #' Maintainer: Piotr Sobczyk \email{Piotr.Sobczyk@@pwr.edu.pl}
+#'
+#' @references \emph{SLOPE -- Adaptive Variable Selection via Convex Optimization},
+#' Malgorzata Bogdan, Ewout van den Berg, Chiara Sabatti,
+#' Weijie Su and Emmanuel Candes
+#'
 #' @examples
 #' \donttest{
 #' famFile <- system.file("extdata", "plinkPhenotypeExample.fam", package = "cps")
 #' mapFile <- system.file("extdata", "plinkMapExample.map", package = "cps")
 #' snpsFile <- system.file("extdata", "plinkDataExample.raw", package = "cps")
 #' phe <- readPhenotype(filename = famFile, sep=";")
-#' screening <- readSNPs(snpsFile, mapFile, phe, pValMax = 0.05, chunkSize = 1e2)
-#' clumping <- clumpProcedure(screening, rho = 0.3, verbose = TRUE)
-#' slope.result <- genSLOPE(clumping, fdr=0.1)
+#' screening.result <- readSNPs(snpsFile, mapFile, phe, pValMax = 0.05, chunkSize = 1e2)
+#' clumping.result <- clumpProcedure(screening.result, rho = 0.3, verbose = TRUE)
+#' slope.result <- genSLOPE(clumping.result, fdr=0.1)
 #' }
 #' \dontrun{
 #' runExample()
