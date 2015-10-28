@@ -56,6 +56,7 @@ genSLOPE <- function(clumpingResult, fdr = 0.1, lambda="gaussian", verbose = TRU
           X_clumps = clumpingResult$X,
           X_all = clumpingResult$X_all,
           selectedSnpsNumbers = clumpingResult$selectedSnpsNumbersScreening[selectedSNPs],
+          selectedSnpsClumpingNumbers = clumpingResult$selectedSnpsNumbersScreening,
           numberOfSnps = clumpingResult$numberOfSnps,
           pValMax = clumpingResult$pValMax),
     class="genSlopeResult")
