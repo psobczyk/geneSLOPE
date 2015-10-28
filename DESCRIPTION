@@ -1,9 +1,9 @@
 Package: geneSLOPE
 Type: Package
 Title: Genome-wide Association Study with SLOPE
-Version: 0.32.0
+Version: 0.32.1
 Date: 2015-10-28
-Author: Piotr Sobczyk
+Author: Malgorzata Bogdan, Damian Brzyski, Christine Peterson, Chiara Sabatti, Piotr Sobczyk
 Maintainer: Piotr Sobczyk <piotr.sobczyk@pwr.edu.pl>
 Description: Genome-wide association study performed with SLOPE.
   In first step, SNPs are clumped according to their correlations and
@@ -21,5 +21,5 @@ Suggests:
   shiny,
   knitr,
   rmarkdown,
-    testthat
+  testthat
 VignetteBuilder: knitr

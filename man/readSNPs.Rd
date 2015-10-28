@@ -5,18 +5,19 @@
 \title{Reading SNPs from one PLINK .raw and .map files}
 \usage{
 readSNPs(rawFile, mapFile = "", phenotype, pValMax = 0.05,
-  chunkSize = 1000, verbose = TRUE)
+  chunkSize = 100, verbose = TRUE)
 }
 \arguments{
-\item{rawFile}{name of .raw file}
+\item{rawFile}{character, name of .raw file}
 
-\item{mapFile}{name of .map file}
+\item{mapFile}{character, name of .map file}
 
 \item{phenotype}{numeric vector or an object of class \code{\link{phenotypeData}}}
 
-\item{pValMax}{p-value threshold value used for screening}
+\item{pValMax}{numeric, p-value threshold value used for screening}
 
-\item{chunkSize}{size of chunk. The bigger the chunk the faster function works but
+\item{chunkSize}{integer, number of snps that will be processed together.
+The bigger chunkSize is, the faster function works but
 computer might run out of RAM}
 
 \item{verbose}{if TRUE (default) information about progress is printed}

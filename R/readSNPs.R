@@ -4,11 +4,12 @@
 #' in plink - see details
 #'
 #' @export
-#' @param rawFile name of .raw file
-#' @param mapFile name of .map file
+#' @param rawFile character, name of .raw file
+#' @param mapFile character, name of .map file
 #' @param phenotype numeric vector or an object of class \code{\link{phenotypeData}}
-#' @param pValMax p-value threshold value used for screening
-#' @param chunkSize size of chunk. The bigger the chunk the faster function works but
+#' @param pValMax numeric, p-value threshold value used for screening
+#' @param chunkSize integer, number of snps that will be processed together.
+#' The bigger chunkSize is, the faster function works but
 #' computer might run out of RAM
 #' @param verbose if TRUE (default) information about progress is printed
 #' @return object of class \code{\link{screeningResult}}
@@ -21,7 +22,7 @@
 #' For more information, please refer to:
 #' \url{http://pngu.mgh.harvard.edu/~purcell/plink/dataman.shtml}
 #'
-readSNPs <- function(rawFile, mapFile="", phenotype, pValMax=0.05, chunkSize=1e3,
+readSNPs <- function(rawFile, mapFile="", phenotype, pValMax=0.05, chunkSize=100,
                         verbose = TRUE){
   if(tail(strsplit(rawFile, "\\.")[[1]], 1) != "raw")
     stop(paste("Wrong file extension in", rawFile, ".raw file is required"))
