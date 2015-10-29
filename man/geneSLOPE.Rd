@@ -11,7 +11,7 @@ This study is split into three steps.
 \itemize{
 \item In the first step data is read using \pkg{\link{bigmemory}} package and immediatly
 screened using marginal tests for each SNP
-\item SNPs are clumped using correlations
+\item SNPs are clumped based on their correlations
 \item SLOPE is performed on data where each clump has
 one representative (therefore we ensure that variables in linear model
 are not strognly correlated)

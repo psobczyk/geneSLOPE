@@ -1,6 +1,6 @@
 #' clumpingResult class
 #'
-#' A result of procedure for snp clumping produced by \code{clumpingProcedure}
+#' A result of procedure for snp clumping produced by \code{\link{clumpingProcedure}}
 #'
 #' @details Always a named list of eleven elements
 #' \enumerate{

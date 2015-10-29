@@ -7,7 +7,7 @@
 clumpingProcedure(screenResult, rho = 0.5, verbose = TRUE)
 }
 \arguments{
-\item{screenResult}{object of class screenResult}
+\item{screenResult}{object of class screeningResult}
 
 \item{rho}{numeric, minimal correlation between two SNPs to be assigned to one clump}
 
@@ -17,7 +17,9 @@ clumpingProcedure(screenResult, rho = 0.5, verbose = TRUE)
 object of class \code{\link{clumpingResult}}
 }
 \description{
-Clumping procedure for SNPs previously read and screened by
-function \code{\link{readSNPs}}. Highly correlated SNPs are put in one cluster.
+Clumping procedure performed on SNPs, columns of matrix \code{X}, from
+object of class \code{\link{screeningResult}},
+which is an output of function \code{\link{readSNPs}}.
+SNPs are clustered based on their correlations. For details see package vignette.
 }
 

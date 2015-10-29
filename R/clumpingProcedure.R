@@ -1,10 +1,12 @@
 #' Clumping procedure for SLOPE
 #'
-#' Clumping procedure for SNPs previously read and screened by
-#' function \code{\link{readSNPs}}. Highly correlated SNPs are put in one cluster.
+#' Clumping procedure performed on SNPs, columns of matrix \code{X}, from
+#' object of class \code{\link{screeningResult}},
+#' which is an output of function \code{\link{readSNPs}}.
+#' SNPs are clustered based on their correlations. For details see package vignette.
 #'
 #' @export
-#' @param screenResult object of class screenResult
+#' @param screenResult object of class screeningResult
 #' @param rho numeric, minimal correlation between two SNPs to be assigned to one clump
 #' @param verbose logical, if TRUE (default) progress bar is shown
 #'
