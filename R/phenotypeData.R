@@ -2,10 +2,10 @@
 #'
 #' Phenotype data
 #'
-#' @details Always a named list of ten elements
+#' @details Always a named list of two elements
 #' \enumerate{
 #' \item \code{y} numeric vector, phenotype
-#' \item \code{yInfo} matrix with additional information about observations
+#' \item \code{yInfo} data.frame, additional information about observations
 #' provied in .fam file
 #' }
 #'
@@ -22,10 +22,10 @@ NULL
 #' @method print phenotypeData
 print.phenotypeData <- function(x, ...){
   cat("Object of class phenotypeData\n")
-  cat("$y: vector of size", length(x$y), "\n")
-  cat("$yInfo: matrix with information\n")
-  cat("\t", nrow(x$yInfo), " observations\n")
-  cat("\t", ncol(x$yInfo), " variables\n")
+  cat("$y: numeric vector of size", length(x$y), "\n")
+  cat("$yInfo: data.frame\n")
+  cat("\t", nrow(x$yInfo), " rows\n")
+  cat("\t", ncol(x$yInfo), " columns\n")
 }
 
 #' Summary phenotypeData class object
@@ -37,8 +37,8 @@ print.phenotypeData <- function(x, ...){
 #' @method summary phenotypeData
 summary.phenotypeData <- function(object, ...){
   cat("Object of class phenotypeData\n")
-  cat("$y: vector of size", length(x$y), "\n")
-  cat("$yInfo: matrix with information\n")
-  cat("\t", nrow(x$yInfo), " observations\n")
-  cat("\t", ncol(x$yInfo), " variables\n")
+  cat("$y: numeric vector with phenotype of length", length(object$y), "\n")
+  cat("$yInfo: matrix with additional information\n")
+  cat("\t", nrow(object$yInfo), " observations\n")
+  cat("\t", ncol(object$yInfo), " variables\n")
 }

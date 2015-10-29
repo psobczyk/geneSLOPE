@@ -2,30 +2,29 @@
 % Please edit documentation in R/readPhenotype.R
 \name{readPhenotype}
 \alias{readPhenotype}
-\title{Reading phenotype}
+\title{Read phenotype from .fam file}
 \usage{
 readPhenotype(filename, sep = " ", header = FALSE,
   stringAsFactors = FALSE)
 }
 \arguments{
-\item{filename}{name of file with phenotype}
+\item{filename}{character, name of file with phenotype}
 
-\item{sep}{field seperator in file}
+\item{sep}{character, field seperator in file}
 
-\item{header}{does first row of file contain variables names}
+\item{header}{logical, does first row of file contain variables names}
 
-\item{stringAsFactors}{should character vectors be converted to factors?}
+\item{stringAsFactors}{logical, should character vectors be converted to factors?}
 }
 \value{
 object of class phenotypeData
 }
 \description{
-Reading phenotype info. It is assumed, that data comes in .fam file
-First column is family id (FID), second is individual id (IID),
-third is Paternal individual ID (PAT),
-fourth is  Maternal individual ID (MAT), fifth is SEX
-and six and last is PHENOTYPE
-If file has only four columns, then it is assumed that PAT and MAT are missing.
+Reading phenotype data from file. It is assumed, that data is given in .fam file.
+In this format, first column is family id (FID), second is individual id (IID),
+third is Paternal individual ID (PAT), fourth is  Maternal individual ID (MAT),
+fifth is SEX and sixth and last is PHENOTYPE.
+If file has only four columns, then it is assumed that PAT and MAT columns are missing.
 If there is only one column, then it is assumed that only phenotype is provided.
 }
 

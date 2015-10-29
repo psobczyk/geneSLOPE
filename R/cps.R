@@ -14,7 +14,7 @@
 #'
 #' @docType package
 #' @name geneSLOPE
-#' @details Version: 0.32.1
+#' @details Version: 0.32.2
 #' @importFrom SLOPE SLOPE
 #' @importFrom SLOPE create_lambda
 #' @import ggplot2
@@ -39,6 +39,6 @@
 #' slope.result <- genSLOPE(clumping.result, fdr=0.1)
 #' }
 #' \dontrun{
-#' runExample()
+#' gui_geneSLOPE()
 #' }
 NULL

@@ -18,7 +18,7 @@ are not strognly correlated)
 }
 }
 \details{
-Version: 0.32.1
+Version: 0.32.2
 }
 \examples{
 \donttest{
@@ -31,7 +31,7 @@ clumping.result <- clumpProcedure(screening.result, rho = 0.3, verbose = TRUE)
 slope.result <- genSLOPE(clumping.result, fdr=0.1)
 }
 \dontrun{
-runExample()
+gui_geneSLOPE()
 }
 }
 \author{

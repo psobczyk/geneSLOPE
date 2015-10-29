@@ -7,10 +7,10 @@
 Phenotype data
 }
 \details{
-Always a named list of ten elements
+Always a named list of two elements
 \enumerate{
 \item \code{y} numeric vector, phenotype
-\item \code{yInfo} matrix with additional information about observations
+\item \code{yInfo} data.frame, additional information about observations
 provied in .fam file
 }
 }
