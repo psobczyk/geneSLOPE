@@ -1,31 +1,39 @@
 #' genSlopeResult class
 #'
-#' A result of procedure for snp clumping produced by \code{\link{genSLOPE}}
+#' A result of applying SLOPE to matrix of SNPs obtained by
+#' clumping produced. Result of function \code{\link{genSLOPE}}
 #'
 #' @details Always a named list of ten elements
 #' \enumerate{
-#' \item \code{X} matrix of snps. One snp representative per each clump
-#' \item \code{effects} coefficients in linear model with SNPs selected by SLOPE
-#' \item \code{R2} R-squared in linear model with SNPs selected by SLOPE
-#' \item \code{selectedSNPs} SNPs selected by SLOPE
-#' \item \code{y} selectedClumps clumps that contain SNPs selected by SLOPE
-#' \item \code{lambda} lambda values used by SLOPE procedure
-#' \item \code{y} phenotype
-#' \item \code{clumpRepresentatives} vector of column number in SNP matrix \code{X_all} of
-#' clumps representative
-#' \item \code{clumps} list of vectors of column numbers in SNP matrix \code{X_all}
-#' for each clump member
-#' \item \code{X_info} SNP info from .map file. Obtained from screening procedure.
-#' \item \code{selectedSnpsNumbers} Contains information on which rows of \code{X_info}
-#' matrix refer to selected clump representatives
-#' \item \code{X_clumps} SNP matrix, output of clumping procedure
-#' \item \code{X_all} SNP matrix,  input for clumping procedure
-#' \item \code{numberOfSnps} Number of SNPs in input for screening procedure
-#' \item \code{selectedSnpsNumbersScreening} Contains information on which rows of
-#' \code{X_info} matrix refer to SNPs that are input in clumping procedure
-#' \item \code{pValMax} p-value used in screening procedure
+#' \item \code{X} numeric matrix, consists of one snp representative for each clump
+#' selected by SLOPE
+#' \item \code{effects} numeric vector, coefficients in linear model build on
+#' snps selected by SLOPE
+#' \item \code{R2} numeric, value of R-squared in linear model build on
+#' snps selected by SLOPE
+#' \item \code{selectedSNPs} which columns in matrix \code{X_all}
+#' are related to snps selected by SLOPE
+#' \item \code{y} selectedClumps list of numeric vectors, which columns in SNP matrix
+#' \code{X_all} are related to clump members selected by SLOPE
+#' \item \code{lambda} numeric vector, lambda values used by SLOPE procedure
+#' \item \code{y} numeric vector, phenotype
+#' \item \code{clumpRepresentatives} numeric vector, which columns in SNP matrix \code{X_all}
+#' are related to clumps representatives
+#' \item \code{clumps} list of numeric vectors, which columns in SNP matrix
+#' \code{X_all} are related to clump members
+#' \item \code{X_info} data.frame, mapping information about SNPs from .map file.
+#' Copied from the result of clumping procedure
+#' \item \code{selectedSnpsNumbers} numeric vector, which rows of \code{X_info}
+#' data.frame are related to snps that were selected by SLOPE
+#' \item \code{X_clumps} numeric matrix, consists of one snp representative for each clump
+#' \item \code{X_all} numeric matrix, all the snps that passed screening procedure
+#' \item \code{selectedSnpsNumbersScreening} numeric vector, which rows of \code{X_info}
+#' data.frame are related to snps that passed screening
+#' \item \code{numberOfSnps} numeric, total number of SNPs before screening procedure
+#' \item \code{pValMax} numeric, p-value used in screening procedure
 #' }
 #' @seealso \code{\link{screeningResult}} \code{\link{clumpingResult}}
+#' \code{\link{genSLOPE}} \code{\link{SLOPE::SLOPE}}
 #' @name genSlopeResult
 NULL
 
@@ -40,24 +48,37 @@ NULL
 #' @method print genSlopeResult
 print.genSlopeResult <- function(x, ...){
   cat("Object of class genSlopeResult\n")
-  cat("$X: Matrix\n")
-  cat("\t", nrow(x$X), " observations\n")
-  cat("\t", ncol(x$X), " snps\n")
-  cat("$effects: effect size for selected snps\n")
-  cat("$R2: R squared for fitted lm model\n")
-  cat("$selectedSNPs: SNPs selected by SLOPE\n")
-  cat("$selectedClumps: clumps that contain SNPs selected by SLOPE\n")
-  cat("$lambda: lambdas used by SLOPE\n")
-  cat("$y: Phenotype\n")
+  cat("$X: numeric matrix\n")
+  cat("\t", nrow(x$X), " rows\n")
+  cat("\t", ncol(x$X), " columns\n")
+  cat("$effects: numeric vector of length ", length(x$effects), "\n")
+  cat("$R2: ", x$R2, "\n")
+  cat("$selectedSNPs: numeric vector of length",
+      length(x$selectedSNPs), "\n")
+  cat("$selectedClumps: list of vectors of length",
+      length(x$selectedClumps), "\n")
+  cat("$lambda: numeric vector of length",
+      length(x$lambda), "\n")
+  cat("$y: numeric vector\n")
   cat("$X_clump: Matrix after clumping\n")
+  cat("\t", nrow(x$X_clump), " rows\n")
+  cat("\t", ncol(x$X_clump), " columns\n")
   cat("$X_all: Matrix before clumping\n")
+  cat("\t", nrow(x$X_all), " rows\n")
+  cat("\t", ncol(x$X_all), " columns\n")
   cat("$X_info: Information about snps\n")
-  cat("$clumpRepresentatives: clumps representatives\n")
-  cat("$clumps: list of clumps\n")
-  cat("$selectedSnpsNumbers: snps selected by SLOPE\n")
-  cat("$selectedSnpsClumpingNumbers: snps selected by screening\n")
-  cat("$numberOfSnps: Number of SNPs before screening\n")
-  cat("$pValMax: p-value threshold\n")
+  cat("\t", nrow(x$X_info), " rows\n")
+  cat("\t", ncol(x$X_info), " columns\n")
+  cat("$clumpRepresentatives: numeric vector of length",
+      length(x$clumpRepresentatives), "\n")
+  cat("$clumps: list of numeric vectors of length",
+      length(x$clumpRepresentatives), "\n")
+  cat("$selectedSnpsNumbers: numeric vector of length",
+      length(x$clumps), "\n")
+  cat("$selectedSnpsClumpingNumbers: numeric vector of length",
+      length(x$selectedSnpsClumpingNumbers), "\n")
+  cat("$numberOfSnps: number of SNPs before screening:", x$numberOfSnps, "\n")
+  cat("$pValMax: p-value threshold: ", x$pValMax, "\n")
 }
 
 #' Summary genSlopeResult class object
@@ -70,7 +91,9 @@ print.genSlopeResult <- function(x, ...){
 summary.genSlopeResult <- function(object, ...){
   cat("Object of class genSlopeResult\n")
   cat(length(object$selectedSNPs), " snps selected\n")
-  cat("R2 of fitted model ", object$R2)
+  cat("Effect size for selected snps\n")
+  cat(object$effects, "\n")
+  cat("R square of fitted model ", object$R2)
 }
 
 
@@ -89,9 +112,9 @@ plot.genSlopeResult <- function(x, chromosomeNumber=NULL, ...){
                                as.numeric(x$X_info[x$selectedSnpsClumpingNumbers[x$selectedClumps[[i]]],3]),
                                i, abs(x$effects[i])/2))
     }
+    rownames(plot.data) <- NULL
     plot.data <- data.frame(plot.data)
     colnames(plot.data) <- c("chromosome", "snp", "clump", "val")
-    rownames(plot.data) <- NULL
     granice <- aggregate(plot.data$snp, list(plot.data$chromosome), max)
     granice$x <- c(0,head(cumsum(granice$x),-1))
     for(i in unique(plot.data$chromosome)){

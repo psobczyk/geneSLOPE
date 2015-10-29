@@ -4,34 +4,42 @@
 \alias{genSlopeResult}
 \title{genSlopeResult class}
 \description{
-A result of procedure for snp clumping produced by \code{\link{genSLOPE}}
+A result of applying SLOPE to matrix of SNPs obtained by
+clumping produced. Result of function \code{\link{genSLOPE}}
 }
 \details{
 Always a named list of ten elements
 \enumerate{
-\item \code{X} matrix of snps. One snp representative per each clump
-\item \code{effects} coefficients in linear model with SNPs selected by SLOPE
-\item \code{R2} R-squared in linear model with SNPs selected by SLOPE
-\item \code{selectedSNPs} SNPs selected by SLOPE
-\item \code{y} selectedClumps clumps that contain SNPs selected by SLOPE
-\item \code{lambda} lambda values used by SLOPE procedure
-\item \code{y} phenotype
-\item \code{clumpRepresentatives} vector of column number in SNP matrix \code{X_all} of
-clumps representative
-\item \code{clumps} list of vectors of column numbers in SNP matrix \code{X_all}
-for each clump member
-\item \code{X_info} SNP info from .map file. Obtained from screening procedure.
-\item \code{selectedSnpsNumbers} Contains information on which rows of \code{X_info}
-matrix refer to selected clump representatives
-\item \code{X_clumps} SNP matrix, output of clumping procedure
-\item \code{X_all} SNP matrix,  input for clumping procedure
-\item \code{numberOfSnps} Number of SNPs in input for screening procedure
-\item \code{selectedSnpsNumbersScreening} Contains information on which rows of
-\code{X_info} matrix refer to SNPs that are input in clumping procedure
-\item \code{pValMax} p-value used in screening procedure
+\item \code{X} numeric matrix, consists of one snp representative for each clump
+selected by SLOPE
+\item \code{effects} numeric vector, coefficients in linear model build on
+snps selected by SLOPE
+\item \code{R2} numeric, value of R-squared in linear model build on
+snps selected by SLOPE
+\item \code{selectedSNPs} which columns in matrix \code{X_all}
+are related to snps selected by SLOPE
+\item \code{y} selectedClumps list of numeric vectors, which columns in SNP matrix
+\code{X_all} are related to clump members selected by SLOPE
+\item \code{lambda} numeric vector, lambda values used by SLOPE procedure
+\item \code{y} numeric vector, phenotype
+\item \code{clumpRepresentatives} numeric vector, which columns in SNP matrix \code{X_all}
+are related to clumps representatives
+\item \code{clumps} list of numeric vectors, which columns in SNP matrix
+\code{X_all} are related to clump members
+\item \code{X_info} data.frame, mapping information about SNPs from .map file.
+Copied from the result of clumping procedure
+\item \code{selectedSnpsNumbers} numeric vector, which rows of \code{X_info}
+data.frame are related to snps that were selected by SLOPE
+\item \code{X_clumps} numeric matrix, consists of one snp representative for each clump
+\item \code{X_all} numeric matrix, all the snps that passed screening procedure
+\item \code{selectedSnpsNumbersScreening} numeric vector, which rows of \code{X_info}
+data.frame are related to snps that passed screening
+\item \code{numberOfSnps} numeric, total number of SNPs before screening procedure
+\item \code{pValMax} numeric, p-value used in screening procedure
 }
 }
 \seealso{
 \code{\link{screeningResult}} \code{\link{clumpingResult}}
+\code{\link{genSLOPE}} \code{\link{SLOPE::SLOPE}}
 }
 
