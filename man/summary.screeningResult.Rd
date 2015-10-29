@@ -2,7 +2,7 @@
 % Please edit documentation in R/screeningResult.R
 \name{summary.screeningResult}
 \alias{summary.screeningResult}
-\title{Summary screeningResult class object}
+\title{Summary function for class screeningResult}
 \usage{
 \method{summary}{screeningResult}(object, ...)
 }
@@ -12,6 +12,6 @@
 \item{...}{Further arguments to be passed to or from other methods. They are ignored in this function.}
 }
 \description{
-Summary screeningResult class object
+Summary function for class screeningResult
 }
 

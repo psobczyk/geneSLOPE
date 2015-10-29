@@ -112,7 +112,7 @@ readSNPs <- function(rawFile, mapFile="", phenotype, pValMax=0.05, chunkSize=100
   result <- structure( list(
     X = x,
     y = y,
-    X_info = x_info,#[p<pValMax,],
+    X_info = x_info,
     pVals = p,
     numberOfSnps = numberOfSnps,
     selectedSnpsNumbers = which(p<pValMax),

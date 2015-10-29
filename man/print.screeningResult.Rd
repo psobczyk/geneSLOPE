@@ -2,7 +2,7 @@
 % Please edit documentation in R/screeningResult.R
 \name{print.screeningResult}
 \alias{print.screeningResult}
-\title{Print screeningResult class object}
+\title{Print function for class screeningResult class}
 \usage{
 \method{print}{screeningResult}(x, ...)
 }
@@ -12,6 +12,6 @@
 \item{...}{Further arguments to be passed to or from other methods. They are ignored in this function.}
 }
 \description{
-Print screeningResult class object
+Print function for class screeningResult class
 }
 
