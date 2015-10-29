@@ -33,7 +33,7 @@
 #' \item \code{pValMax} numeric, p-value used in screening procedure
 #' }
 #' @seealso \code{\link{screeningResult}} \code{\link{clumpingResult}}
-#' \code{\link{genSLOPE}} \code{\link{SLOPE::SLOPE}}
+#' \code{\link{genSLOPE}} \code{\link[SLOPE]{SLOPE}}
 #' @name genSlopeResult
 NULL
 

@@ -40,6 +40,6 @@ data.frame are related to snps that passed screening
 }
 \seealso{
 \code{\link{screeningResult}} \code{\link{clumpingResult}}
-\code{\link{genSLOPE}} \code{\link{SLOPE::SLOPE}}
+\code{\link{genSLOPE}} \code{\link[SLOPE]{SLOPE}}
 }
 
