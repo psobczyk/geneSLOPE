@@ -32,7 +32,7 @@ print.screeningResult <- function(x, ...){
   cat("$X: numeric matrix\n")
   cat("\t", nrow(x$X), " rows\n")
   cat("\t", ncol(x$X), " columns\n")
-  cat("$y: numeric phenotype vector\n")
+  cat("$y: numeric phenotype vector of length", length(x$y), "\n")
   cat("$X_info: data.frame\n")
   cat("\t", nrow(x$X_info), " rows\n")
   cat("\t", ncol(x$X_info), " columns\n")
