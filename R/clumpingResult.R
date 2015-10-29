@@ -1,10 +1,10 @@
 #' clumpingResult class
 #'
-#' A result of procedure for snp clumping produced by \code{clumpProcedure}
+#' A result of procedure for snp clumping produced by \code{clumpingProcedure}
 #'
-#' @details Always a named list of ten elements
+#' @details Always a named list of eleven elements
 #' \enumerate{
-#' \item \code{X} numeric matrix, contains snp representative for each clump
+#' \item \code{X} numeric matrix, consists of one snp representative for each clump
 #' \item \code{y} numeric vector, phenotype
 #' \item \code{SNPnumber} numeric vector, which columns in SNP matrix \code{X_all}
 #' are related to clumps representatives
@@ -14,14 +14,14 @@
 #' Copied from the result of screening procedure.
 #' \item \code{selectedSnpsNumbers} numeric vector, which rows of \code{X_info}
 #' matrix are related to selected clump representatives
-#' \item \code{X_all} X matrix that was input for clumping procedure
-#' \item \code{numberOfSnps} Number of SNPs in input for screening procedure
-#' \item \code{selectedSnpsNumbersScreening} Contains information on which rows of
-#' \code{X_info} matrix refer to SNPs that are input in clumping procedure
-#' \item \code{pVals} p-values from marginal tests
-#' \item \code{pValMax} p-value used in screening procedure
+#' \item \code{X_all} numeric matrix, all the snps that passed screening procedure
+#' \item \code{numberOfSnps} numeric, total number of SNPs before screening procedure
+#' \item \code{selectedSnpsNumbersScreening} numeric vector, which rows of \code{X_info}
+#' data.frame are related to snps that passed screening
+#' \item \code{pVals} numeric vector, p-values from marginal tests for each snp
+#' \item \code{pValMax} numeric, p-value used in screening procedure
 #' }
-#' @seealso \code{\link{screeningResult}} \code{\link{clumpProcedure}}
+#' @seealso \code{\link{screeningResult}} \code{\link{clumpingProcedure}}
 #' @name clumpingResult
 NULL
 
@@ -34,16 +34,26 @@ NULL
 #' @method print clumpingResult
 print.clumpingResult <- function(x, ...){
   cat("Object of class clumpingResult\n")
-  cat("$X: Matrix\n")
-  cat("\t", nrow(x$X), " observations\n")
-  cat("\t", ncol(x$X), " snps\n")
-  cat("$y: vector with phenotype")
+  cat("$X: numeric matrix\n")
+  cat("\t", nrow(x$X), " rows\n")
+  cat("\t", ncol(x$X), " columns\n")
+  cat("$y: numeric phenotype vector of length", length(x$y), "\n")
   cat("$SNPnumber: list with snp representatives for clumps \n")
   cat("\t[", paste(head(x$SNPnumber), collapse=","), "..., ]\n")
-  cat("$SNPclumps: list of vector, number of snps in clumps\n")
-  cat("$X_info: information about SNPs\n")
-  cat("$selectedSnpsNumbers: ")
-  cat("$pVals: numeric vector of p-values")
+  cat("$SNPclumps: list of length", length(x$SNPclumps), " containing numeric vectors\n")
+  cat("$X_info: data.frame\n")
+  cat("\t", nrow(x$X_info), " rows\n")
+  cat("\t", ncol(x$X_info), " columns\n")
+  cat("$selectedSnpsNumbers: numeric vector of length" ,
+      length(x$selectedSnpsNumbers), "\n")
+  cat("$X_all: numeric matrix\n")
+  cat("\t", nrow(x$X_all), " rows\n")
+  cat("\t", ncol(x$X_all), " columns\n")
+  cat("$numberOfSnps: ", x$numberOfSnps, "\n")
+  cat("$selectedSnpsNumbersScreening: numeric vector of length" ,
+      length(x$selectedSnpsNumbersScreening), "\n")
+  cat("$pVals: numeric vector of length ", length(x$pVals), "\n")
+  cat("$pValMax: ", x$pValMax, "\n")
 }
 
 #' Summary clumpingResult class object

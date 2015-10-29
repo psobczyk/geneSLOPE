@@ -1,16 +1,25 @@
-#' Clumping procedure
+#' Clumping procedure for SLOPE
 #'
-#' Clumping of SNPs previously read and screened by \code{\link{readSNPs}}
+#' Clumping procedure for SNPs previously read and screened by
+#' function \code{\link{readSNPs}}. Highly correlated SNPs are put in one cluster.
 #'
 #' @export
 #' @param screenResult object of class screenResult
-#' @param rho numeric, minimal correlation between two SNPs to be
+#' @param rho numeric, minimal correlation between two SNPs to be assigned to one clump
 #' @param verbose logical, if TRUE (default) progress bar is shown
-#' classified to the same clump
 #'
 #' @return object of class \code{\link{clumpingResult}}
 #'
-clumpProcedure <- function(screenResult, rho = 0.3, verbose = TRUE){
+clumpingProcedure <- function(screenResult, rho = 0.5, verbose = TRUE){
+
+  if(rho>=1 | rho <= 0)
+    stop("Error: Rho has to be within range (0,1)")
+
+  if(length(screenResult$y) != nrow(screenResult$X))
+    stop("Error: Length of phenotype must match number of observations in matrix with snps")
+
+  if(class(screenResult)!="screeningResult")
+    stop("Error: parameter screenResult has to be of class screeningResult")
 
   if(verbose){
     message("Clumping procedure has started. Depending on
@@ -20,13 +29,6 @@ clumpProcedure <- function(screenResult, rho = 0.3, verbose = TRUE){
     pb <- txtProgressBar(min = 0, max = total, style = 3)
   }
 
-  if(rho>=1 | rho <= 0){
-    stop("Rho has to be within range (0,1)")
-  }
-  if(length(screenResult$y) != nrow(screenResult$X)){
-    stop("Length of y must match
-         number of rows in X")
-  }
   suma = sum((screenResult$y-mean(screenResult$y))^2)
   n = length(screenResult$y) - 2
   pVals <- apply(screenResult$X, 2, function(x) pValComp(x,screenResult$y,n,suma))
@@ -49,11 +51,12 @@ clumpProcedure <- function(screenResult, rho = 0.3, verbose = TRUE){
     if(verbose)
       setTxtProgressBar(pb, sqrt(i))
   }
-  if(verbose)
-    close(pb)
+  if(verbose) close(pb)
+
   nullClumps <- sapply(representatives, is.null)
   representatives <- representatives[!nullClumps]
   clumps <- clumps[!nullClumps]
+
   result <- structure(
     list( X = screenResult$X[,unlist(representatives)],
           y = screenResult$y,

@@ -4,12 +4,12 @@
 \alias{clumpingResult}
 \title{clumpingResult class}
 \description{
-A result of procedure for snp clumping produced by \code{clumpProcedure}
+A result of procedure for snp clumping produced by \code{clumpingProcedure}
 }
 \details{
-Always a named list of ten elements
+Always a named list of eleven elements
 \enumerate{
-\item \code{X} numeric matrix, contains snp representative for each clump
+\item \code{X} numeric matrix, consists of one snp representative for each clump
 \item \code{y} numeric vector, phenotype
 \item \code{SNPnumber} numeric vector, which columns in SNP matrix \code{X_all}
 are related to clumps representatives
@@ -19,15 +19,15 @@ are related to clumps representatives
 Copied from the result of screening procedure.
 \item \code{selectedSnpsNumbers} numeric vector, which rows of \code{X_info}
 matrix are related to selected clump representatives
-\item \code{X_all} X matrix that was input for clumping procedure
-\item \code{numberOfSnps} Number of SNPs in input for screening procedure
-\item \code{selectedSnpsNumbersScreening} Contains information on which rows of
-\code{X_info} matrix refer to SNPs that are input in clumping procedure
-\item \code{pVals} p-values from marginal tests
-\item \code{pValMax} p-value used in screening procedure
+\item \code{X_all} numeric matrix, all the snps that passed screening procedure
+\item \code{numberOfSnps} numeric, total number of SNPs before screening procedure
+\item \code{selectedSnpsNumbersScreening} numeric vector, which rows of \code{X_info}
+data.frame are related to snps that passed screening
+\item \code{pVals} numeric vector, p-values from marginal tests for each snp
+\item \code{pValMax} numeric, p-value used in screening procedure
 }
 }
 \seealso{
-\code{\link{screeningResult}} \code{\link{clumpProcedure}}
+\code{\link{screeningResult}} \code{\link{clumpingProcedure}}
 }
 

@@ -39,7 +39,7 @@ shinyServer(function(input, output) {
   })
 
   clumping <-  eventReactive(input$go, {
-    clumpProcedure(screening(), input$rho, verbose = FALSE)
+    clumpingProcedure(screening(), input$rho, verbose = FALSE)
   })
 
   slopeResult <- eventReactive(input$go, {

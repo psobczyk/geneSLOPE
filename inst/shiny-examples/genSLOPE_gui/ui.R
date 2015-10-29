@@ -56,7 +56,7 @@ shinyUI(fluidPage(
          conditionalPanel("output.phenotypeOk",
                           h4("Head of phenotype data"),
                           tableOutput("summary"),
-                          h4("Clumping results"),
+                          h4("Clumping procedure summary"),
                           verbatimTextOutput("clumpSummary"),
                           h4("GWAS results. Important snps"),
                           plotOutput("slopePlot")

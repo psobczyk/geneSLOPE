@@ -14,7 +14,7 @@
 #'
 #' @docType package
 #' @name geneSLOPE
-#' @details Version: 0.32.3
+#' @details Version: 0.32.4
 #' @importFrom SLOPE SLOPE
 #' @importFrom SLOPE create_lambda
 #' @import ggplot2
@@ -35,7 +35,7 @@
 #' snpsFile <- system.file("extdata", "plinkDataExample.raw", package = "cps")
 #' phe <- readPhenotype(filename = famFile, sep=";")
 #' screening.result <- readSNPs(snpsFile, mapFile, phe, pValMax = 0.05, chunkSize = 1e2)
-#' clumping.result <- clumpProcedure(screening.result, rho = 0.3, verbose = TRUE)
+#' clumping.result <- clumpingProcedure(screening.result, rho = 0.3, verbose = TRUE)
 #' slope.result <- genSLOPE(clumping.result, fdr=0.1)
 #' }
 #' \dontrun{
