@@ -1,7 +1,7 @@
 Package: geneSLOPE
 Type: Package
 Title: Genome-wide Association Study with SLOPE
-Version: 0.32.9
+Version: 0.32.10
 Date: 2015-10-29
 Author: Malgorzata Bogdan, Damian Brzyski, Christine Peterson, Chiara Sabatti, Piotr Sobczyk
 Maintainer: Piotr Sobczyk <piotr.sobczyk@pwr.edu.pl>
@@ -16,7 +16,8 @@ Depends:
     SLOPE
 Imports:
   ggplot2,
-  bigmemory
+  bigmemory,
+  grid
 Suggests:
   shiny,
   knitr,

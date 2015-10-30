@@ -4,12 +4,15 @@
 \alias{plot.genSlopeResult}
 \title{Plot genSlopeResult class object}
 \usage{
-\method{plot}{genSlopeResult}(x, chromosomeNumber = NULL, ...)
+\method{plot}{genSlopeResult}(x, chromosomeNumber = NULL,
+  clumpNumber = NULL, ...)
 }
 \arguments{
 \item{x}{genSlopeResult class object}
 
 \item{chromosomeNumber}{optional parameter, only selected chromosome will be plotted}
+
+\item{clumpNumber}{optional parameter, only SNPs from selected clump will be plotted}
 
 \item{...}{Further arguments to be passed to or from other methods. They are ignored in this function.}
 }

@@ -101,9 +101,10 @@ summary.genSlopeResult <- function(object, ...){
 #'
 #' @param x genSlopeResult class object
 #' @param chromosomeNumber optional parameter, only selected chromosome will be plotted
+#' @param clumpNumber optional parameter, only SNPs from selected clump will be plotted
 #' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
 #' @export
-plot.genSlopeResult <- function(x, chromosomeNumber=NULL, ...){
+plot.genSlopeResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...){
   if(!is.null(x$X_info)){
     plot.data <- NULL
     for(i in 1L:length(x$selectedClumps)){
@@ -144,7 +145,27 @@ plot.genSlopeResult <- function(x, chromosomeNumber=NULL, ...){
                            labels=granice$Group.1,
                            minor_breaks=c(granice$x, max(granice_max))) +
         scale_alpha_manual(guide=FALSE, values = c(0.5, 1)) +
-        scale_color_discrete("Clump") +
+        scale_color_discrete(guide=FALSE, "Clump") +
+        scale_size_area(guide=FALSE, max_size = 4) +
+        slope_result_theme
+    } else if(!is.null(clumpNumber)) {
+      plot.data <- subset(plot.data, clump%in%clumpNumber)
+      if(nrow(plot.data)==0 | nrow(plot.data[plot.data$representatives,])==0) {
+        message("No SNPs selected in clump ", clumpNumber)
+        return(NULL)
+      }
+      plot.data$clump <- as.factor(plot.data$clump)
+      ggplot(plot.data) + geom_point(aes(x=snp, y=val, colour = clump, size = 6),
+                                     plot.data[plot.data$representatives,]) +
+        geom_segment(aes(x=snp, xend=snp, y=0, yend=val, alpha=representatives,
+                         color=clump)) +
+        ylab("% of variance explained") + scale_y_continuous() +
+        xlab("Genome") +
+        scale_x_continuous(breaks=rowMeans(cbind(granice$x, granice_max)),
+                           labels=granice$Group.1,
+                           minor_breaks=c(granice$x, max(granice_max))) +
+        scale_alpha_manual(guide=FALSE, values = c(0.5, 1)) +
+        scale_color_discrete(guide=FALSE, "Clump") +
         scale_size_area(guide=FALSE, max_size = 4) +
         slope_result_theme
     } else {
@@ -153,14 +174,16 @@ plot.genSlopeResult <- function(x, chromosomeNumber=NULL, ...){
                                      plot.data[plot.data$representatives,]) +
         geom_segment(aes(x=snp, xend=snp, y=0, yend=val, alpha=representatives,
                          color=clump)) +
-        ylab("% of variance explained") + scale_y_continuous() +
+        ylab("% of variance explained") +
         xlab("Genome") +
-        scale_x_continuous(limits=c(0, max(granice_max)),
+        scale_x_continuous(expand = c(0,0),
+                           limits=c(0, max(granice_max)+1),
                            breaks=rowMeans(cbind(granice$x, granice_max)),
                            labels=granice$Group.1,
                            minor_breaks=c(granice$x, max(granice_max))) +
+        scale_y_continuous(expand = c(0,0),limits=c(0, 1.1*max(plot.data$val))) +
         scale_alpha_manual(guide=FALSE, values = c(0.5, 1)) +
-        scale_color_discrete("Clump") +
+        scale_color_discrete(guide=FALSE, "Clump") +
         scale_size_area(guide=FALSE, max_size = 4) +
         slope_result_theme
     }
@@ -179,7 +202,7 @@ plot.genSlopeResult <- function(x, chromosomeNumber=NULL, ...){
       ggplot(plot.data) + geom_point(aes(x=snp, y=val, colour = "red", size = 6),
                                      plot.data[representatives,]) +
         geom_segment(aes(x=snp, xend=snp, y=0, yend=val, alpha=val/4)) +
-        ylab("") + scale_y_continuous() +
+        ylab("") +
         xlab("SNP number") +
         scale_alpha_continuous(guide=FALSE) +
         scale_color_discrete(guide=FALSE) +
@@ -203,3 +226,43 @@ slope_result_theme <- theme(panel.background=element_blank(),
                         legend.text = element_text(size=15),
                         legend.position="bottom",
                         legend.key =element_rect(fill="white"))
+
+#' Identify clump number in genSlopeResult class plot
+#'
+#' @param x genSlopeResult class object
+#' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
+#' @export
+identify_clump <- function(x, ...) {
+  plot.data <- NULL
+  for(i in 1L:length(x$selectedClumps)){
+    plot.data <- rbind(plot.data,
+                       cbind(as.numeric(x$X_info[x$selectedSnpsClumpingNumbers[x$selectedClumps[[i]]],1]),
+                             as.numeric(x$X_info[x$selectedSnpsClumpingNumbers[x$selectedClumps[[i]]],3]),
+                             i, (x$effects[i]^2/var(x$y))))
+  }
+  rownames(plot.data) <- NULL
+  plot.data <- data.frame(plot.data)
+  colnames(plot.data) <- c("chromosome", "snp", "clump", "val")
+  plot.data <- cbind(plot.data,
+                     representatives = unlist(x$selectedClumps) %in% unlist(x$selectedSNPs))
+  granice <- aggregate(x$X_info[,3], list(x$X_info[,1]), max)
+  granice_max <- cumsum(granice$x)
+  granice$x <- c(0,head(cumsum(granice$x),-1))
+  for(i in unique(plot.data$chromosome)){
+    plot.data$snp[plot.data$chromosome==i] <- granice$x[i] +
+      plot.data$snp[plot.data$chromosome==i]
+  }
+  plot.data$val[plot.data$representatives] <- (x$effects^2/var(x$y))
+
+  a<- plot.data$snp
+  b <- plot.data$val
+  viewport_name <- unname(grid.ls()[[1]][[4]])
+  downViewport(viewport_name)
+  # showViewport()
+  # popViewport()
+  pushViewport(viewport(xscale=c(0, max(granice_max)+1), yscale=c(0, 1.1*max(plot.data$val))))
+  tmp = grid.locator()
+  tmp.n <- as.numeric(tmp)
+  paste("Selected SNP is in clump",
+        plot.data$clump[which.min((a-tmp.n[1])^2 + (b-tmp.n[2])^2)])
+}
