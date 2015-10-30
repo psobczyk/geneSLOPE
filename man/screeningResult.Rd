@@ -4,7 +4,7 @@
 \alias{screeningResult}
 \title{screeningResult class}
 \description{
-A result of procedure for snp clumping produced by \code{\link{readSNPs}}
+A result of procedure for snp clumping produced by \code{\link{screen_snps}}
 }
 \details{
 Always a named list of eight elements
@@ -22,6 +22,6 @@ provied in \code{\link{phenotypeData}} object
 }
 }
 \seealso{
-\code{\link{phenotypeData}} \code{\link{readSNPs}}
+\code{\link{phenotypeData}} \code{\link{screen_snps}}
 }
 

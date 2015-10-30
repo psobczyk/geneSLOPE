@@ -1,6 +1,6 @@
 #' screeningResult class
 #'
-#' A result of procedure for snp clumping produced by \code{\link{readSNPs}}
+#' A result of procedure for snp clumping produced by \code{\link{screen_snps}}
 #'
 #' @details Always a named list of eight elements
 #' \enumerate{
@@ -16,7 +16,7 @@
 #' provied in \code{\link{phenotypeData}} object
 #' }
 #'
-#' @seealso \code{\link{phenotypeData}} \code{\link{readSNPs}}
+#' @seealso \code{\link{phenotypeData}} \code{\link{screen_snps}}
 #' @name screeningResult
 NULL
 

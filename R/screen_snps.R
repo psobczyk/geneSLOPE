@@ -1,7 +1,7 @@
-#' Reading SNPs from one PLINK .raw and .map files
+#' Reading and screening SNPs from .raw file and
 #'
-#' Reading PLINK files that were previously suitably tranformed
-#' in plink - see details
+#' Reading .raw file that was previously exported from PLINK - see details.
+#' Additional information about SNP mapping is read from .map file.
 #'
 #' @export
 #' @param rawFile character, name of .raw file
@@ -22,7 +22,7 @@
 #' For more information, please refer to:
 #' \url{http://pngu.mgh.harvard.edu/~purcell/plink/dataman.shtml}
 #'
-readSNPs <- function(rawFile, mapFile="", phenotype, pValMax=0.05, chunkSize=100,
+screen_snps <- function(rawFile, mapFile="", phenotype, pValMax=0.05, chunkSize=100,
                         verbose = TRUE){
   if(tail(strsplit(rawFile, "\\.")[[1]], 1) != "raw")
     stop(paste("Wrong file extension in", rawFile, ".raw file is required"))
@@ -31,6 +31,9 @@ readSNPs <- function(rawFile, mapFile="", phenotype, pValMax=0.05, chunkSize=100
 
   if(file.exists(mapFile)){
     x_info <- read.table(mapFile)
+    if(ncol(x_info)!=4) stop("Four columns expected in map file")
+    colnames(x_info) <- c("chromosome", "rs", "genetic_distance_(morgans)",
+                          "base_pair_position_(bp_units)")
   } else {
     x_info <- NULL
     message(".map file not found")

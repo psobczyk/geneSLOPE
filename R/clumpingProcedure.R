@@ -2,7 +2,7 @@
 #'
 #' Clumping procedure performed on SNPs, columns of matrix \code{X}, from
 #' object of class \code{\link{screeningResult}},
-#' which is an output of function \code{\link{readSNPs}}.
+#' which is an output of function \code{\link{screen_snps}}.
 #' SNPs are clustered based on their correlations. For details see package vignette.
 #'
 #' @export

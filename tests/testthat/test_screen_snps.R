@@ -8,7 +8,7 @@ test_that("Number of observations in phenotype and snp matrix are equal",{
 
   phenotype$y <- rnorm(91)
 
-  expect_error(readSNPs(snpsFile, mapFile, phenotype, pValMax = 0.05,
+  expect_error(screen_snps(snpsFile, mapFile, phenotype, pValMax = 0.05,
                         chunkSize = 1e2, verbose=FALSE), "phenotype")
 })
 
@@ -18,9 +18,9 @@ test_that("p-value has to be smaller than 1, larger than 0",{
   snpsFile <- system.file("extdata", "plinkDataExample.raw", package = "geneSLOPE")
   phenotype <- readPhenotype(filename = famFile, sep=";")
 
-  expect_error(readSNPs(snpsFile, mapFile, phenotype, pValMax = 1.2,
+  expect_error(screen_snps(snpsFile, mapFile, phenotype, pValMax = 1.2,
                         chunkSize = 1e2, verbose=FALSE), "pValMax")
-  expect_error(readSNPs(snpsFile, mapFile, phenotype, pValMax = -0.5,
+  expect_error(screen_snps(snpsFile, mapFile, phenotype, pValMax = -0.5,
                         chunkSize = 1e2, verbose=FALSE), "pValMax")
 })
 
@@ -30,7 +30,7 @@ test_that("chunk size has to be positive",{
   snpsFile <- system.file("extdata", "plinkDataExample.raw", package = "geneSLOPE")
   phenotype <- readPhenotype(filename = famFile, sep=";")
 
-  expect_error(readSNPs(snpsFile, mapFile, phenotype, pValMax = 0.05,
+  expect_error(screen_snps(snpsFile, mapFile, phenotype, pValMax = 0.05,
                         chunkSize = -100, verbose=FALSE), "chunkSize.*positive")
 })
 
@@ -41,7 +41,7 @@ test_that("Give warning when chunk size is smaller than 10",{
   snpsFile <- system.file("extdata", "plinkDataExample.raw", package = "geneSLOPE")
   phenotype <- readPhenotype(filename = famFile, sep=";")
 
-  expect_warning(readSNPs(snpsFile, mapFile, phenotype, pValMax = 0.05,
+  expect_warning(screen_snps(snpsFile, mapFile, phenotype, pValMax = 0.05,
                         chunkSize = 9, verbose=FALSE), "chunk")
 })
 
@@ -53,7 +53,7 @@ test_that("Error when parameter rawFile is not .raw",{
   snpsFile <- "fileWithWrongExtension.dup"
   phenotype <- readPhenotype(filename = famFile, sep=";")
 
-  expect_error(readSNPs(snpsFile, mapFile, phenotype, pValMax = 0.05,
+  expect_error(screen_snps(snpsFile, mapFile, phenotype, pValMax = 0.05,
                           chunkSize = 100, verbose=FALSE), ".raw")
 })
 
@@ -65,6 +65,6 @@ test_that("Meaningful error when file cannot be found",{
   snpsFile <- "nonExistingFile.raw"
   phenotype <- readPhenotype(filename = famFile, sep=";")
 
-  expect_error(readSNPs(snpsFile, mapFile, phenotype, pValMax = 0.05,
+  expect_error(screen_snps(snpsFile, mapFile, phenotype, pValMax = 0.05,
                           chunkSize = 100, verbose=FALSE), "not found")
 })
