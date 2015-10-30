@@ -65,10 +65,10 @@ print.clumpingResult <- function(x, ...){
 #' @method summary clumpingResult
 summary.clumpingResult <- function(object, ...){
   cat("Object of class clumpingResult\n")
-  cat(length(object$SNPclumps), " clumps with ", ncol(object$X_all), " SNPs\n")
-  cat("Average clumps size ", mean(unlist(lapply(object$SNPclumps, length))), "\n")
-  cat("Smallest clump size ", min(unlist(lapply(object$SNPclumps, length))), "\n")
-  cat("Biggest clump size ", max(unlist(lapply(object$SNPclumps, length))), "\n")
+  cat(ncol(object$X_all), " SNPs grouped in ", length(object$SNPclumps), " clumps\n")
+  cat("Mean clump size ", mean(unlist(lapply(object$SNPclumps, length))), "\n")
+  cat("Min clump size ", min(unlist(lapply(object$SNPclumps, length))), "\n")
+  cat("Max clump size ", max(unlist(lapply(object$SNPclumps, length))), "\n")
 }
 
 
@@ -83,48 +83,94 @@ plot.clumpingResult <- function(x, chromosomeNumber=NULL, ...){
   if(!is.null(x$X_info)){
     plot.data <- data.frame(cbind(chromosome=as.numeric(x$X_info[x$selectedSnpsNumbersScreening[unlist(x$SNPclumps)],1]),
                                   snp=as.numeric(x$X_info[x$selectedSnpsNumbersScreening[unlist(x$SNPclumps)],3]),
-                                  val=-log(x$pVals[x$selectedSnpsNumbersScreening[unlist(x$SNPclumps)]])))
-    granice <- aggregate(plot.data$snp, list(plot.data$chromosome), max)
+                                  val=-log(x$pVals[x$selectedSnpsNumbersScreening[unlist(x$SNPclumps)]])),
+                            representatives = unlist(x$SNPclumps) %in% unlist(x$SNPnumber))
+    granice <- aggregate(x$X_info[,3], list(x$X_info[,1]), max)
+    granice_max <- cumsum(granice$x)
     granice$x <- c(0,head(cumsum(granice$x),-1))
     for(i in unique(plot.data$chromosome)){
-      plot.data$snp[plot.data$chromosome==i] <- granice$x[which(granice$Group.1==i)] +
+      plot.data$snp[plot.data$chromosome==i] <- granice$x[i] +
         plot.data$snp[plot.data$chromosome==i]
     }
-    representatives = which(unlist(x$SNPclumps) %in% unlist(x$SNPnumber))
-    if(!is.null(chromosomeNumber))
-      plot.data <- subset(plot.data, plot.data$chromosome==chromosomeNumber)
-    ggplot(plot.data) + geom_point(aes(x=snp, y=val, colour = "red", size = 6),
-                                   data=plot.data[representatives,]) +
-      geom_segment(aes(x=snp, xend=snp, y=0, yend=val, alpha=val/4)) +
-      ylab("") + scale_y_continuous("Marginal test p-value", breaks=-log(0.1^(1:5)),
-                                    labels=0.1^(1:5)) +
-      xlab("Genome") + scale_x_continuous(breaks=granice$x, labels=granice$Group.1) +
-      scale_alpha_continuous(guide=FALSE) +
-      scale_color_discrete(guide=FALSE) +
-      scale_size_area(guide=FALSE) +
-      theme(panel.background=element_blank(),
-            panel.grid.major.y=element_line(colour = "grey80"),
-            panel.grid.minor.y=element_line(colour = "grey90"),
-            panel.grid.major.x=element_blank(),
-            panel.grid.minor.x=element_blank())
+    if(!is.null(chromosomeNumber)){
+      plot.data <- subset(plot.data, plot.data$chromosome%in%chromosomeNumber)
+      if(nrow(plot.data)==0) {
+        message("No SNPs selected in chromosme ", chromosomeNumber)
+        return(NULL)
+      }
+      ggplot(plot.data) + geom_point(aes(x=snp, y=val, colour = "red", size = 1),
+                                     data=plot.data[plot.data$representatives,]) +
+        geom_segment(aes(x=snp, xend=snp, y=0, yend=val, alpha=representatives)) +
+        ylab("") + scale_y_continuous("Marginal test p-value", breaks=-log(0.1^(1:10)),
+                                      labels=0.1^(1:10)) +
+        xlab("Genome") +
+        scale_x_continuous(limits=c(min(granice$x[chromosomeNumber]),
+                                    max(granice_max[chromosomeNumber])),
+                           breaks=rowMeans(cbind(granice$x, granice_max)),
+                           labels=granice$Group.1,
+                           minor_breaks=c(granice$x, max(granice_max))) +
+        scale_alpha_manual(guide=FALSE, values = c(0.5, 1)) +
+        scale_color_manual("", values = "red", labels="Clump representative") +
+        scale_size_area(guide=FALSE, max_size = 4) +
+        clumping_theme
+    } else{
+      ggplot(plot.data) + geom_point(aes(x=snp, y=val, colour = "red", size = 1),
+                                     data=plot.data[plot.data$representatives,]) +
+        geom_segment(aes(x=snp, xend=snp, y=0, yend=val, alpha=representatives)) +
+        ylab("") + scale_y_continuous("Marginal test p-value", breaks=-log(0.1^(1:5)),
+                                      labels=0.1^(1:5)) +
+        xlab("Genome") +
+        scale_x_continuous(limits=c(0, max(granice_max)),
+                           breaks=rowMeans(cbind(granice$x, granice_max)),
+                           labels=granice$Group.1,
+                           minor_breaks=c(granice$x, max(granice_max))) +
+        scale_alpha_manual(guide=FALSE, values = c(0.5, 1)) +
+        scale_color_manual("", values = "red", labels="Clump representative") +
+        scale_size_area(guide=FALSE, max_size = 4) +
+        theme(panel.background=element_blank(),
+              panel.grid.major.y=element_line(colour = "grey80"),
+              panel.grid.minor.y=element_line(colour = "grey90"),
+              panel.grid.major.x=element_blank(),
+              panel.grid.minor.x=element_line(colour = "grey70", linetype = "dotted", size=0.5),
+              axis.ticks.x=element_blank(),
+              legend.text = element_text(size=15),
+              legend.position="top",
+              legend.key =element_rect(fill="white"))
+    }
   } else {
-    plot.data <- data.frame(cbind(snp=x$selectedSnpsNumbersScreening[unlist(x$SNPclumps)],
-                                  val=-log(x$pVals[x$selectedSnpsNumbersScreening[unlist(x$SNPclumps)]])))
-    representatives = which(x$selectedSnpsNumbersScreening %in% x$selectedSnpsNumbers)
-    ggplot(plot.data) + geom_point(aes(x=snp, y=val, colour = "red", size = 6),
-                                   plot.data[representatives,]) +
-      geom_segment(aes(x=snp, xend=snp, y=0, yend=val, alpha=val/4)) +
-      ylab("") + scale_y_continuous("Marginal test p-value", breaks=-log(0.1^(1:5)),
-                                    labels=0.1^(1:5)) +
-      xlab("SNP number") +
-      scale_alpha_continuous(guide=FALSE) +
-      scale_color_discrete(guide=FALSE) +
-      scale_size_area(guide=FALSE) +
-      theme(panel.background=element_blank(),
-            panel.grid.major.y=element_line(colour = "grey80"),
-            panel.grid.minor.y=element_line(colour = "grey90"),
-            panel.grid.major.x=element_blank(),
-            panel.grid.minor.x=element_blank())
+    clumpingResult_no_info_print()
   }
 
 }
+
+
+clumpingResult_no_info_print <- function(x, ...){
+  plot.data <- data.frame(cbind(snp=x$selectedSnpsNumbersScreening[unlist(x$SNPclumps)],
+                                val=-log(x$pVals[x$selectedSnpsNumbersScreening[unlist(x$SNPclumps)]])))
+  representatives = which(x$selectedSnpsNumbersScreening %in% x$selectedSnpsNumbers)
+  ggplot(plot.data) + geom_point(aes(x=snp, y=val, colour = "red", size = 6),
+                                 plot.data[representatives,]) +
+    geom_segment(aes(x=snp, xend=snp, y=0, yend=val, alpha=val/4)) +
+    ylab("") + scale_y_continuous("Marginal test p-value", breaks=-log(0.1^(1:5)),
+                                  labels=0.1^(1:5)) +
+    xlab("SNP number") +
+    scale_alpha_continuous(guide=FALSE) +
+    scale_color_discrete(guide=FALSE) +
+    scale_size_area(guide=FALSE) +
+    theme(panel.background=element_blank(),
+          panel.grid.major.y=element_line(colour = "grey80"),
+          panel.grid.minor.y=element_line(colour = "grey90"),
+          panel.grid.major.x=element_blank(),
+          panel.grid.minor.x=element_blank())
+}
+
+
+clumping_theme <- theme(panel.background=element_blank(),
+                        panel.grid.major.y=element_line(colour = "grey80"),
+                        panel.grid.minor.y=element_line(colour = "grey90"),
+                        panel.grid.major.x=element_blank(),
+                        panel.grid.minor.x=element_line(colour = "grey70", linetype = "dotted", size=0.5),
+                        axis.ticks.x=element_blank(),
+                        legend.text = element_text(size=15),
+                        legend.position="top",
+                        legend.key =element_rect(fill="white"))
