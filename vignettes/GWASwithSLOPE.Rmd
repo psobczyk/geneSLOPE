@@ -44,7 +44,7 @@ snpsFile <- system.file("extdata", "plinkDataExample.raw", package = "geneSLOPE"
 ```
 
 ```{r}
-phenotype <- readPhenotype(filename = famFile, sep=";")
+phenotype <- read_phenotype(filename = famFile, sep=";")
 ```
 
 When you have phenotype you can move to reading snp data. 

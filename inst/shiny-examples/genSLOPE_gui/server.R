@@ -17,7 +17,7 @@ shinyServer(function(input, output) {
     validate(
       need(name != "", "Please upload phenotype data")
     )
-    readPhenotype(name$datapath, sep=input$sep, header = input$header)
+    read_phenotype(name$datapath, sep=input$sep, header = input$header)
   })
 
   output$phenotypeOk <- reactive({

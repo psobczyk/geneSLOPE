@@ -15,6 +15,6 @@ provied in .fam file
 }
 }
 \seealso{
-\code{\link{readPhenotype}}
+\code{\link{read_phenotype}}
 }
 

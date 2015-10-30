@@ -15,7 +15,7 @@
 #'
 #' @return object of class phenotypeData
 #'
-readPhenotype <- function(filename, sep=" ", header=FALSE, stringAsFactors=FALSE){
+read_phenotype <- function(filename, sep=" ", header=FALSE, stringAsFactors=FALSE){
   if(!file.exists(filename))
     stop(paste("File", filename, "does not exist"))
 
@@ -23,12 +23,12 @@ readPhenotype <- function(filename, sep=" ", header=FALSE, stringAsFactors=FALSE
                          stringsAsFactors = stringAsFactors)
   if(ncol(phe.data)==6){
     y = phe.data[,6]
-    y_info = phe.data[,c(1,2,5)]
-    colnames(y_info) = c("FID", "IID", "SEX")
+    y_info = phe.data
+    colnames(y_info) = c("FID", "IID", "PAT", "MAT", "SEX", "PHE")
   } else if(ncol(phe.data)==4){
     y = phe.data[,4]
-    y_info = phe.data[,c(1,2,3)]
-    colnames(y_info) = c("FID", "IID", "SEX")
+    y_info = phe.data
+    colnames(y_info) = c("FID", "IID", "SEX", "PHE")
   } else if(ncol(phe.data)==1){
     y = phe.data[,1]
     y_info = NULL

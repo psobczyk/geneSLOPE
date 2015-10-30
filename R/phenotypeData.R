@@ -9,7 +9,7 @@
 #' provied in .fam file
 #' }
 #'
-#' @seealso \code{\link{readPhenotype}}
+#' @seealso \code{\link{read_phenotype}}
 #' @name phenotypeData
 NULL
 
