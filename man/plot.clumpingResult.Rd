@@ -4,12 +4,15 @@
 \alias{plot.clumpingResult}
 \title{Plot clumpingResult class object}
 \usage{
-\method{plot}{clumpingResult}(x, chromosomeNumber = NULL, ...)
+\method{plot}{clumpingResult}(x, chromosomeNumber = NULL,
+  clumpNumber = NULL, ...)
 }
 \arguments{
 \item{x}{clumpingResult class object}
 
 \item{chromosomeNumber}{optional parameter, only selected chromosome will be plotted}
+
+\item{clumpNumber}{optional parameter, only SNPs from selected clump will be plotted}
 
 \item{...}{Further arguments to be passed to or from other methods. They are ignored in this function.}
 }
