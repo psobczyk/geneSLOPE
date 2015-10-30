@@ -117,13 +117,17 @@ plot.clumpingResult <- function(x, chromosomeNumber=NULL, ...){
       ggplot(plot.data) + geom_point(aes(x=snp, y=val, colour = "red", size = 1),
                                      data=plot.data[plot.data$representatives,]) +
         geom_segment(aes(x=snp, xend=snp, y=0, yend=val, alpha=representatives)) +
-        ylab("") + scale_y_continuous("Marginal test p-value", breaks=-log(0.1^(1:5)),
-                                      labels=0.1^(1:5)) +
+        ylab("") +
         xlab("Genome") +
-        scale_x_continuous(limits=c(0, max(granice_max)),
+        scale_x_continuous(expand = c(0,0),
+                           limits=c(0, max(granice_max)+1),
                            breaks=rowMeans(cbind(granice$x, granice_max)),
                            labels=granice$Group.1,
                            minor_breaks=c(granice$x, max(granice_max))) +
+        scale_y_continuous("Marginal test p-value", expand = c(0,0),
+                           limits=c(0, 1.1*max(plot.data$val)),
+                           breaks=-log(0.1^(1:5)),
+                           labels=0.1^(1:5)) +
         scale_alpha_manual(guide=FALSE, values = c(0.5, 1)) +
         scale_color_manual("", values = "red", labels="Clump representative") +
         scale_size_area(guide=FALSE, max_size = 4) +
@@ -166,3 +170,4 @@ clumping_theme <- theme(panel.background=element_blank(),
                         legend.text = element_text(size=15),
                         legend.position="top",
                         legend.key =element_rect(fill="white"))
+
