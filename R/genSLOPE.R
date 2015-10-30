@@ -39,7 +39,7 @@ genSLOPE <- function(clumpingResult, fdr = 0.1, lambda="gaussian", verbose = TRU
   if(length(selectedSNPs)==0)
     X_selected <- rep(1, length(clumpingResult$y))
   # refitting linear model
-  lm.fit.summary <- summary(lm(clumpingResult$y~X_selected))
+  lm.fit.summary <- summary(lm(clumpingResult$y~scale(X_selected)))
 
 
   result <- structure(

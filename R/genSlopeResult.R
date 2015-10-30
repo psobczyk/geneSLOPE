@@ -110,37 +110,62 @@ plot.genSlopeResult <- function(x, chromosomeNumber=NULL, ...){
       plot.data <- rbind(plot.data,
                          cbind(as.numeric(x$X_info[x$selectedSnpsClumpingNumbers[x$selectedClumps[[i]]],1]),
                                as.numeric(x$X_info[x$selectedSnpsClumpingNumbers[x$selectedClumps[[i]]],3]),
-                               i, abs(x$effects[i])/2))
+                               i, (x$effects[i]^2/var(x$y))))
     }
     rownames(plot.data) <- NULL
     plot.data <- data.frame(plot.data)
     colnames(plot.data) <- c("chromosome", "snp", "clump", "val")
-    granice <- aggregate(plot.data$snp, list(plot.data$chromosome), max)
+    plot.data <- cbind(plot.data,
+                       representatives = unlist(x$selectedClumps) %in% unlist(x$selectedSNPs))
+    granice <- aggregate(x$X_info[,3], list(x$X_info[,1]), max)
+    granice_max <- cumsum(granice$x)
     granice$x <- c(0,head(cumsum(granice$x),-1))
     for(i in unique(plot.data$chromosome)){
-      plot.data$snp[plot.data$chromosome==i] <- granice$x[which(granice$Group.1==i)] +
+      plot.data$snp[plot.data$chromosome==i] <- granice$x[i] +
         plot.data$snp[plot.data$chromosome==i]
     }
-    representatives = which(unlist(x$selectedClumps) %in% unlist(x$selectedSNPs))
-    plot.data$val[representatives] <- abs(x$effects)
-    if(!is.null(chromosomeNumber))
-      plot.data <- subset(plot.data, chromosome==chromosomeNumber)
-    plot.data$clump <- as.factor(plot.data$clump)
-    ggplot(plot.data) + geom_point(aes(x=snp, y=val, colour = clump, size = 6),
-                                   plot.data[representatives,]) +
-      geom_segment(aes(x=snp, xend=snp, y=0, yend=val, alpha=val/4, color=clump)) +
-      ylab("Effect size") + scale_y_continuous() +
-      xlab("Genome") + scale_x_continuous(breaks=granice$x, labels=granice$Group.1) +
-      scale_alpha_continuous(guide=FALSE) +
-      scale_color_discrete("Clump") +
-      scale_size_area(guide=FALSE) +
-      theme(panel.background=element_blank(),
-            panel.grid.major.y=element_line(colour = "grey80"),
-            panel.grid.minor.y=element_line(colour = "grey90"),
-            axis.text.y=element_blank(),
-            axis.ticks.y=element_blank(),
-            panel.grid.major.x=element_blank(),
-            panel.grid.minor.x=element_blank())
+    plot.data$val[plot.data$representatives] <- (x$effects^2/var(x$y))
+    if(!is.null(chromosomeNumber)) {
+      plot.data <- subset(plot.data, chromosome%in%chromosomeNumber)
+      if(nrow(plot.data)==0 | nrow(plot.data[plot.data$representatives,])==0) {
+        message("No SNPs selected in chromosme ", chromosomeNumber)
+        return(NULL)
+      }
+      plot.data$clump <- as.factor(plot.data$clump)
+      ggplot(plot.data) + geom_point(aes(x=snp, y=val, colour = clump, size = 6),
+                                     plot.data[plot.data$representatives,]) +
+        geom_segment(aes(x=snp, xend=snp, y=0, yend=val, alpha=representatives,
+                         color=clump)) +
+        ylab("% of variance explained") + scale_y_continuous() +
+        xlab("Genome") +
+        scale_x_continuous(limits=c(min(granice$x[chromosomeNumber]),
+                                    max(granice_max[chromosomeNumber])),
+                           breaks=rowMeans(cbind(granice$x, granice_max)),
+                           labels=granice$Group.1,
+                           minor_breaks=c(granice$x, max(granice_max))) +
+        scale_alpha_manual(guide=FALSE, values = c(0.5, 1)) +
+        scale_color_discrete("Clump") +
+        scale_size_area(guide=FALSE, max_size = 4) +
+        slope_result_theme
+    } else {
+      plot.data$clump <- as.factor(plot.data$clump)
+      ggplot(plot.data) + geom_point(aes(x=snp, y=val, colour = clump, size = 6),
+                                     plot.data[plot.data$representatives,]) +
+        geom_segment(aes(x=snp, xend=snp, y=0, yend=val, alpha=representatives,
+                         color=clump)) +
+        ylab("% of variance explained") + scale_y_continuous() +
+        xlab("Genome") +
+        scale_x_continuous(limits=c(0, max(granice_max)),
+                           breaks=rowMeans(cbind(granice$x, granice_max)),
+                           labels=granice$Group.1,
+                           minor_breaks=c(granice$x, max(granice_max))) +
+        scale_alpha_manual(guide=FALSE, values = c(0.5, 1)) +
+        scale_color_discrete("Clump") +
+        scale_size_area(guide=FALSE, max_size = 4) +
+        slope_result_theme
+    }
+
+
     } else {
       plot.data <- NULL
       for(i in 1L:length(x$selectedClumps)){
@@ -168,3 +193,13 @@ plot.genSlopeResult <- function(x, chromosomeNumber=NULL, ...){
               panel.grid.minor.x=element_blank())
     }
 }
+
+slope_result_theme <- theme(panel.background=element_blank(),
+                        panel.grid.major.y=element_line(colour = "grey80"),
+                        panel.grid.minor.y=element_line(colour = "grey90"),
+                        panel.grid.major.x=element_blank(),
+                        panel.grid.minor.x=element_line(colour = "grey70", linetype = "dotted", size=0.5),
+                        axis.ticks.x=element_blank(),
+                        legend.text = element_text(size=15),
+                        legend.position="bottom",
+                        legend.key =element_rect(fill="white"))

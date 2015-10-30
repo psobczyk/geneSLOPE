@@ -127,15 +127,7 @@ plot.clumpingResult <- function(x, chromosomeNumber=NULL, ...){
         scale_alpha_manual(guide=FALSE, values = c(0.5, 1)) +
         scale_color_manual("", values = "red", labels="Clump representative") +
         scale_size_area(guide=FALSE, max_size = 4) +
-        theme(panel.background=element_blank(),
-              panel.grid.major.y=element_line(colour = "grey80"),
-              panel.grid.minor.y=element_line(colour = "grey90"),
-              panel.grid.major.x=element_blank(),
-              panel.grid.minor.x=element_line(colour = "grey70", linetype = "dotted", size=0.5),
-              axis.ticks.x=element_blank(),
-              legend.text = element_text(size=15),
-              legend.position="top",
-              legend.key =element_rect(fill="white"))
+        clumping_theme
     }
   } else {
     clumpingResult_no_info_print()
