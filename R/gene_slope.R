@@ -29,6 +29,12 @@ gene_slope <- function(clumpingResult, fdr = 0.1, lambda="gaussian", verbose = T
   lambda <- SLOPE::create_lambda(length(clumpingResult$y),
                                  clumpingResult$numberOfSnps, fdr, "gaussian")
   lambda <- lambda[1:ncol(clumpingResult$X)]
+  lambda_diffs <- diff(lambda)
+  if(any(lambda_diffs==0) & which.min(lambda_diffs==0)==1){
+    warning("All lambdas are equal. SLOPE does not guarantee
+            False Discovery Rate control")
+  }
+
   slopeResult <- SLOPE::SLOPE(X = clumpingResult$X, y = clumpingResult$y,
                               fdr = fdr, lambda = lambda)
 
@@ -36,8 +42,9 @@ gene_slope <- function(clumpingResult, fdr = 0.1, lambda="gaussian", verbose = T
   selectedSNPs <- sort(selectedSNPs)
 
   X_selected <- clumpingResult$X_all[,selectedSNPs]
-  if(length(selectedSNPs)==0)
+  if(length(selectedSNPs)==0) {
     X_selected <- rep(1, length(clumpingResult$y))
+  }
   # refitting linear model
   lm.fit.summary <- summary(lm(clumpingResult$y~scale(X_selected)))
 
