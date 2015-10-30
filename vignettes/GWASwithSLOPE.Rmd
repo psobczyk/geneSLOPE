@@ -111,6 +111,25 @@ summary(slope.result)
 plot(slope.result)
 ```
 
+If one wants to identify interactively in which clump specific SNP is
+the procedure is the following. First plot the whole genome
+
+```{r, eval=FALSE}
+plot(slope.result)
+```
+
+The run function \emph{identify_clump} and select SNP of interest
+
+```{r, eval=FALSE}
+identify_clump(slope.result)
+```
+
+Then one can zoom into that clump
+
+```{r, warning = FALSE, fig.height=7, fig.width=7}
+plot(slope.result, clumpNumber = 1)
+```
+
 ### How changing parameters affects my analysis?
 
 There are three numerical parameters that influence result

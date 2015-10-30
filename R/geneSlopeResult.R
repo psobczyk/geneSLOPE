@@ -171,7 +171,9 @@ plot.geneSlopeResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...
                          color=clump)) +
         ylab("% of variance explained") + scale_y_continuous() +
         xlab("Genome") +
-        scale_x_continuous(breaks=rowMeans(cbind(granice$x, granice_max)),
+        scale_x_continuous(limits=c(min(granice$x[plot.data$chromosome]),
+                                    max(granice_max[plot.data$chromosome])),
+                           breaks=rowMeans(cbind(granice$x, granice_max)),
                            labels=granice$Group.1,
                            minor_breaks=c(granice$x, max(granice_max))) +
         scale_alpha_manual(guide=FALSE, values = c(0.5, 1)) +
