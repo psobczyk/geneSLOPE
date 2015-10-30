@@ -43,7 +43,7 @@ shinyServer(function(input, output) {
   })
 
   slopeResult <- eventReactive(input$go, {
-    genSLOPE(clumping(), input$fdr, verbose = FALSE)
+    gene_slope(clumping(), input$fdr, verbose = FALSE)
   })
 
   output$clumpSummary <- renderPrint({

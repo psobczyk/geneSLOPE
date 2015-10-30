@@ -11,13 +11,13 @@
 #' @param fdr, False Discovery Rate for SLOPE
 #' @param lambda lambda for SLOPE. See \code{\link[SLOPE]{create_lambda}}
 #' @param verbose if TRUE progress bar is printed
-#' @return object of class \code{\link{genSlopeResult}}
+#' @return object of class \code{\link{geneSlopeResult}}
 #'
 #' @examples
 #' \dontrun{
-#' slope.result <- genSLOPE(clumping, fdr=0.1)
+#' slope.result <- gene_slope(clumping.result, fdr=0.1)
 #' }
-genSLOPE <- function(clumpingResult, fdr = 0.1, lambda="gaussian", verbose = TRUE){
+gene_slope <- function(clumpingResult, fdr = 0.1, lambda="gaussian", verbose = TRUE){
   if(fdr>=1 | fdr <= 0){
     stop("FDR has to be within range (0,1)")
   }
@@ -59,7 +59,7 @@ genSLOPE <- function(clumpingResult, fdr = 0.1, lambda="gaussian", verbose = TRU
           selectedSnpsClumpingNumbers = clumpingResult$selectedSnpsNumbersScreening,
           numberOfSnps = clumpingResult$numberOfSnps,
           pValMax = clumpingResult$pValMax),
-    class="genSlopeResult")
+    class="geneSlopeResult")
   return(result)
 }
 

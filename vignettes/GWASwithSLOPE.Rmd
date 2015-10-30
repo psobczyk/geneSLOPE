@@ -101,7 +101,7 @@ plot(clumping.result, 1)
 Last step of analysis is using SLOPE
 
 ```{r}
-slope.result <- genSLOPE(clumping.result, fdr=0.1)
+slope.result <- gene_slope(clumping.result, fdr=0.1)
 ```
 
 As before one can plot and summarize results

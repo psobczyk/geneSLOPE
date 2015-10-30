@@ -1,7 +1,7 @@
-#' genSlopeResult class
+#' geneSlopeResult class
 #'
 #' A result of applying SLOPE to matrix of SNPs obtained by
-#' clumping produced. Result of function \code{\link{genSLOPE}}
+#' clumping produced. Result of function \code{\link{gene_slope}}
 #'
 #' @details Always a named list of ten elements
 #' \enumerate{
@@ -33,21 +33,21 @@
 #' \item \code{pValMax} numeric, p-value used in screening procedure
 #' }
 #' @seealso \code{\link{screeningResult}} \code{\link{clumpingResult}}
-#' \code{\link{genSLOPE}} \code{\link[SLOPE]{SLOPE}}
-#' @name genSlopeResult
+#' \code{\link{gene_slope}} \code{\link[SLOPE]{SLOPE}}
+#' @name geneSlopeResult
 NULL
 
 
-#' Print genSlopeResult class object
+#' Print geneSlopeResult class object
 #'
-#' @param x genSlopeResult class object
+#' @param x geneSlopeResult class object
 #' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
 #' @return Nothing.
 #' @export
 #'
-#' @method print genSlopeResult
-print.genSlopeResult <- function(x, ...){
-  cat("Object of class genSlopeResult\n")
+#' @method print geneSlopeResult
+print.geneSlopeResult <- function(x, ...){
+  cat("Object of class geneSlopeResult\n")
   cat("$X: numeric matrix\n")
   cat("\t", nrow(x$X), " rows\n")
   cat("\t", ncol(x$X), " columns\n")
@@ -81,30 +81,40 @@ print.genSlopeResult <- function(x, ...){
   cat("$pValMax: p-value threshold: ", x$pValMax, "\n")
 }
 
-#' Summary genSlopeResult class object
+#' Summary geneSlopeResult class object
 #'
-#' @param object genSlopeResult class object
+#' @param object geneSlopeResult class object
 #' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
 #' @export
 #'
-#' @method summary genSlopeResult
-summary.genSlopeResult <- function(object, ...){
-  cat("Object of class genSlopeResult\n")
-  cat(length(object$selectedSNPs), " snps selected\n")
-  cat("Effect size for selected snps\n")
-  cat(object$effects, "\n")
-  cat("R square of fitted model ", object$R2)
+#' @method summary geneSlopeResult
+summary.geneSlopeResult <- function(object, ...){
+  lambda_diffs <- diff(object$lambda)
+  if(any(lambda_diffs==0)){
+    kink <- which.min(lambda_diffs==0)
+  } else {
+    kink <- length(lambda)
+  }
+  cat("Object of class geneSlopeResult\n")
+  cat(length(object$selectedSNPs), " snps selected out of ",
+      ncol(object$clumpRepresentatives), " clump representatives\n")
+  cat("Effect size for selected snps (absolute values)\n")
+  cat("\tMin: ", min(abs(object$effects)), "\n")
+  cat("\tMean: ", mean(abs(object$effects)), "\n")
+  cat("\tMax: ", max(abs(object$effects)), "\n")
+  cat("R square of the final model: ", object$R2, "\n")
+  cat("Kink value: ", kink)
 }
 
 
-#' Plot genSlopeResult class object
+#' Plot geneSlopeResult class object
 #'
-#' @param x genSlopeResult class object
+#' @param x geneSlopeResult class object
 #' @param chromosomeNumber optional parameter, only selected chromosome will be plotted
 #' @param clumpNumber optional parameter, only SNPs from selected clump will be plotted
 #' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
 #' @export
-plot.genSlopeResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...){
+plot.geneSlopeResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...){
   if(!is.null(x$X_info)){
     plot.data <- NULL
     for(i in 1L:length(x$selectedClumps)){
@@ -227,9 +237,9 @@ slope_result_theme <- theme(panel.background=element_blank(),
                         legend.position="bottom",
                         legend.key =element_rect(fill="white"))
 
-#' Identify clump number in genSlopeResult class plot
+#' Identify clump number in geneSlopeResult class plot
 #'
-#' @param x genSlopeResult class object
+#' @param x geneSlopeResult class object
 #' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
 #' @export
 identify_clump <- function(x, ...) {

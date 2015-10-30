@@ -2,16 +2,16 @@
 % Please edit documentation in R/genSlopeResult.R
 \name{identify_clump}
 \alias{identify_clump}
-\title{Identify clump number in genSlopeResult class plot}
+\title{Identify clump number in geneSlopeResult class plot}
 \usage{
 identify_clump(x, ...)
 }
 \arguments{
-\item{x}{genSlopeResult class object}
+\item{x}{geneSlopeResult class object}
 
 \item{...}{Further arguments to be passed to or from other methods. They are ignored in this function.}
 }
 \description{
-Identify clump number in genSlopeResult class plot
+Identify clump number in geneSlopeResult class plot
 }
 
