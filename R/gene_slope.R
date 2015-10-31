@@ -8,16 +8,17 @@
 #'
 #' @export
 #' @param clumpingResult clumpProcedure output
-#' @param fdr, False Discovery Rate for SLOPE
+#' @param fdr, numeric, False Discovery Rate for SLOPE
 #' @param lambda lambda for SLOPE. See \code{\link[SLOPE]{create_lambda}}
-#' @param verbose if TRUE progress bar is printed
+#' @param sigma numeric, sigma for SLOPE
+#' @param verbose logical, if TRUE progress bar is printed
 #' @return object of class \code{\link{geneSlopeResult}}
 #'
 #' @examples
 #' \dontrun{
 #' slope.result <- gene_slope(clumping.result, fdr=0.1)
 #' }
-gene_slope <- function(clumpingResult, fdr = 0.1, lambda="gaussian", verbose = TRUE){
+gene_slope <- function(clumpingResult, fdr = 0.1, lambda="gaussian", sigma=NULL, verbose = TRUE){
   if(fdr>=1 | fdr <= 0){
     stop("FDR has to be within range (0,1)")
   }
@@ -36,18 +37,18 @@ gene_slope <- function(clumpingResult, fdr = 0.1, lambda="gaussian", verbose = T
   }
 
   slopeResult <- SLOPE::SLOPE(X = clumpingResult$X, y = clumpingResult$y,
-                              fdr = fdr, lambda = lambda)
+                              fdr = fdr, lambda = lambda, sigma = sigma)
 
   selectedSNPs <- unlist(clumpingResult$SNPnumber)[slopeResult$selected]
   selectedSNPs <- sort(selectedSNPs)
 
   X_selected <- clumpingResult$X_all[,selectedSNPs]
   if(length(selectedSNPs)==0) {
-    X_selected <- rep(1, length(clumpingResult$y))
+    lm.fit.summary <- summary(lm(clumpingResult$y~1))
+  } else {
+    # refitting linear model
+    lm.fit.summary <- summary(lm(clumpingResult$y~scale(X_selected)))
   }
-  # refitting linear model
-  lm.fit.summary <- summary(lm(clumpingResult$y~scale(X_selected)))
-
 
   result <- structure(
     list( X = X_selected,

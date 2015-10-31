@@ -4,16 +4,19 @@
 \alias{gene_slope}
 \title{GWAS with SLOPE}
 \usage{
-gene_slope(clumpingResult, fdr = 0.1, lambda = "gaussian", verbose = TRUE)
+gene_slope(clumpingResult, fdr = 0.1, lambda = "gaussian", sigma = NULL,
+  verbose = TRUE)
 }
 \arguments{
 \item{clumpingResult}{clumpProcedure output}
 
-\item{fdr,}{False Discovery Rate for SLOPE}
+\item{fdr,}{numeric, False Discovery Rate for SLOPE}
 
 \item{lambda}{lambda for SLOPE. See \code{\link[SLOPE]{create_lambda}}}
 
-\item{verbose}{if TRUE progress bar is printed}
+\item{sigma}{numeric, sigma for SLOPE}
+
+\item{verbose}{logical, if TRUE progress bar is printed}
 }
 \value{
 object of class \code{\link{geneSlopeResult}}
