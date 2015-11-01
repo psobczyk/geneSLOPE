@@ -31,3 +31,13 @@ recodeAD <- function(x){
     }
   })
 }
+
+#estimate noise in lm
+estimate_noise <- function (X, y, intercept = TRUE) {
+  n = nrow(X)
+  if (intercept)
+    X = cbind(rep(1, n), X)
+  p = ncol(X)
+  fit = lm.fit(X, y)
+  sqrt(sum(fit$residuals^2)/(n - p))
+}

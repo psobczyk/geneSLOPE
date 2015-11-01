@@ -115,7 +115,7 @@ summary.geneSlopeResult <- function(object, ...){
 #' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
 #' @export
 plot.geneSlopeResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...){
-  if(length(x$selectedSNPs)){
+  if(length(x$selectedSNPs)==0){
     message("No SNPs selected by SLOPE")
     return(NULL)
   }

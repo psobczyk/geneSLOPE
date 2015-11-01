@@ -14,7 +14,7 @@
 #'
 #' @docType package
 #' @name geneSLOPE
-#' @details Version: 0.32.15
+#' @details Version: 0.33.0
 #' @importFrom SLOPE SLOPE
 #' @importFrom SLOPE create_lambda
 #' @import ggplot2

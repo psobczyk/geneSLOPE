@@ -36,6 +36,20 @@ gene_slope <- function(clumpingResult, fdr = 0.1, lambda="gaussian", sigma=NULL,
             False Discovery Rate control")
   }
 
+  if (is.null(sigma) && (nrow(clumpingResult$X) >= ncol(clumpingResult$X) + 30)) {
+    selected = NULL
+    repeat {
+      selected.prev = selected
+      sigma = c(sigma, estimate_noise(clumpingResult$X[, selected], clumpingResult$y))
+      result = SLOPE::SLOPE(clumpingResult$X, clumpingResult$y, fdr = fdr,
+                            lambda = lambda, sigma = tail(sigma, 1))
+      selected = result$selected
+      if (identical(selected, selected.prev))
+        break
+    }
+    sigma = tail(sigma, 1)
+  }
+
   slopeResult <- SLOPE::SLOPE(X = clumpingResult$X, y = clumpingResult$y,
                               fdr = fdr, lambda = lambda, sigma = sigma)
 
