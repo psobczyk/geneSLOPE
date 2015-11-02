@@ -125,7 +125,7 @@ plot.geneSlopeResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...
       plot.data <- rbind(plot.data,
                          cbind(as.numeric(x$X_info[x$selectedSnpsClumpingNumbers[x$selectedClumps[[i]]],1]),
                                as.numeric(x$X_info[x$selectedSnpsClumpingNumbers[x$selectedClumps[[i]]],3]),
-                               i, (x$effects[i]^2/var(x$y))))
+                               i, x$effects[i]^2/var(as.vector(x$y))))
     }
     rownames(plot.data) <- NULL
     plot.data <- data.frame(plot.data)
