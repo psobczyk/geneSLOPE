@@ -22,28 +22,15 @@ identify_clump <- function(x, ...){
 #' @export
 #'
 identify_clump.clumpingResult <- function(x, ...) {
-  plot.data <- NULL
-  for(i in 1L:length(x$SNPclumps)){
-    plot.data <- rbind(plot.data,
-                       cbind(as.numeric(x$X_info[x$selectedSnpsNumbersScreening[x$SNPclumps[[i]]],1]),
-                             as.numeric(x$X_info[x$selectedSnpsNumbersScreening[x$SNPclumps[[i]]],3]),
-                             i, -log(x$pVals[x$selectedSnpsNumbersScreening[x$SNPclumps[[i]]]])))
-  }
-  rownames(plot.data) <- NULL
-  plot.data <- data.frame(plot.data)
-  colnames(plot.data) <- c("chromosome", "snp", "clump", "val")
-  plot.data <- cbind(plot.data,
-                     representatives = unlist(x$SNPclumps) %in% unlist(x$SNPnumber))
+  plot.data <- create_clumping_plot_data(x)
+
   granice <- aggregate(x$X_info[,3], list(x$X_info[,1]), max)
   granice_max <- cumsum(granice$x)
   granice$x <- c(0,head(cumsum(granice$x),-1))
-  for(i in unique(plot.data$chromosome)){
-    plot.data$snp[plot.data$chromosome==i] <- granice$x[i] +
-      plot.data$snp[plot.data$chromosome==i]
-  }
 
-  a<- plot.data$snp
+  a <- plot.data$snp
   b <- plot.data$val
+
   viewport_name <- unname(grid.ls(print = FALSE)[[1]][[4]])
   downViewport(viewport_name)
   # showViewport()
@@ -64,28 +51,13 @@ identify_clump.clumpingResult <- function(x, ...) {
 #'
 #' @export
 identify_clump.geneSlopeResult <- function(x, ...) {
-  plot.data <- NULL
-  for(i in 1L:length(x$selectedClumps)){
-    plot.data <- rbind(plot.data,
-                       cbind(as.numeric(x$X_info[x$selectedSnpsClumpingNumbers[x$selectedClumps[[i]]],1]),
-                             as.numeric(x$X_info[x$selectedSnpsClumpingNumbers[x$selectedClumps[[i]]],3]),
-                             i, (x$effects[i]^2/var(x$y))))
-  }
-  rownames(plot.data) <- NULL
-  plot.data <- data.frame(plot.data)
-  colnames(plot.data) <- c("chromosome", "snp", "clump", "val")
-  plot.data <- cbind(plot.data,
-                     representatives = unlist(x$selectedClumps) %in% unlist(x$selectedSNPs))
+  plot.data <- create_slope_plot_data(x)
+
   granice <- aggregate(x$X_info[,3], list(x$X_info[,1]), max)
   granice_max <- cumsum(granice$x)
   granice$x <- c(0,head(cumsum(granice$x),-1))
-  for(i in unique(plot.data$chromosome)){
-    plot.data$snp[plot.data$chromosome==i] <- granice$x[i] +
-      plot.data$snp[plot.data$chromosome==i]
-  }
-  plot.data$val[plot.data$representatives] <- (x$effects^2/var(x$y))
 
-  a<- plot.data$snp
+  a <- plot.data$snp
   b <- plot.data$val
   viewport_name <- unname(grid.ls(print = FALSE)[[1]][[4]])
   downViewport(viewport_name)

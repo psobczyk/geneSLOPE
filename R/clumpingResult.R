@@ -82,25 +82,11 @@ summary.clumpingResult <- function(object, ...){
 #' @keywords internal
 plot.clumpingResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...){
   if(!is.null(x$X_info)){
-    plot.data <- NULL
-    for(i in 1L:length(x$SNPclumps)){
-      plot.data <- rbind(plot.data,
-                         cbind(as.numeric(x$X_info[x$selectedSnpsNumbersScreening[x$SNPclumps[[i]]],1]),
-                               as.numeric(x$X_info[x$selectedSnpsNumbersScreening[x$SNPclumps[[i]]],3]),
-                               i, -log(x$pVals[x$selectedSnpsNumbersScreening[x$SNPclumps[[i]]]])))
-    }
-    rownames(plot.data) <- NULL
-    plot.data <- data.frame(plot.data)
-    colnames(plot.data) <- c("chromosome", "snp", "clump", "val")
-    plot.data <- cbind(plot.data,
-                       representatives = unlist(x$SNPclumps) %in% unlist(x$SNPnumber))
+    plot.data <- create_clumping_plot_data(x)
     granice <- aggregate(x$X_info[,3], list(x$X_info[,1]), max)
     granice_max <- cumsum(granice$x)
     granice$x <- c(0,head(cumsum(granice$x),-1))
-    for(i in unique(plot.data$chromosome)){
-      plot.data$snp[plot.data$chromosome==i] <- granice$x[i] +
-        plot.data$snp[plot.data$chromosome==i]
-    }
+
     if(!is.null(chromosomeNumber)){
       plot.data <- subset(plot.data, plot.data$chromosome%in%chromosomeNumber)
       if(nrow(plot.data)==0) {
@@ -110,8 +96,8 @@ plot.clumpingResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...)
       ggplot(plot.data) + geom_point(aes(x=snp, y=val, colour = "red", size = 1),
                                      data=plot.data[plot.data$representatives,]) +
         geom_segment(aes(x=snp, xend=snp, y=0, yend=val, alpha=representatives)) +
-        ylab("") + scale_y_continuous("Marginal test p-value", breaks=-log(0.1^(1:10)),
-                                      labels=0.1^(1:10)) +
+        ylab("") + scale_y_continuous("Marginal test p-value", breaks=-log(0.1^(1:20)),
+                                      labels=0.1^(1:20)) +
         xlab("Genome") +
         scale_x_continuous(limits=c(min(granice$x[chromosomeNumber]),
                                     max(granice_max[chromosomeNumber])),
@@ -131,8 +117,8 @@ plot.clumpingResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...)
       ggplot(plot.data) + geom_point(aes(x=snp, y=val, colour = "red", size = 1),
                                      data=plot.data[plot.data$representatives,]) +
         geom_segment(aes(x=snp, xend=snp, y=0, yend=val, alpha=representatives)) +
-        ylab("") + scale_y_continuous("Marginal test p-value", breaks=-log(0.1^(1:10)),
-                                      labels=0.1^(1:10)) +
+        ylab("") + scale_y_continuous("Marginal test p-value", breaks=-log(0.1^(1:20)),
+                                      labels=0.1^(1:20)) +
         xlab("Genome") +
         scale_x_continuous(limits=c(min(granice$x[plot.data$chromosome]),
                                     max(granice_max[plot.data$chromosome])),
@@ -156,8 +142,8 @@ plot.clumpingResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...)
                            minor_breaks=c(granice$x, max(granice_max))) +
         scale_y_continuous("Marginal test p-value", expand = c(0,0),
                            limits=c(0, 1.1*max(plot.data$val)),
-                           breaks=-log(0.1^(1:5)),
-                           labels=0.1^(1:5)) +
+                           breaks=-log(0.1^(1:20)),
+                           labels=0.1^(1:20)) +
         scale_alpha_manual(guide=FALSE, values = c(0.5, 1)) +
         scale_color_manual("", values = "red", labels="Clump representative") +
         scale_size_area(guide=FALSE, max_size = 4) +

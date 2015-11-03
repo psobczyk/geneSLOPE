@@ -120,26 +120,11 @@ plot.geneSlopeResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...
     return(NULL)
   }
   if(!is.null(x$X_info)){
-    plot.data <- NULL
-    for(i in 1L:length(x$selectedClumps)){
-      plot.data <- rbind(plot.data,
-                         cbind(as.numeric(x$X_info[x$selectedSnpsClumpingNumbers[x$selectedClumps[[i]]],1]),
-                               as.numeric(x$X_info[x$selectedSnpsClumpingNumbers[x$selectedClumps[[i]]],3]),
-                               i, x$effects[i]^2/var(as.vector(x$y))))
-    }
-    rownames(plot.data) <- NULL
-    plot.data <- data.frame(plot.data)
-    colnames(plot.data) <- c("chromosome", "snp", "clump", "val")
-    plot.data <- cbind(plot.data,
-                       representatives = unlist(x$selectedClumps) %in% unlist(x$selectedSNPs))
+    plot.data <- create_slope_plot_data(x)
     granice <- aggregate(x$X_info[,3], list(x$X_info[,1]), max)
     granice_max <- cumsum(granice$x)
     granice$x <- c(0,head(cumsum(granice$x),-1))
-    for(i in unique(plot.data$chromosome)){
-      plot.data$snp[plot.data$chromosome==i] <- granice$x[i] +
-        plot.data$snp[plot.data$chromosome==i]
-    }
-    plot.data$val[plot.data$representatives] <- (x$effects^2/var(x$y))
+
     if(!is.null(chromosomeNumber)) {
       plot.data <- subset(plot.data, chromosome%in%chromosomeNumber)
       if(nrow(plot.data)==0 | nrow(plot.data[plot.data$representatives,])==0) {
