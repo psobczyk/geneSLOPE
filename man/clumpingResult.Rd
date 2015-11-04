@@ -4,7 +4,7 @@
 \alias{clumpingResult}
 \title{clumpingResult class}
 \description{
-A result of procedure for snp clumping produced by \code{\link{clumpingProcedure}}
+A result of procedure for snp clumping produced by \code{\link{clumping_procedure}}
 }
 \details{
 Always a named list of eleven elements
@@ -28,6 +28,6 @@ data.frame are related to snps that passed screening
 }
 }
 \seealso{
-\code{\link{screeningResult}} \code{\link{clumpingProcedure}}
+\code{\link{screeningResult}} \code{\link{clumping_procedure}}
 }
 

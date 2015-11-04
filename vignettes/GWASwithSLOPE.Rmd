@@ -75,7 +75,7 @@ see [How this procedure works exactly?](#how-this-procedure-works-exactly)
 $rho$ controls number and size of clumps. For details see [How changing parameters affects my analysis?](#how-changing-parameters-affects-my-analysis)
 
 ```{r}
-clumping.result <- clumpingProcedure(screening.result, rho = 0.3, verbose = FALSE)
+clumping.result <- clumping_procedure(screening.result, rho = 0.3, verbose = FALSE)
 ```
 
 What is the result of clumping procedure?

@@ -1,6 +1,6 @@
 #' clumpingResult class
 #'
-#' A result of procedure for snp clumping produced by \code{\link{clumpingProcedure}}
+#' A result of procedure for snp clumping produced by \code{\link{clumping_procedure}}
 #'
 #' @details Always a named list of eleven elements
 #' \enumerate{
@@ -21,7 +21,7 @@
 #' \item \code{pVals} numeric vector, p-values from marginal tests for each snp
 #' \item \code{pValMax} numeric, p-value used in screening procedure
 #' }
-#' @seealso \code{\link{screeningResult}} \code{\link{clumpingProcedure}}
+#' @seealso \code{\link{screeningResult}} \code{\link{clumping_procedure}}
 #' @name clumpingResult
 NULL
 
