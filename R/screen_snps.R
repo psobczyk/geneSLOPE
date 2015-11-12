@@ -25,7 +25,7 @@
 screen_snps <- function(rawFile, mapFile="", phenotype, pValMax=0.05, chunkSize=100,
                         verbose = TRUE){
   if(tail(strsplit(rawFile, "\\.")[[1]], 1) != "raw")
-    stop(paste("Wrong file extension in", rawFile, ".raw file is required"))
+    warning(paste("Wrong file extension in", rawFile, ".raw file is required"))
 
   if(!file.exists(rawFile)) stop(paste("File", rawFile, "not found"))
 

@@ -46,14 +46,14 @@ test_that("Give warning when chunk size is smaller than 10",{
 })
 
 
-test_that("Error when parameter rawFile is not .raw",{
+test_that("Warning when parameter rawFile is not .raw",{
   famFile <- system.file("extdata", "plinkPhenotypeExample.fam", package = "geneSLOPE")
   mapFile <- system.file("extdata", "plinkMapExample.map", package = "geneSLOPE")
   # we change file extension
   snpsFile <- "fileWithWrongExtension.dup"
   phenotype <- read_phenotype(filename = famFile, sep=";")
 
-  expect_error(screen_snps(snpsFile, mapFile, phenotype, pValMax = 0.05,
+  expect_warning(screen_snps(snpsFile, mapFile, phenotype, pValMax = 0.05,
                           chunkSize = 100, verbose=FALSE), ".raw")
 })
 
