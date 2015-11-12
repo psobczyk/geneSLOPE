@@ -82,6 +82,7 @@ summary.clumpingResult <- function(object, ...){
 #' @keywords internal
 plot.clumpingResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...){
   if(!is.null(x$X_info)){
+    chromosome <- snp <- val <- clump <- representatives <- NULL #to remove CRAN's NOTE
     plot.data <- create_clumping_plot_data(x)
     granice <- aggregate(x$X_info[,3], list(x$X_info[,1]), max)
     granice_max <- cumsum(granice$x)
@@ -157,6 +158,7 @@ plot.clumpingResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...)
 
 
 clumpingResult_no_info_print <- function(x, ...){
+  snp <- val <- clump  <- NULL #to remove CRAN's NOTE
   plot.data <- data.frame(cbind(snp=x$selectedSnpsNumbersScreening[unlist(x$SNPclumps)],
                                 val=-log(x$pVals[x$selectedSnpsNumbersScreening[unlist(x$SNPclumps)]])))
   representatives = which(x$selectedSnpsNumbersScreening %in% x$selectedSnpsNumbers)

@@ -93,7 +93,7 @@ summary.geneSlopeResult <- function(object, ...){
   if(any(lambda_diffs==0)){
     kink <- which.min(lambda_diffs==0)
   } else {
-    kink <- length(lambda)
+    kink <- length(object$lambda)
   }
   cat("Object of class geneSlopeResult\n")
   cat(length(object$selectedSNPs), " snps selected out of ",
@@ -115,6 +115,7 @@ summary.geneSlopeResult <- function(object, ...){
 #' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
 #' @export
 plot.geneSlopeResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...){
+  chromosome <- snp <- val <- clump <- representatives <- NULL #to remove CRAN's NOTE
   if(length(x$selectedSNPs)==0){
     message("No SNPs selected by SLOPE")
     return(NULL)
