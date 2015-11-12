@@ -12,7 +12,7 @@
 #'
 #' @return object of class \code{\link{clumpingResult}}
 #'
-clumping_procedure <- function(screenResult, rho = 0.5, verbose = TRUE){
+clump_snps <- function(screenResult, rho = 0.5, verbose = TRUE){
 
   if(rho>=1 | rho <= 0)
     stop("Error: Rho has to be within range (0,1)")

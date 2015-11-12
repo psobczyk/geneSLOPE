@@ -18,7 +18,7 @@ are not strognly correlated)
 }
 }
 \details{
-Version: 0.33.3
+Version: 0.33.4
 }
 \examples{
 \donttest{
@@ -27,7 +27,7 @@ mapFile <- system.file("extdata", "plinkMapExample.map", package = "cps")
 snpsFile <- system.file("extdata", "plinkDataExample.raw", package = "cps")
 phe <- read_phenotype(filename = famFile, sep=";")
 screening.result <- screen_snps(snpsFile, mapFile, phe, pValMax = 0.05, chunkSize = 1e2)
-clumping.result <- clumping_procedure(screening.result, rho = 0.3, verbose = TRUE)
+clumping.result <- clump_snps(screening.result, rho = 0.3, verbose = TRUE)
 slope.result <- gene_slope(clumping.result, fdr=0.1)
 }
 \dontrun{
