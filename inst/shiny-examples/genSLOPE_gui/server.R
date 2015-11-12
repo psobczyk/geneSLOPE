@@ -1,9 +1,4 @@
 
-# This is the server logic for a Shiny web application.
-# You can find out more about building applications with Shiny here:
-#
-# http://shiny.rstudio.com
-#
 
 library(shiny)
 library(cps)
@@ -43,7 +38,7 @@ shinyServer(function(input, output) {
   })
 
   slopeResult <- eventReactive(input$go, {
-    gene_slope(clumping(), input$fdr, verbose = FALSE)
+    select_snps(clumping(), input$fdr, verbose = FALSE)
   })
 
   output$clumpSummary <- renderPrint({

@@ -16,9 +16,9 @@
 #'
 #' @examples
 #' \dontrun{
-#' slope.result <- gene_slope(clumping.result, fdr=0.1)
+#' slope.result <- select_snps(clumping.result, fdr=0.1)
 #' }
-gene_slope <- function(clumpingResult, fdr = 0.1, lambda="gaussian", sigma=NULL, verbose = TRUE){
+select_snps <- function(clumpingResult, fdr = 0.1, lambda="gaussian", sigma=NULL, verbose = TRUE){
   if(fdr>=1 | fdr <= 0){
     stop("FDR has to be within range (0,1)")
   }

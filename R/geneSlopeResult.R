@@ -1,7 +1,7 @@
 #' geneSlopeResult class
 #'
 #' A result of applying SLOPE to matrix of SNPs obtained by
-#' clumping produced. Result of function \code{\link{gene_slope}}
+#' clumping produced. Result of function \code{\link{select_snps}}
 #'
 #' @details Always a named list of ten elements
 #' \enumerate{
@@ -33,7 +33,7 @@
 #' \item \code{pValMax} numeric, p-value used in screening procedure
 #' }
 #' @seealso \code{\link{screeningResult}} \code{\link{clumpingResult}}
-#' \code{\link{gene_slope}} \code{\link[SLOPE]{SLOPE}}
+#' \code{\link{select_snps}} \code{\link[SLOPE]{SLOPE}}
 #' @name geneSlopeResult
 NULL
 
