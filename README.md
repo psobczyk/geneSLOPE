@@ -2,7 +2,7 @@
 
 -------------
 
-**geneSLOPE** --- Genome Wide Association Study with SLOPE
+**geneSLOPE** -- Genome Wide Association Study with SLOPE
 -------------------------
 
 Package **geneSLOPE** can be used to perform Genome-wide association study with 
@@ -10,7 +10,7 @@ Package **geneSLOPE** can be used to perform Genome-wide association study with
 
 Such an analysis  is split into three steps.
 
-1. Data is read using *bigmemory* package and immediately screened using marginal tests for each SNP
+1. Data is read and immediately screened using marginal test for each SNP
 
 2. SNPs are clumped based on correlations
 
