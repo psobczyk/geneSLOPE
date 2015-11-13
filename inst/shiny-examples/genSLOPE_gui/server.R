@@ -1,7 +1,7 @@
 
 
 library(shiny)
-library(cps)
+library(geneSLOPE)
 
 options(shiny.maxRequestSize=300*1024^2)
 
