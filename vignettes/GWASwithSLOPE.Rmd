@@ -44,7 +44,7 @@ snpsFile <- system.file("extdata", "plinkDataExample.raw", package = "geneSLOPE"
 ```
 
 ```{r}
-phenotype <- read_phenotype(filename = famFile, sep=";")
+phenotype <- read_phenotype(filename = famFile)
 ```
 
 When you have phenotype you can move to reading snp data. 
@@ -111,23 +111,32 @@ summary(slope.result)
 plot(slope.result)
 ```
 
-If one wants to identify interactively in which clump specific SNP is
-the procedure is the following. First plot the whole genome
+It is possible to identify interactively clump number of specific SNP.
+The procedure is the following. First plot the whole genome,
+then run function \emph{identify_clump} and click on SNP of interest.
 
 ```{r, eval=FALSE}
 plot(slope.result)
-```
-
-The run function \emph{identify_clump} and select SNP of interest
-
-```{r, eval=FALSE}
 identify_clump(slope.result)
 ```
 
-Then one can zoom into that clump
+When clump is identified one can zoom into it
 
 ```{r, warning = FALSE, fig.height=7, fig.width=7}
 plot(slope.result, clumpNumber = 1)
+```
+
+It is easy to get information about selected SNPs.
+To get indices of columns in original SNP matrix they refer to use
+
+```{r}
+slope.result$selectedSnpsNumbers
+```
+
+If .map file was given, then one can get more information about SNPs
+
+```{r}
+slope.result$X_info[slope.result$selectedSnpsNumbers,]
 ```
 
 ### How changing parameters affects my analysis?
