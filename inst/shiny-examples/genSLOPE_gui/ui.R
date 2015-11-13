@@ -10,7 +10,7 @@ shinyUI(fluidPage(
     "))
   ),
 
-  titlePanel(h1("GWAS with SLOPE", align = "center", style="color:#317eac")),
+  titlePanel(h1("GWAS with SLOPE", align = "center", style="color:#317eac"), windowTitle = "GWAS with SLOPE"),
 
   column(4, wellPanel(
     fileInput("fileY",

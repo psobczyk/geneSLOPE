@@ -1,7 +1,7 @@
 Package: geneSLOPE
 Type: Package
 Title: Genome-wide Association Study with SLOPE
-Version: 0.34.0
+Version: 0.34.1
 Date: 2015-11-13
 Author: Malgorzata Bogdan, Damian Brzyski, Christine Peterson, Chiara Sabatti, Piotr Sobczyk
 Maintainer: Piotr Sobczyk <piotr.sobczyk@pwr.edu.pl>
