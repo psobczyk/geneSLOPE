@@ -96,8 +96,8 @@ summary.geneSlopeResult <- function(object, ...){
     kink <- length(object$lambda)
   }
   cat("Object of class geneSlopeResult\n")
-  cat(length(object$selectedSNPs), " snps selected out of ",
-      ncol(object$clumpRepresentatives), " clump representatives\n")
+  cat(length(object$selectedSNPs), "snps selected out of",
+      length(object$clumpRepresentatives), "clump representatives\n")
   cat("Effect size for selected snps (absolute values)\n")
   cat("\tMin: ", min(abs(object$effects)), "\n")
   cat("\tMean: ", mean(abs(object$effects)), "\n")
