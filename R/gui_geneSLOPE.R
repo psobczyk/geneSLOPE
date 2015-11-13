@@ -3,6 +3,8 @@
 #' A graphical user interface for performing Genome-wide
 #' Association Study with SLOPE
 #'
+#' @details requires installing \pkg{\link{shiny}} package
+#'
 #' @return null
 #' @export
 gui_geneSLOPE <- function() {

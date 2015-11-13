@@ -14,13 +14,13 @@
 #'
 #' @docType package
 #' @name geneSLOPE
-#' @details Version: 0.34.1
+#' @details Version: 0.34.2
 #' @importFrom SLOPE SLOPE
 #' @importFrom SLOPE create_lambda
 #' @import ggplot2
 #' @import grid
 #' @importFrom bigmemory read.big.matrix
-#' @author Malgorzata Bogdan, Damian Brzyski, Christine Peterson, Chiara Sabatti,
+#' @author Malgorzata Bogdan, Damian Brzyski, Christine Peterson, Chiara Sabatti, Laurel Stell,
 #' Piotr Sobczyk
 #'
 #' Maintainer: Piotr Sobczyk \email{Piotr.Sobczyk@@pwr.edu.pl}

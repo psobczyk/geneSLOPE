@@ -13,4 +13,7 @@ null
 A graphical user interface for performing Genome-wide
 Association Study with SLOPE
 }
+\details{
+requires installing \pkg{\link{shiny}} package
+}
 

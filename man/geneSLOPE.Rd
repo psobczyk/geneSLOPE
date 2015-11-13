@@ -18,7 +18,7 @@ are not strognly correlated)
 }
 }
 \details{
-Version: 0.34.1
+Version: 0.34.2
 }
 \examples{
 \donttest{
@@ -35,7 +35,7 @@ gui_geneSLOPE()
 }
 }
 \author{
-Malgorzata Bogdan, Damian Brzyski, Christine Peterson, Chiara Sabatti,
+Malgorzata Bogdan, Damian Brzyski, Christine Peterson, Chiara Sabatti, Laurel Stell,
 Piotr Sobczyk
 
 Maintainer: Piotr Sobczyk \email{Piotr.Sobczyk@pwr.edu.pl}
