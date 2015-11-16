@@ -142,16 +142,23 @@ plot.geneSlopeResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...
     granice$x <- c(0,head(cumsum(granice$x),-1))
 
     if(!is.null(chromosomeNumber)) {
-      plot.data <- subset(plot.data, chromosome%in%chromosomeNumber)
-      if(nrow(plot.data)==0 | nrow(plot.data[plot.data$representatives,])==0) {
+      plot.data <- subset(plot.data, plot.data$chromosome%in%chromosomeNumber)
+      if(nrow(plot.data)==0) {
         message("No SNPs selected in chromosme ", chromosomeNumber)
         return(NULL)
       }
       plot.data$clump <- as.factor(plot.data$clump)
-      ggplot(plot.data) + geom_point(aes(x=snp, y=val, colour = clump, size = 6),
-                                     plot.data[plot.data$representatives,]) +
+      if(nrow(plot.data[plot.data$representatives,])==0) {
+        p <- ggplot(plot.data)
+      } else {
+        p <- ggplot(plot.data) + geom_point(aes(x=snp, y=val, colour = clump, size = 6),
+                                            plot.data[plot.data$representatives,])
+      }
+      p +
         geom_segment(aes(x=snp, xend=snp, y=0, yend=val, alpha=representatives,
                          color=clump)) +
+        ggtitle(expression(atop(bold("SLOPE selection result"),
+                                atop(italic("Dots indicate clump representatives. Colors indicate different clumps"), "")))) +
         ylab("% of variance explained") + scale_y_continuous() +
         xlab("Genome") +
         scale_x_continuous(limits=c(min(granice$x[chromosomeNumber]),
@@ -164,7 +171,7 @@ plot.geneSlopeResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...
         scale_size_area(guide=FALSE, max_size = 4) +
         slope_result_theme
     } else if(!is.null(clumpNumber)) {
-      plot.data <- subset(plot.data, clump%in%clumpNumber)
+      plot.data <- subset(plot.data, plot.data$clump%in%clumpNumber)
       if(nrow(plot.data)==0 | nrow(plot.data[plot.data$representatives,])==0) {
         message("No SNPs selected in clump ", clumpNumber)
         return(NULL)
@@ -174,6 +181,8 @@ plot.geneSlopeResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...
                                      plot.data[plot.data$representatives,]) +
         geom_segment(aes(x=snp, xend=snp, y=0, yend=val, alpha=representatives,
                          color=clump)) +
+        ggtitle(expression(atop(bold("SLOPE selection result"),
+                                atop(italic("Dots indicate clump representatives"), "")))) +
         ylab("% of variance explained") + scale_y_continuous() +
         xlab("Genome") +
         scale_x_continuous(limits=c(min(granice$x[plot.data$chromosome]),
@@ -191,6 +200,8 @@ plot.geneSlopeResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...
                                      plot.data[plot.data$representatives,]) +
         geom_segment(aes(x=snp, xend=snp, y=0, yend=val, alpha=representatives,
                          color=clump)) +
+        ggtitle(expression(atop(bold("SLOPE selection result"),
+                                atop(italic("Dots indicate clump representatives. Colors indicate different clumps"), "")))) +
         ylab("% of variance explained") +
         xlab("Genome") +
         scale_x_continuous(expand = c(0,0),
