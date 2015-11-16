@@ -90,10 +90,26 @@ We can also plot our results
 plot(clumping.result)
 ```
 
-If we are interested in specific genome we can "zoom it"
+If we are interested in specific chromosome we can "zoom it"
 
 ```{r, warning=FALSE, fig.height=6, fig.width=6}
-plot(clumping.result, 1)
+plot(clumping.result, chromosomeNumber = 1)
+```
+
+
+It is possible to identify interactively clump number that contains SNP of interest.
+The procedure is the following. First plot the whole genome,
+then run function \emph{identify_clump} and click on SNP of interest.
+
+```{r, eval=FALSE}
+plot(clumping.result)
+identify_clump(clumping.result)
+```
+
+Knowing clump number one can zoom into it. 
+
+```{r, warning=FALSE, fig.height=6, fig.width=6}
+plot(clumping.result, clumpNumber = 1)
 ```
 
 #### Running SLOPE on result of clumping procedure
@@ -111,7 +127,8 @@ summary(slope.result)
 plot(slope.result)
 ```
 
-It is possible to identify interactively clump number of specific SNP.
+Like with result of clumping, it is possible to identify interactively clump number which contains
+specific SNP selected by SLOPE.
 The procedure is the following. First plot the whole genome,
 then run function \emph{identify_clump} and click on SNP of interest.
 
@@ -137,6 +154,12 @@ If .map file was given, then one can get more information about SNPs
 
 ```{r}
 slope.result$X_info[slope.result$selectedSnpsNumbers,]
+```
+
+For information about SNPs that are part of specific clump use
+
+```{r}
+summary(slope.result, clump_number = 1)
 ```
 
 ### How changing parameters affects my analysis?
