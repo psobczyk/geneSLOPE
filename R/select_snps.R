@@ -78,9 +78,11 @@ select_snps <- function(clumpingResult, fdr = 0.1, lambda="gaussian", sigma=NULL
           X_clumps = clumpingResult$X,
           X_all = clumpingResult$X_all,
           selectedSnpsNumbers = clumpingResult$selectedSnpsNumbersScreening[selectedSNPs],
-          selectedSnpsClumpingNumbers = clumpingResult$selectedSnpsNumbersScreening,
+          clumpingRepresentativesNumbers = clumpingResult$selectedSnpsNumbers,
+          screenedSNPsNumbers = clumpingResult$selectedSnpsNumbersScreening,
           numberOfSnps = clumpingResult$numberOfSnps,
-          pValMax = clumpingResult$pValMax),
+          pValMax = clumpingResult$pValMax,
+          fdr = fdr),
     class="geneSlopeResult")
   return(result)
 }

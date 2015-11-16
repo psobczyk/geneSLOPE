@@ -8,7 +8,7 @@ A result of applying SLOPE to matrix of SNPs obtained by
 clumping produced. Result of function \code{\link{select_snps}}
 }
 \details{
-Always a named list of ten elements
+Always a named list of eighteen elements
 \enumerate{
 \item \code{X} numeric matrix, consists of one snp representative for each clump
 selected by SLOPE
@@ -28,14 +28,17 @@ are related to clumps representatives
 \code{X_all} are related to clump members
 \item \code{X_info} data.frame, mapping information about SNPs from .map file.
 Copied from the result of clumping procedure
-\item \code{selectedSnpsNumbers} numeric vector, which rows of \code{X_info}
-data.frame are related to snps that were selected by SLOPE
 \item \code{X_clumps} numeric matrix, consists of one snp representative for each clump
 \item \code{X_all} numeric matrix, all the snps that passed screening procedure
-\item \code{selectedSnpsNumbersScreening} numeric vector, which rows of \code{X_info}
+\item \code{selectedSnpsNumbers} numeric vector, which rows of \code{X_info}
+data.frame are related to snps that were selected by SLOPE
+\item \code{clumpingRepresentativesNumbers} numeric vector, which rows of \code{X_info}
+data.frame are related to snps that are clump represenatives
+\item \code{screenedSNPsNumbers} numeric vector, which rows of \code{X_info}
 data.frame are related to snps that passed screening
 \item \code{numberOfSnps} numeric, total number of SNPs before screening procedure
 \item \code{pValMax} numeric, p-value used in screening procedure
+\item \code{fdr} numeric, false discovery rate used by \code{\link{SLOPE}}
 }
 }
 \seealso{

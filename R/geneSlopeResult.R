@@ -3,7 +3,7 @@
 #' A result of applying SLOPE to matrix of SNPs obtained by
 #' clumping produced. Result of function \code{\link{select_snps}}
 #'
-#' @details Always a named list of ten elements
+#' @details Always a named list of eighteen elements
 #' \enumerate{
 #' \item \code{X} numeric matrix, consists of one snp representative for each clump
 #' selected by SLOPE
@@ -23,14 +23,17 @@
 #' \code{X_all} are related to clump members
 #' \item \code{X_info} data.frame, mapping information about SNPs from .map file.
 #' Copied from the result of clumping procedure
-#' \item \code{selectedSnpsNumbers} numeric vector, which rows of \code{X_info}
-#' data.frame are related to snps that were selected by SLOPE
 #' \item \code{X_clumps} numeric matrix, consists of one snp representative for each clump
 #' \item \code{X_all} numeric matrix, all the snps that passed screening procedure
-#' \item \code{selectedSnpsNumbersScreening} numeric vector, which rows of \code{X_info}
+#' \item \code{selectedSnpsNumbers} numeric vector, which rows of \code{X_info}
+#' data.frame are related to snps that were selected by SLOPE
+#' \item \code{clumpingRepresentativesNumbers} numeric vector, which rows of \code{X_info}
+#' data.frame are related to snps that are clump represenatives
+#' \item \code{screenedSNPsNumbers} numeric vector, which rows of \code{X_info}
 #' data.frame are related to snps that passed screening
 #' \item \code{numberOfSnps} numeric, total number of SNPs before screening procedure
 #' \item \code{pValMax} numeric, p-value used in screening procedure
+#' \item \code{fdr} numeric, false discovery rate used by \code{\link{SLOPE}}
 #' }
 #' @seealso \code{\link{screeningResult}} \code{\link{clumpingResult}}
 #' \code{\link{select_snps}} \code{\link[SLOPE]{SLOPE}}
@@ -72,38 +75,50 @@ print.geneSlopeResult <- function(x, ...){
   cat("$clumpRepresentatives: numeric vector of length",
       length(x$clumpRepresentatives), "\n")
   cat("$clumps: list of numeric vectors of length",
-      length(x$clumpRepresentatives), "\n")
-  cat("$selectedSnpsNumbers: numeric vector of length",
       length(x$clumps), "\n")
-  cat("$selectedSnpsClumpingNumbers: numeric vector of length",
-      length(x$selectedSnpsClumpingNumbers), "\n")
+  cat("$selectedSnpsNumbers: numeric vector of length",
+      length(x$selectedSnpsNumbers), "\n")
+  cat("$clumpingRepresentativesNumbers: numeric vector of length",
+      length(x$clumpingRepresentativesNumbers), "\n")
+  cat("$screenedSNPsNumbers: numeric vector of length",
+      length(x$screenedSNPsNumbers), "\n")
   cat("$numberOfSnps: number of SNPs before screening:", x$numberOfSnps, "\n")
   cat("$pValMax: p-value threshold: ", x$pValMax, "\n")
+  cat("$fdr: false discovery rate: ", x$fdr, "\n")
 }
 
 #' Summary geneSlopeResult class object
 #'
 #' @param object geneSlopeResult class object
+#' @param clump_number number of clump to be summarized
 #' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
 #' @export
 #'
 #' @method summary geneSlopeResult
-summary.geneSlopeResult <- function(object, ...){
-  lambda_diffs <- diff(object$lambda)
-  if(any(lambda_diffs==0)){
-    kink <- which.min(lambda_diffs==0)
-  } else {
-    kink <- length(object$lambda)
-  }
-  cat("Object of class geneSlopeResult\n")
-  cat(length(object$selectedSNPs), "snps selected out of",
-      length(object$clumpRepresentatives), "clump representatives\n")
-  cat("Effect size for selected snps (absolute values)\n")
-  cat("\tMin: ", min(abs(object$effects)), "\n")
-  cat("\tMean: ", mean(abs(object$effects)), "\n")
-  cat("\tMax: ", max(abs(object$effects)), "\n")
-  cat("R square of the final model: ", object$R2, "\n")
-  cat("Kink value: ", kink)
+summary.geneSlopeResult <- function(object, clump_number = NULL, ...){
+    if(is.null(clump_number)) {
+    lambda_diffs <- diff(object$lambda)
+    if(any(lambda_diffs==0)){
+      kink <- which.min(lambda_diffs==0)
+    } else {
+      kink <- length(object$lambda)
+    }
+    cat("Object of class geneSlopeResult\n")
+    cat(length(object$selectedSNPs), "snps selected out of",
+        length(object$clumpRepresentatives), "clump representatives\n")
+    cat("Effect size for selected snps (absolute values)\n")
+    cat("\tMin: ", min(abs(object$effects)), "\n")
+    cat("\tMean: ", mean(abs(object$effects)), "\n")
+    cat("\tMax: ", max(abs(object$effects)), "\n")
+    cat("R square of the final model: ", object$R2, "\n")
+    cat("Kink value: ", kink, "\n")
+    } else {
+      if(length(object$selectedClumps)<clump_number){
+        stop("Number of selected clumps is smaller than ", clump_number)
+      }
+      cat("Summary of", clump_number, "selected clump\n")
+      print(object$X_info[object$screenedSNPsNumbers[object$selectedClumps[[clump_number]]],])
+    }
 }
 
 

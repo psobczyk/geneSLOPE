@@ -4,10 +4,12 @@
 \alias{summary.geneSlopeResult}
 \title{Summary geneSlopeResult class object}
 \usage{
-\method{summary}{geneSlopeResult}(object, ...)
+\method{summary}{geneSlopeResult}(object, clump_number = NULL, ...)
 }
 \arguments{
 \item{object}{geneSlopeResult class object}
+
+\item{clump_number}{number of clump to be summarized}
 
 \item{...}{Further arguments to be passed to or from other methods. They are ignored in this function.}
 }

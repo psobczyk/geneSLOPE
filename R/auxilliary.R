@@ -72,8 +72,8 @@ create_slope_plot_data <- function(x){
   plot.data <- NULL
   for(i in 1L:length(x$selectedClumps)){
     plot.data <- rbind(plot.data,
-                       cbind(as.numeric(x$X_info[x$selectedSnpsClumpingNumbers[x$selectedClumps[[i]]],1]),
-                             as.numeric(x$X_info[x$selectedSnpsClumpingNumbers[x$selectedClumps[[i]]],3]),
+                       cbind(as.numeric(x$X_info[x$screenedSNPsNumbers[x$selectedClumps[[i]]],1]),
+                             as.numeric(x$X_info[x$screenedSNPsNumbers[x$selectedClumps[[i]]],3]),
                              i, x$effects[i]^2/var(as.vector(x$y))))
   }
   rownames(plot.data) <- NULL
