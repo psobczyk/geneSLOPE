@@ -56,7 +56,7 @@ please contact Piotr.Sobczyk[at]pwr.edu.pl
 
 -------------
 
-Development of this software was supported by National Institutes of Health under award number R01 HG006695.
+Research reported in this software was supported by National Institutes of Health under award number R01 HG006695.
 
 -------------
 
