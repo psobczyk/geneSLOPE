@@ -18,7 +18,7 @@ are not strognly correlated)
 }
 }
 \details{
-Version: 0.34.5
+Version: 0.35.0
 }
 \examples{
 \donttest{

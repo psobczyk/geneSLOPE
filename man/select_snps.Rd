@@ -19,7 +19,7 @@ select_snps(clumpingResult, fdr = 0.1, lambda = "gaussian", sigma = NULL,
 \item{verbose}{logical, if TRUE progress bar is printed}
 }
 \value{
-object of class \code{\link{geneSlopeResult}}
+object of class \code{\link{selectionResult}}
 }
 \description{
 Performs GWAS with SLOPE on given snp matrix and phenotype.

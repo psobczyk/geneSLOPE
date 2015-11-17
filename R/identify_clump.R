@@ -48,13 +48,13 @@ identify_clump.clumpingResult <- function(x, ...) {
         plot.data$clump[which.min(diff.a/max(diff.a) + diff.b/max(diff.b))])
 }
 
-#' Identify clump number in geneSlopeResult class plot
+#' Identify clump number in selectionResult class plot
 #'
-#' @param x geneSlopeResult class object
+#' @param x selectionResult class object
 #' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
 #'
 #' @export
-identify_clump.geneSlopeResult <- function(x, ...) {
+identify_clump.selectionResult <- function(x, ...) {
   plot.data <- create_slope_plot_data(x)
 
   granice <- aggregate(x$X_info[,3], list(x$X_info[,1]), max)
@@ -67,7 +67,7 @@ identify_clump.geneSlopeResult <- function(x, ...) {
   tryCatch({
     downViewport(viewport_name)
     }, error = function(e){
-      stop("Please plot geneSlopeResult object before running identify_clump()")
+      stop("Please plot selectionResult object before running identify_clump()")
     })
 
   # showViewport()

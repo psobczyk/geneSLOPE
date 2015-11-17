@@ -1,4 +1,4 @@
-#' geneSlopeResult class
+#' selectionResult class
 #'
 #' A result of applying SLOPE to matrix of SNPs obtained by
 #' clumping produced. Result of function \code{\link{select_snps}}
@@ -37,20 +37,20 @@
 #' }
 #' @seealso \code{\link{screeningResult}} \code{\link{clumpingResult}}
 #' \code{\link{select_snps}} \code{\link[SLOPE]{SLOPE}}
-#' @name geneSlopeResult
+#' @name selectionResult
 NULL
 
 
-#' Print geneSlopeResult class object
+#' Print selectionResult class object
 #'
-#' @param x geneSlopeResult class object
+#' @param x selectionResult class object
 #' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
 #' @return Nothing.
 #' @export
 #'
-#' @method print geneSlopeResult
-print.geneSlopeResult <- function(x, ...){
-  cat("Object of class geneSlopeResult\n")
+#' @method print selectionResult
+print.selectionResult <- function(x, ...){
+  cat("Object of class selectionResult\n")
   cat("$X: numeric matrix\n")
   cat("\t", nrow(x$X), " rows\n")
   cat("\t", ncol(x$X), " columns\n")
@@ -87,23 +87,23 @@ print.geneSlopeResult <- function(x, ...){
   cat("$fdr: false discovery rate: ", x$fdr, "\n")
 }
 
-#' Summary geneSlopeResult class object
+#' Summary selectionResult class object
 #'
-#' @param object geneSlopeResult class object
-#' @param clump_number number of clump to be summarized
+#' @param object selectionResult class object
+#' @param clumpNumber number of clump to be summarized
 #' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
 #' @export
 #'
-#' @method summary geneSlopeResult
-summary.geneSlopeResult <- function(object, clump_number = NULL, ...){
-    if(is.null(clump_number)) {
+#' @method summary selectionResult
+summary.selectionResult <- function(object, clumpNumber = NULL, ...){
+    if(is.null(clumpNumber)) {
     lambda_diffs <- diff(object$lambda)
     if(any(lambda_diffs==0)){
       kink <- which.min(lambda_diffs==0)
     } else {
       kink <- length(object$lambda)
     }
-    cat("Object of class geneSlopeResult\n")
+    cat("Object of class selectionResult\n")
     cat(length(object$selectedSNPs), "snps selected out of",
         length(object$clumpRepresentatives), "clump representatives\n")
     cat("Effect size for selected snps (absolute values)\n")
@@ -113,23 +113,23 @@ summary.geneSlopeResult <- function(object, clump_number = NULL, ...){
     cat("R square of the final model: ", object$R2, "\n")
     cat("Kink value: ", kink, "\n")
     } else {
-      if(length(object$selectedClumps)<clump_number){
-        stop("Number of selected clumps is smaller than ", clump_number)
+      if(length(object$selectedClumps)<clumpNumber){
+        stop("Number of selected clumps is smaller than ", clumpNumber)
       }
-      cat("Summary of", clump_number, "selected clump\n")
-      print(object$X_info[object$screenedSNPsNumbers[object$selectedClumps[[clump_number]]],])
+      cat("Summary of", clumpNumber, "selected clump\n")
+      print(object$X_info[object$screenedSNPsNumbers[object$selectedClumps[[clumpNumber]]],])
     }
 }
 
 
-#' Plot geneSlopeResult class object
+#' Plot selectionResult class object
 #'
-#' @param x geneSlopeResult class object
+#' @param x selectionResult class object
 #' @param chromosomeNumber optional parameter, only selected chromosome will be plotted
 #' @param clumpNumber optional parameter, only SNPs from selected clump will be plotted
 #' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
 #' @export
-plot.geneSlopeResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...){
+plot.selectionResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...){
   chromosome <- snp <- val <- clump <- representatives <- NULL #to remove CRAN's NOTE
   if(length(x$selectedSNPs)==0){
     message("No SNPs selected by SLOPE")

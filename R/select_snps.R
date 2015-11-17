@@ -12,7 +12,7 @@
 #' @param lambda lambda for SLOPE. See \code{\link[SLOPE]{create_lambda}}
 #' @param sigma numeric, sigma for SLOPE
 #' @param verbose logical, if TRUE progress bar is printed
-#' @return object of class \code{\link{geneSlopeResult}}
+#' @return object of class \code{\link{selectionResult}}
 #'
 #' @examples
 #' \dontrun{
@@ -83,7 +83,7 @@ select_snps <- function(clumpingResult, fdr = 0.1, lambda="gaussian", sigma=NULL
           numberOfSnps = clumpingResult$numberOfSnps,
           pValMax = clumpingResult$pValMax,
           fdr = fdr),
-    class="geneSlopeResult")
+    class="selectionResult")
   return(result)
 }
 

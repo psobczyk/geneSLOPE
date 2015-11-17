@@ -159,7 +159,7 @@ slope.result$X_info[slope.result$selectedSnpsNumbers,]
 For information about SNPs that are part of specific clump use
 
 ```{r}
-summary(slope.result, clump_number = 1)
+summary(slope.result, clumpNumber = 1)
 ```
 
 ### How changing parameters affects my analysis?
