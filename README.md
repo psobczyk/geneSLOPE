@@ -38,10 +38,12 @@ install_github("psobczyk/geneSLOPE")
     * ggplot2
     * bigmemory
     * grid
-* Read vignette to get familiar with basic usage
+* Read vignette **"Tutorial for GWAS with SLOPE"** to get familiar with basic usage
 
 
 #### Running GUI ####
+
+GUI based on *shiny* R package is available
 
 ```R
 library(geneSLOPE)
