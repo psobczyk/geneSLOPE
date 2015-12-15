@@ -14,11 +14,13 @@
 #'
 #' @docType package
 #' @name geneSLOPE
-#' @details Version: 0.36.0
-#' @importFrom SLOPE SLOPE
-#' @importFrom SLOPE create_lambda
+#' @details Version: 0.36.1
 #' @import ggplot2
 #' @import grid
+#' @importFrom SLOPE SLOPE
+#' @importFrom SLOPE create_lambda
+#' @importFrom stats aggregate cor lm lm.fit pf var
+#' @importFrom utils head read.table setTxtProgressBar tail txtProgressBar
 #' @importFrom bigmemory read.big.matrix
 #' @author Malgorzata Bogdan, Damian Brzyski, Christine Peterson, Chiara Sabatti, Laurel Stell,
 #' Piotr Sobczyk

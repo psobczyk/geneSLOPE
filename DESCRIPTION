@@ -12,12 +12,14 @@ Description: Genome-wide association study performed with SLOPE.
 License: GPL-3
 LazyData: TRUE
 Depends:
-    R (>= 3.2.1),
+    R (>= 3.1.3),
     SLOPE
 Imports:
   ggplot2,
   bigmemory,
-  grid
+  grid,
+  utils,
+  stats
 Suggests:
   shiny,
   knitr,
