@@ -1,3 +1,5 @@
+[![Build Status](https://api.travis-ci.org/psobczyk/geneSLOPE.png)](https://travis-ci.org/psobczyk/geneSLOPE)
+
 [<img src="http://www.ideal.rwth-aachen.de/wp-content/uploads/2013/08/banner1.png">](http://www.ideal.rwth-aachen.de/)
 
 -------------
