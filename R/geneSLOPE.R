@@ -14,7 +14,7 @@
 #'
 #' @docType package
 #' @name geneSLOPE
-#' @details Version: 0.36.1
+#' @details Version: 0.36.2
 #' @import ggplot2
 #' @import grid
 #' @importFrom SLOPE SLOPE

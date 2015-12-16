@@ -1,28 +1,30 @@
 Package: geneSLOPE
 Type: Package
 Title: Genome-wide Association Study with SLOPE
-Version: 0.36.0
-Date: 2015-11-17
-Author: Malgorzata Bogdan, Damian Brzyski, Christine Peterson, Chiara Sabatti, Laurel Stell, Piotr Sobczyk
+Version: 0.36.2
+Date: 2015-12-15
+Author: Malgorzata Bogdan, Damian Brzyski, Christine Peterson, Chiara Sabatti,
+    Laurel Stell, Piotr Sobczyk
 Maintainer: Piotr Sobczyk <piotr.sobczyk@pwr.edu.pl>
 Description: Genome-wide association study performed with SLOPE.
-  In first step, SNPs are clumped according to their correlations and
-  distances. Then, SLOPE is performed on data where each clump has
-  one representative.
+    In first step, SNPs are clumped according to their correlations and
+    distances. Then, SLOPE is performed on data where each clump has
+    one representative.
 License: GPL-3
 LazyData: TRUE
 Depends:
     R (>= 3.1.3),
     SLOPE
 Imports:
-  ggplot2,
-  bigmemory,
-  grid,
-  utils,
-  stats
+    ggplot2,
+    bigmemory,
+    grid,
+    utils,
+    stats
 Suggests:
-  shiny,
-  knitr,
-  rmarkdown,
-  testthat
+    shiny,
+    knitr,
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr
+RoxygenNote: 5.0.1
