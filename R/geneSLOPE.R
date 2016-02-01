@@ -14,7 +14,7 @@
 #'
 #' @docType package
 #' @name geneSLOPE
-#' @details Version: 0.36.2
+#' @details Version: 0.36.3
 #' @import ggplot2
 #' @import grid
 #' @importFrom SLOPE SLOPE
@@ -22,8 +22,7 @@
 #' @importFrom stats aggregate cor lm lm.fit pf var
 #' @importFrom utils head read.table setTxtProgressBar tail txtProgressBar
 #' @importFrom bigmemory read.big.matrix
-#' @author Malgorzata Bogdan, Damian Brzyski, Christine Peterson, Chiara Sabatti, Laurel Stell,
-#' Piotr Sobczyk
+#' @author Malgorzata Bogdan, Damian Brzyski, Christine Peterson, Chiara Sabatti, Piotr Sobczyk
 #'
 #' Maintainer: Piotr Sobczyk \email{Piotr.Sobczyk@@pwr.edu.pl}
 #'
