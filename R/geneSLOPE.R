@@ -1,7 +1,11 @@
-#' Genome Wide Association Study with SLOPE
+#' Genome-Wide Association Study with SLOPE
 #'
-#' Package geneSLOPE performes Genome-wide association study with SLOPE.
-#' This study is split into three steps.
+#' @description Package geneSLOPE performes genome-wide association study (GWAS) with \pkg{\link{SLOPE}},
+#' short for Sorted L-One Penalized Estimation. SLOPE is a
+#' method for estimating the vector of coefficients in linear model. For details
+#' about it see references.
+#'
+#' @details GWAS is splitted into three steps.
 #' \itemize{
 #' \item In the first step data is read using \pkg{\link{bigmemory}} package and immediatly
 #' screened using marginal tests for each SNP
@@ -10,11 +14,10 @@
 #' one representative (therefore we ensure that variables in linear model
 #' are not strognly correlated)
 #' }
-#'
+#' Version: 0.36.6
 #'
 #' @docType package
 #' @name geneSLOPE
-#' @details Version: 0.36.3
 #' @import ggplot2
 #' @import grid
 #' @importFrom SLOPE SLOPE
@@ -22,10 +25,11 @@
 #' @importFrom stats aggregate cor lm lm.fit pf var
 #' @importFrom utils head read.table setTxtProgressBar tail txtProgressBar
 #' @importFrom bigmemory read.big.matrix
-#' @author Malgorzata Bogdan, Damian Brzyski, Christine Peterson, Chiara Sabatti, Piotr Sobczyk
+#' @author{
+#' Malgorzata Bogdan, Damian Brzyski, Christine Peterson, Chiara Sabatti, Piotr Sobczyk
 #'
 #' Maintainer: Piotr Sobczyk \email{Piotr.Sobczyk@@pwr.edu.pl}
-#'
+#' }
 #' @references \emph{SLOPE -- Adaptive Variable Selection via Convex Optimization},
 #' Malgorzata Bogdan, Ewout van den Berg, Chiara Sabatti,
 #' Weijie Su and Emmanuel Candes
