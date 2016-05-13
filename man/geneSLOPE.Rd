@@ -21,7 +21,7 @@ screened using marginal tests for each SNP
 one representative (therefore we ensure that variables in linear model
 are not strognly correlated)
 }
-Version: 0.36.6
+Version: 0.36.7
 }
 \examples{
 \donttest{

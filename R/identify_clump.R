@@ -31,19 +31,21 @@ identify_clump.clumpingResult <- function(x, ...) {
   a <- plot.data$snp
   b <- plot.data$val
 
-  viewport_name <- unname(grid.ls(print = FALSE)[[1]][[4]])
-  tryCatch({
-    downViewport(viewport_name)
-  }, error = function(e){
-    stop("Please plot clumpingResult object before running identify_clump()")
-  })
-  # showViewport()
-  # popViewport()
-  pushViewport(viewport(xscale=c(0, max(granice_max)+1), yscale=c(0, 1.1*max(plot.data$val))))
-  tmp = grid.locator()
-  tmp.n <- as.numeric(tmp)
+  # viewport_name <- unname(grid::grid.ls(print = FALSE)[[1]][[4]])
+  # tryCatch({
+  #   downViewport(viewport_name)
+  # }, error = function(e){
+  #   stop("Please plot clumpingResult object before running identify_clump()")
+  # })
+  # # showViewport()
+  # # popViewport()
+  # pushViewport(viewport(xscale=c(0, max(granice_max)+1), yscale=c(0, 1.1*max(plot.data$val))))
+  downViewport("panel.4-4-4-4")
+  tmp = as.numeric(grid.locator(unit = "npc"))
+  tmp.n <- as.numeric(tmp)*c(max(granice_max)+1, 1.1*max(plot.data$val))
   diff.a <- (a-tmp.n[1])^2
   diff.b <- (b-tmp.n[2])^2
+  upViewport(n = 0)
   paste("Selected SNP is in clump",
         plot.data$clump[which.min(diff.a/max(diff.a) + diff.b/max(diff.b))])
 }
@@ -63,18 +65,13 @@ identify_clump.selectionResult <- function(x, ...) {
 
   a <- plot.data$snp
   b <- plot.data$val
-  viewport_name <- unname(grid.ls(print = FALSE)[[1]][[4]])
-  tryCatch({
-    downViewport(viewport_name)
-    }, error = function(e){
-      stop("Please plot selectionResult object before running identify_clump()")
-    })
 
-  # showViewport()
-  # popViewport()
-  pushViewport(viewport(xscale=c(0, max(granice_max)+1), yscale=c(0, 1.1*max(plot.data$val))))
-  tmp = grid.locator()
-  tmp.n <- as.numeric(tmp)
+  downViewport("panel.3-4-3-4")
+  tmp = as.numeric(grid.locator(unit = "npc"))
+  tmp.n <- as.numeric(tmp)*c(max(granice_max)+1, 1.1*max(plot.data$val))
+  diff.a <- (a-tmp.n[1])^2
+  diff.b <- (b-tmp.n[2])^2
+  upViewport(n = 0)
   paste("Selected SNP is in clump",
         plot.data$clump[which.min((a-tmp.n[1])^2 + (b-tmp.n[2])^2)])
 }
