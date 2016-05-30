@@ -1,3 +1,5 @@
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/geneSLOPE)](http://cran.r-project.org/package=geneSLOPE)
+[![Downloads](http://cranlogs.r-pkg.org/badges/geneSLOPE)](http://cran.rstudio.com/package=geneSLOPE)
 [![Build Status](https://api.travis-ci.org/psobczyk/geneSLOPE.png)](https://travis-ci.org/psobczyk/geneSLOPE)
 
 [<img src="http://www.ideal.rwth-aachen.de/wp-content/uploads/2013/08/banner1.png">](http://www.ideal.rwth-aachen.de/)
