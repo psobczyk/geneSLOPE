@@ -8,11 +8,13 @@
 #' @export
 #' @param screenResult object of class screeningResult
 #' @param rho numeric, minimal correlation between two SNPs to be assigned to one clump
+#' @param pValues numeric vector, p-values for SNPs computed outside geneSLOPE,
+#' eg. with EMMAX
 #' @param verbose logical, if TRUE (default) progress bar is shown
 #'
 #' @return object of class \code{\link{clumpingResult}}
 #'
-clump_snps <- function(screenResult, rho = 0.5, verbose = TRUE){
+clump_snps <- function(screenResult, rho = 0.5, pValues=NULL, verbose = TRUE){
 
   if(rho>=1 | rho <= 0)
     stop("Error: Rho has to be within range (0,1)")
@@ -31,15 +33,20 @@ clump_snps <- function(screenResult, rho = 0.5, verbose = TRUE){
     pb <- txtProgressBar(min = 0, max = total, style = 3)
   }
 
-  suma = sum((screenResult$y-mean(screenResult$y))^2)
-  n = length(screenResult$y) - 2
-  pVals <- apply(screenResult$X, 2, function(x) pValComp(x,screenResult$y,n,suma))
+  if(is.null(pValues) | (length(pValues) != ncol(screenResult$X))){
+    suma = sum((screenResult$y-mean(screenResult$y))^2)
+    n = length(screenResult$y) - 2
+    pVals <- apply(screenResult$X, 2, function(x) pValComp(x,screenResult$y,n,suma))
+  } else{
+    pVals = pValues
+  }
 
   a <- order(pVals, decreasing = FALSE)
   notClumped <- rep(TRUE, length(a))
   clumps <- list()
   representatives <- list()
 
+  #clumping procedure
   i <- 1
   while(any(notClumped)){
     idx = a[i]

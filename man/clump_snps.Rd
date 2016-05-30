@@ -4,12 +4,15 @@
 \alias{clump_snps}
 \title{Clumping procedure for SLOPE}
 \usage{
-clump_snps(screenResult, rho = 0.5, verbose = TRUE)
+clump_snps(screenResult, rho = 0.5, pValues = NULL, verbose = TRUE)
 }
 \arguments{
 \item{screenResult}{object of class screeningResult}
 
 \item{rho}{numeric, minimal correlation between two SNPs to be assigned to one clump}
+
+\item{pValues}{numeric vector, p-values for SNPs computed outside geneSLOPE,
+eg. with EMMAX}
 
 \item{verbose}{logical, if TRUE (default) progress bar is shown}
 }
