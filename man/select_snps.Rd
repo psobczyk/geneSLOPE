@@ -4,13 +4,17 @@
 \alias{select_snps}
 \title{GWAS with SLOPE}
 \usage{
-select_snps(clumpingResult, fdr = 0.1, lambda = "gaussian", sigma = NULL,
-  verbose = TRUE)
+select_snps(clumpingResult, fdr = 0.1, type = c("slope", "smt"),
+  lambda = "gaussian", sigma = NULL, verbose = TRUE)
 }
 \arguments{
 \item{clumpingResult}{clumpProcedure output}
 
 \item{fdr, }{numeric, False Discovery Rate for SLOPE}
+
+\item{type}{method for snp selection. slope (default value) is SLOPE
+on clump representatives, smt is Benjamini-Hochberg procedure on
+single marker test p-values for clump representatives}
 
 \item{lambda}{lambda for SLOPE. See \code{\link[SLOPE]{create_lambda}}}
 
