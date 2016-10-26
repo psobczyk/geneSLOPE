@@ -1,10 +1,11 @@
 Package: geneSLOPE
 Type: Package
 Title: Genome-Wide Association Study with SLOPE
-Version: 0.36.7
-Date: 2016-05-13
+Version: 0.37.0
+Date: 2016-10-26
 Authors@R: c(person("Damian", "Brzyski", role = "aut"),
     person("Christine", "Peterson", role = "aut"),
+    person("Emmanuel J.", "Candes", role = "aut"),
     person("Malgorzata", "Bogdan", role = "aut"),
     person("Chiara", "Sabatti", role = "aut"),
     person("Piotr", "Sobczyk", email = "piotr.sobczyk@pwr.edu.pl", role = c("cre", "aut")))

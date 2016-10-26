@@ -31,15 +31,6 @@ identify_clump.clumpingResult <- function(x, ...) {
   a <- plot.data$snp
   b <- plot.data$val
 
-  # viewport_name <- unname(grid::grid.ls(print = FALSE)[[1]][[4]])
-  # tryCatch({
-  #   downViewport(viewport_name)
-  # }, error = function(e){
-  #   stop("Please plot clumpingResult object before running identify_clump()")
-  # })
-  # # showViewport()
-  # # popViewport()
-  # pushViewport(viewport(xscale=c(0, max(granice_max)+1), yscale=c(0, 1.1*max(plot.data$val))))
   downViewport("panel.4-4-4-4")
   tmp = as.numeric(grid.locator(unit = "npc"))
   tmp.n <- as.numeric(tmp)*c(max(granice_max)+1, 1.1*max(plot.data$val))

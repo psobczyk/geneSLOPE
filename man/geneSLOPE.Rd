@@ -21,7 +21,7 @@ screened using marginal tests for each SNP
 one representative (therefore we ensure that variables in linear model
 are not strognly correlated)
 }
-Version: 0.36.7
+Version: 0.37.0
 }
 \examples{
 \donttest{
@@ -39,7 +39,7 @@ gui_geneSLOPE()
 }
 \author{
 {
-Malgorzata Bogdan, Damian Brzyski, Christine Peterson, Chiara Sabatti, Piotr Sobczyk
+Malgorzata Bogdan, Damian Brzyski, Emmanuel J. Candes, Christine Peterson, Chiara Sabatti, Piotr Sobczyk
 
 Maintainer: Piotr Sobczyk \email{Piotr.Sobczyk@pwr.edu.pl}
 }

@@ -14,19 +14,19 @@
 #' one representative (therefore we ensure that variables in linear model
 #' are not strognly correlated)
 #' }
-#' Version: 0.36.7
+#' Version: 0.37.0
 #'
 #' @docType package
 #' @name geneSLOPE
 #' @import ggplot2
-#' @import grid
+#' @importFrom grid downViewport grid.locator upViewport
 #' @importFrom SLOPE SLOPE
 #' @importFrom SLOPE create_lambda
 #' @importFrom stats aggregate cor lm lm.fit pf var
 #' @importFrom utils head read.table setTxtProgressBar tail txtProgressBar
 #' @importFrom bigmemory read.big.matrix
 #' @author{
-#' Malgorzata Bogdan, Damian Brzyski, Christine Peterson, Chiara Sabatti, Piotr Sobczyk
+#' Malgorzata Bogdan, Damian Brzyski, Emmanuel J. Candes, Christine Peterson, Chiara Sabatti, Piotr Sobczyk
 #'
 #' Maintainer: Piotr Sobczyk \email{Piotr.Sobczyk@@pwr.edu.pl}
 #' }
