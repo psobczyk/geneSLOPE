@@ -1,8 +1,8 @@
 Package: geneSLOPE
 Type: Package
 Title: Genome-Wide Association Study with SLOPE
-Version: 0.37.0
-Date: 2016-10-26
+Version: 0.38.0
+Date: 2017-07-21
 Authors@R: c(person("Damian", "Brzyski", role = "aut"),
     person("Christine", "Peterson", role = "aut"),
     person("Emmanuel J.", "Candes", role = "aut"),
@@ -35,4 +35,4 @@ Suggests:
     testthat
 VignetteBuilder: knitr
 Repository: CRAN
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

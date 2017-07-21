@@ -71,7 +71,7 @@ select_snps <- function(clumpingResult, fdr = 0.1, type=c("slope", "smt"),
   }
 
 
-  X_selected <- clumpingResult$X_all[,selectedSNPs]
+  X_selected <- clumpingResult$X_all[,selectedSNPs, drop = FALSE]
   if(length(selectedSNPs)==0) {
     lm.fit.summary <- summary(lm(clumpingResult$y~1))
   } else {

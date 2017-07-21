@@ -84,9 +84,14 @@ plot.clumpingResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...)
   if(!is.null(x$X_info)){
     chromosome <- snp <- val <- clump <- representatives <- NULL #to remove CRAN's NOTE
     plot.data <- create_clumping_plot_data(x)
-    granice <- aggregate(x$X_info[,3], list(x$X_info[,1]), max)
-    granice_max <- cumsum(granice$x)
-    granice$x <- c(0,head(cumsum(granice$x),-1))
+    if(length(unique(x$X_info[,3])) == 1){
+      chromosome_limits <- aggregate(x$X_info[,4], list(x$X_info[,1]), max)
+    } else {
+      chromosome_limits <- aggregate(x$X_info[,3], list(x$X_info[,1]), max)
+    }
+
+    chromosome_limits_max <- cumsum(chromosome_limits$x)
+    chromosome_limits$x <- c(0,head(cumsum(chromosome_limits$x),-1))
 
     if(!is.null(chromosomeNumber)){
       plot.data <- subset(plot.data, plot.data$chromosome%in%chromosomeNumber)
@@ -100,11 +105,11 @@ plot.clumpingResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...)
         ylab("") + scale_y_continuous("Marginal test p-value", breaks=-log(0.1^(1:20)),
                                       labels=0.1^(1:20)) +
         xlab("Genome") +
-        scale_x_continuous(limits=c(min(granice$x[chromosomeNumber]),
-                                    max(granice_max[chromosomeNumber])),
-                           breaks=rowMeans(cbind(granice$x, granice_max)),
-                           labels=granice$Group.1,
-                           minor_breaks=c(granice$x, max(granice_max))) +
+        scale_x_continuous(limits=c(min(chromosome_limits$x[chromosomeNumber]),
+                                    max(chromosome_limits_max[chromosomeNumber])),
+                           breaks=rowMeans(cbind(chromosome_limits$x, chromosome_limits_max)),
+                           labels=chromosome_limits$Group.1,
+                           minor_breaks=c(chromosome_limits$x, max(chromosome_limits_max))) +
         scale_alpha_manual(guide=FALSE, values = c(0.5, 1)) +
         scale_color_manual("", values = "red", labels="Clump representative") +
         scale_size_area(guide=FALSE, max_size = 4) +
@@ -121,11 +126,11 @@ plot.clumpingResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...)
         ylab("") + scale_y_continuous("Marginal test p-value", breaks=-log(0.1^(1:20)),
                                       labels=0.1^(1:20)) +
         xlab("Genome") +
-        scale_x_continuous(limits=c(min(granice$x[plot.data$chromosome]),
-                                    max(granice_max[plot.data$chromosome])),
-                           breaks=rowMeans(cbind(granice$x, granice_max)),
-                           labels=granice$Group.1,
-                           minor_breaks=c(granice$x, max(granice_max))) +
+        scale_x_continuous(limits=c(min(chromosome_limits$x[plot.data$chromosome]),
+                                    max(chromosome_limits_max[plot.data$chromosome])),
+                           breaks=rowMeans(cbind(chromosome_limits$x, chromosome_limits_max)),
+                           labels=chromosome_limits$Group.1,
+                           minor_breaks=c(chromosome_limits$x, max(chromosome_limits_max))) +
         scale_alpha_manual(guide=FALSE, values = c(0.5, 1)) +
         scale_color_manual("", values = "red", labels="Clump representative") +
         scale_size_area(guide=FALSE, max_size = 4) +
@@ -137,10 +142,10 @@ plot.clumpingResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...)
         ylab("") +
         xlab("Genome") +
         scale_x_continuous(expand = c(0,0),
-                           limits=c(0, max(granice_max)+1),
-                           breaks=rowMeans(cbind(granice$x, granice_max)),
-                           labels=granice$Group.1,
-                           minor_breaks=c(granice$x, max(granice_max))) +
+                           limits=c(0, max(chromosome_limits_max)+1),
+                           breaks=rowMeans(cbind(chromosome_limits$x, chromosome_limits_max)),
+                           labels=chromosome_limits$Group.1,
+                           minor_breaks=c(chromosome_limits$x, max(chromosome_limits_max))) +
         scale_y_continuous("Marginal test p-value", expand = c(0,0),
                            limits=c(0, 1.1*max(plot.data$val)),
                            breaks=-log(0.1^(1:20)),

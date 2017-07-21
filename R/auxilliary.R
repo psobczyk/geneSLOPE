@@ -31,20 +31,29 @@ create_clumping_plot_data <- function(x){
     plot.data <- rbind(plot.data,
                        cbind(as.numeric(x$X_info[x$selectedSnpsNumbersScreening[x$SNPclumps[[i]]],1]),
                              as.numeric(x$X_info[x$selectedSnpsNumbersScreening[x$SNPclumps[[i]]],3]),
+                             as.numeric(x$X_info[x$selectedSnpsNumbersScreening[x$SNPclumps[[i]]],4]),
                              i, -log(x$pVals[x$selectedSnpsNumbersScreening[x$SNPclumps[[i]]]])))
   }
   rownames(plot.data) <- NULL
   plot.data <- data.frame(plot.data)
-  colnames(plot.data) <- c("chromosome", "snp", "clump", "val")
+  colnames(plot.data) <- c("chromosome", "snp", "bp", "clump", "val")
   plot.data <- cbind(plot.data,
                      representatives = unlist(x$SNPclumps) %in% unlist(x$SNPnumber))
-  granice <- aggregate(x$X_info[,3], list(x$X_info[,1]), max)
-  granice_max <- cumsum(granice$x)
-  granice$x <- c(0,head(cumsum(granice$x),-1))
-  for(i in unique(plot.data$chromosome)){
-    plot.data$snp[plot.data$chromosome==i] <- granice$x[i] +
-      plot.data$snp[plot.data$chromosome==i]
+
+  if(length(unique(plot.data$snp)) == 1 &
+     length(unique(plot.data$chromosome)) == 1){ #we have one chromosome
+    plot.data$snp <- plot.data$bp
+  } else {
+    chromosomes_limits <- aggregate(x$X_info[,3], list(x$X_info[,1]), max)
+    #granice_max <- cumsum(chromosomes_limits$x)
+    chromosomes_limits$x <- c(0,head(cumsum(chromosomes_limits$x),-1))
+    for(i in seq_along(unique(plot.data$chromosome))){
+      chromosome_idx <- unique(plot.data$chromosome)[i]
+      plot.data$snp[plot.data$chromosome==chromosome_idx] <- chromosomes_limits$x[i] +
+        plot.data$snp[plot.data$chromosome==chromosome_idx]
+    }
   }
+
   plot.data$val[is.infinite(plot.data$val)] <- -log(2e-16) #R precision
   return(plot.data)
 }
@@ -56,20 +65,36 @@ create_slope_plot_data <- function(x){
     plot.data <- rbind(plot.data,
                        cbind(as.numeric(x$X_info[x$screenedSNPsNumbers[x$selectedClumps[[i]]],1]),
                              as.numeric(x$X_info[x$screenedSNPsNumbers[x$selectedClumps[[i]]],3]),
+                             as.numeric(x$X_info[x$screenedSNPsNumbers[x$selectedClumps[[i]]],4]),
                              i, x$effects[i]^2/var(as.vector(x$y))))
   }
   rownames(plot.data) <- NULL
   plot.data <- data.frame(plot.data)
-  colnames(plot.data) <- c("chromosome", "snp", "clump", "val")
+  colnames(plot.data) <- c("chromosome", "snp", "bp", "clump", "val")
   plot.data <- cbind(plot.data,
                      representatives = unlist(x$selectedClumps) %in% unlist(x$selectedSNPs))
-  granice <- aggregate(x$X_info[,3], list(x$X_info[,1]), max)
-  granice_max <- cumsum(granice$x)
-  granice$x <- c(0,head(cumsum(granice$x),-1))
-  for(i in unique(plot.data$chromosome)){
-    plot.data$snp[plot.data$chromosome==i] <- granice$x[i] +
-      plot.data$snp[plot.data$chromosome==i]
+
+  if(length(unique(plot.data$snp)) == 1 &
+     length(unique(plot.data$chromosome)) == 1){ #we have one chromosome
+    plot.data$snp <- plot.data$bp
+  } else {
+    chromosomes_limits <- aggregate(x$X_info[,3], list(x$X_info[,1]), max)
+    #granice_max <- cumsum(chromosomes_limits$x)
+    chromosomes_limits$x <- c(0,head(cumsum(chromosomes_limits$x),-1))
+    for(i in seq_along(unique(plot.data$chromosome))){
+      chromosome_idx <- unique(plot.data$chromosome)[i]
+      plot.data$snp[plot.data$chromosome==chromosome_idx] <- chromosomes_limits$x[i] +
+        plot.data$snp[plot.data$chromosome==chromosome_idx]
+    }
   }
+
+  # limits <- aggregate(x$X_info[,3], list(x$X_info[,1]), max)
+  # limits_max <- cumsum(limits$x)
+  # limits$x <- c(0,head(cumsum(limits$x),-1))
+  # for(i in unique(plot.data$chromosome)){
+  #   plot.data$snp[plot.data$chromosome==i] <- limits$x[i] +
+  #     plot.data$snp[plot.data$chromosome==i]
+  # }
   plot.data$val[plot.data$representatives] <- (x$effects^2/var(x$y))
   plot.data
 }

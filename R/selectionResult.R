@@ -137,9 +137,18 @@ plot.selectionResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...
   }
   if(!is.null(x$X_info)){
     plot.data <- create_slope_plot_data(x)
-    granice <- aggregate(x$X_info[,3], list(x$X_info[,1]), max)
-    granice_max <- cumsum(granice$x)
-    granice$x <- c(0,head(cumsum(granice$x),-1))
+    # granice <- aggregate(x$X_info[,3], list(x$X_info[,1]), max)
+    # granice_max <- cumsum(granice$x)
+    # granice$x <- c(0,head(cumsum(granice$x),-1))
+
+    if(length(unique(x$X_info[,3])) == 1){
+      chromosome_limits <- aggregate(x$X_info[,4], list(x$X_info[,1]), max)
+    } else {
+      chromosome_limits <- aggregate(x$X_info[,3], list(x$X_info[,1]), max)
+    }
+
+    chromosome_limits_max <- cumsum(chromosome_limits$x)
+    chromosome_limits$x <- c(0,head(cumsum(chromosome_limits$x),-1))
 
     if(!is.null(chromosomeNumber)) {
       plot.data <- subset(plot.data, plot.data$chromosome%in%chromosomeNumber)
@@ -161,15 +170,16 @@ plot.selectionResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...
                                 atop(italic("Dots indicate clump representatives. Colors indicate different clumps"), "")))) +
         ylab("% of variance explained") + scale_y_continuous() +
         xlab("Genome") +
-        scale_x_continuous(limits=c(min(granice$x[chromosomeNumber]),
-                                    max(granice_max[chromosomeNumber])),
-                           breaks=rowMeans(cbind(granice$x, granice_max)),
-                           labels=granice$Group.1,
-                           minor_breaks=c(granice$x, max(granice_max))) +
+        scale_x_continuous(limits=c(min(chromosome_limits$x[chromosomeNumber]),
+                                    max(chromosome_limits_max[chromosomeNumber])),
+                           breaks=rowMeans(cbind(chromosome_limits$x, chromosome_limits_max)),
+                           labels=chromosome_limits$Group.1,
+                           minor_breaks=c(chromosome_limits$x, max(chromosome_limits_max))) +
         scale_alpha_manual(guide=FALSE, values = c(0.5, 1)) +
         scale_color_discrete(guide=FALSE, "Clump") +
         scale_size_area(guide=FALSE, max_size = 4) +
-        slope_result_theme
+        slope_result_theme +
+        theme(text = element_text(family = "Helvetica"))
     } else if(!is.null(clumpNumber)) {
       plot.data <- subset(plot.data, plot.data$clump%in%clumpNumber)
       if(nrow(plot.data)==0 | nrow(plot.data[plot.data$representatives,])==0) {
@@ -185,15 +195,16 @@ plot.selectionResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...
                                 atop(italic("Dots indicate clump representatives"), "")))) +
         ylab("% of variance explained") + scale_y_continuous() +
         xlab("Genome") +
-        scale_x_continuous(limits=c(min(granice$x[plot.data$chromosome]),
-                                    max(granice_max[plot.data$chromosome])),
-                           breaks=rowMeans(cbind(granice$x, granice_max)),
-                           labels=granice$Group.1,
-                           minor_breaks=c(granice$x, max(granice_max))) +
+        scale_x_continuous(limits=c(min(chromosome_limits$x[plot.data$chromosome]),
+                                    max(chromosome_limits_max[plot.data$chromosome])),
+                           breaks=rowMeans(cbind(chromosome_limits$x, chromosome_limits_max)),
+                           labels=chromosome_limits$Group.1,
+                           minor_breaks=c(chromosome_limits$x, max(chromosome_limits_max))) +
         scale_alpha_manual(guide=FALSE, values = c(0.5, 1)) +
         scale_color_discrete(guide=FALSE, "Clump") +
         scale_size_area(guide=FALSE, max_size = 4) +
-        slope_result_theme
+        slope_result_theme +
+        theme(text = element_text(family = "Helvetica"))
     } else {
       plot.data$clump <- as.factor(plot.data$clump)
       ggplot(plot.data) + geom_point(aes(x=snp, y=val, colour = clump, size = 6),
@@ -205,15 +216,16 @@ plot.selectionResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...
         ylab("% of variance explained") +
         xlab("Genome") +
         scale_x_continuous(expand = c(0,0),
-                           limits=c(0, max(granice_max)+1),
-                           breaks=rowMeans(cbind(granice$x, granice_max)),
-                           labels=granice$Group.1,
-                           minor_breaks=c(granice$x, max(granice_max))) +
+                           limits=c(0, max(chromosome_limits_max)+1),
+                           breaks=rowMeans(cbind(chromosome_limits$x, chromosome_limits_max)),
+                           labels=chromosome_limits$Group.1,
+                           minor_breaks=c(chromosome_limits$x, max(chromosome_limits_max))) +
         scale_y_continuous(expand = c(0,0),limits=c(0, 1.1*max(plot.data$val))) +
         scale_alpha_manual(guide=FALSE, values = c(0.5, 1)) +
         scale_color_discrete(guide=FALSE, "Clump") +
         scale_size_area(guide=FALSE, max_size = 4) +
-        slope_result_theme
+        slope_result_theme +
+        theme(text = element_text(family = "Helvetica"))
     }
 
 
@@ -245,13 +257,18 @@ plot.selectionResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...
     }
 }
 
-slope_result_theme <- theme(panel.background=element_blank(),
-                        panel.grid.major.y=element_line(colour = "grey80"),
-                        panel.grid.minor.y=element_line(colour = "grey90"),
-                        panel.grid.major.x=element_blank(),
-                        panel.grid.minor.x=element_line(colour = "grey70", linetype = "dotted", size=0.5),
-                        axis.ticks.x=element_blank(),
-                        legend.text = element_text(size=15),
-                        legend.position="bottom",
-                        legend.key =element_rect(fill="white"))
+slope_result_theme <- theme(
+  plot.title = element_text(hjust = 0.5),
+  plot.subtitle = element_text(hjust = 0.5),
+  panel.background=element_blank(),
+  panel.grid.major.y=element_line(colour = "grey80"),
+  panel.grid.minor.y=element_line(colour = "grey90"),
+  panel.grid.major.x=element_blank(),
+  panel.grid.minor.x=element_line(colour = "grey70",
+                                  linetype = "dotted",
+                                  size=0.5),
+  axis.ticks.x=element_blank(),
+  legend.text = element_text(size=15),
+  legend.position="bottom",
+  legend.key =element_rect(fill="white"))
 
