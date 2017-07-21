@@ -45,4 +45,3 @@ data.frame are related to snps that passed screening
 \code{\link{screeningResult}} \code{\link{clumpingResult}}
 \code{\link{select_snps}} \code{\link[SLOPE]{SLOPE}}
 }
-

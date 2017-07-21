@@ -14,4 +14,3 @@
 \description{
 Print clumpingResult class object
 }
-

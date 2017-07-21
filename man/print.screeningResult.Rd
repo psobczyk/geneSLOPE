@@ -14,4 +14,3 @@
 \description{
 Print function for class screeningResult class
 }
-

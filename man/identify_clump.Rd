@@ -18,4 +18,3 @@ identify_clump
 Enable interactive selection of snps in plot.
 Return clump number.
 }
-

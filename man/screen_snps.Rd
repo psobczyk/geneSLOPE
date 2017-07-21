@@ -38,4 +38,3 @@ The PLINK command should therefore look like
 For more information, please refer to:
 \url{http://pngu.mgh.harvard.edu/~purcell/plink/dataman.shtml}
 }
-

@@ -14,4 +14,3 @@
 \description{
 Summary phenotypeData class object
 }
-

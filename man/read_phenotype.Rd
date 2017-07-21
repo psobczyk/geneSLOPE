@@ -27,4 +27,3 @@ fifth is SEX and sixth and last is PHENOTYPE.
 If file has only four columns, then it is assumed that PAT and MAT columns are missing.
 If there is only one column, then it is assumed that only phenotype is provided.
 }
-

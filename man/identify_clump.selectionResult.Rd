@@ -14,4 +14,3 @@
 \description{
 Identify clump number in selectionResult class plot
 }
-

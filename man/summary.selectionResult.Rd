@@ -16,4 +16,3 @@
 \description{
 Summary selectionResult class object
 }
-

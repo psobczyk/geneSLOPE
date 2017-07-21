@@ -14,4 +14,3 @@
 \description{
 Summary clumpingResult class object
 }
-

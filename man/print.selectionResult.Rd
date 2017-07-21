@@ -17,4 +17,3 @@ Nothing.
 \description{
 Print selectionResult class object
 }
-

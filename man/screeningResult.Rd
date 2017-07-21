@@ -24,4 +24,3 @@ provied in \code{\link{phenotypeData}} object
 \seealso{
 \code{\link{phenotypeData}} \code{\link{screen_snps}}
 }
-

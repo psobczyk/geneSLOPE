@@ -19,4 +19,3 @@
 \description{
 Plot selectionResult class object
 }
-

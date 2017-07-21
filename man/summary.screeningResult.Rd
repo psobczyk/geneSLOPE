@@ -14,4 +14,3 @@
 \description{
 Summary function for class screeningResult
 }
-

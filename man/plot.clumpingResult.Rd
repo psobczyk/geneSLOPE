@@ -20,4 +20,3 @@
 Plot clumpingResult class object
 }
 \keyword{internal}
-

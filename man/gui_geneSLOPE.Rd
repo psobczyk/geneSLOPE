@@ -16,4 +16,3 @@ Association Study with SLOPE
 \details{
 requires installing \pkg{\link[shiny]{shiny}} package
 }
-

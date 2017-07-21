@@ -30,4 +30,3 @@ data.frame are related to snps that passed screening
 \seealso{
 \code{\link{screeningResult}} \code{\link{clump_snps}}
 }
-

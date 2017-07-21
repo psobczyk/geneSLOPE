@@ -21,7 +21,7 @@ screened using marginal tests for each SNP
 one representative (therefore we ensure that variables in linear model
 are not strognly correlated)
 }
-Version: 0.37.0
+Version: 0.38.0
 }
 \examples{
 \donttest{
@@ -37,6 +37,11 @@ slope.result <- select_snps(clumping.result, fdr=0.1)
 gui_geneSLOPE()
 }
 }
+\references{
+\emph{SLOPE -- Adaptive Variable Selection via Convex Optimization},
+Malgorzata Bogdan, Ewout van den Berg, Chiara Sabatti,
+Weijie Su and Emmanuel Candes
+}
 \author{
 {
 Malgorzata Bogdan, Damian Brzyski, Emmanuel J. Candes, Christine Peterson, Chiara Sabatti, Piotr Sobczyk
@@ -44,9 +49,3 @@ Malgorzata Bogdan, Damian Brzyski, Emmanuel J. Candes, Christine Peterson, Chiar
 Maintainer: Piotr Sobczyk \email{Piotr.Sobczyk@pwr.edu.pl}
 }
 }
-\references{
-\emph{SLOPE -- Adaptive Variable Selection via Convex Optimization},
-Malgorzata Bogdan, Ewout van den Berg, Chiara Sabatti,
-Weijie Su and Emmanuel Candes
-}
-

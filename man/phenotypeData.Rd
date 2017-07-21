@@ -17,4 +17,3 @@ provied in .fam file
 \seealso{
 \code{\link{read_phenotype}}
 }
-

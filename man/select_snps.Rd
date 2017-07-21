@@ -37,4 +37,3 @@ one representative for each clump.
 slope.result <- select_snps(clumping.result, fdr=0.1)
 }
 }
-

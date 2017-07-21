@@ -25,4 +25,3 @@ object of class \code{\link{screeningResult}},
 which is an output of function \code{\link{screen_snps}}.
 SNPs are clustered based on their correlations. For details see package vignette.
 }
-
