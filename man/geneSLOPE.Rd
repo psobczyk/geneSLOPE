@@ -46,6 +46,6 @@ Weijie Su and Emmanuel Candes
 {
 Malgorzata Bogdan, Damian Brzyski, Emmanuel J. Candes, Christine Peterson, Chiara Sabatti, Piotr Sobczyk
 
-Maintainer: Piotr Sobczyk \email{Piotr.Sobczyk@pwr.edu.pl}
+Maintainer: Piotr Sobczyk \email{pj.sobczyk@gmail.com}
 }
 }

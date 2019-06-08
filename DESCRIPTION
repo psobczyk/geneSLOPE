@@ -8,7 +8,7 @@ Authors@R: c(person("Damian", "Brzyski", role = "aut"),
     person("Emmanuel J.", "Candes", role = "aut"),
     person("Malgorzata", "Bogdan", role = "aut"),
     person("Chiara", "Sabatti", role = "aut"),
-    person("Piotr", "Sobczyk", email = "piotr.sobczyk@pwr.edu.pl", role = c("cre", "aut")))
+    person("Piotr", "Sobczyk", email = "pj.sobczyk@gmail.com", role = c("cre", "aut")))
 Description: Genome-wide association study (GWAS) performed with SLOPE,
     short for Sorted L-One Penalized Estimation, a
     method for estimating the vector of coefficients in linear model.
@@ -35,4 +35,5 @@ Suggests:
     testthat
 VignetteBuilder: knitr
 Repository: CRAN
-RoxygenNote: 6.0.1
+Encoding: UTF-8
+RoxygenNote: 6.1.1
