@@ -16,13 +16,13 @@
 #'
 clump_snps <- function(screenResult, rho = 0.5, pValues=NULL, verbose = TRUE){
 
-  if(rho>=1 | rho <= 0)
+  if(rho >= 1 | rho <= 0)
     stop("Error: Rho has to be within range (0,1)")
 
   if(length(screenResult$y) != nrow(screenResult$X))
     stop("Error: Length of phenotype must match number of observations in matrix with snps")
 
-  if(class(screenResult)!="screeningResult")
+  if(class(screenResult) != "screeningResult")
     stop("Error: parameter screenResult has to be of class screeningResult")
 
   if(verbose){
@@ -34,11 +34,11 @@ clump_snps <- function(screenResult, rho = 0.5, pValues=NULL, verbose = TRUE){
   }
 
   if(is.null(pValues) | (length(pValues) != ncol(screenResult$X))){
-    suma = sum((screenResult$y-mean(screenResult$y))^2)
-    n = length(screenResult$y) - 2
-    pVals <- apply(screenResult$X, 2, function(x) pValComp(x,screenResult$y,n,suma))
+    suma <- sum((screenResult$y-mean(screenResult$y))^2)
+    n <- length(screenResult$y) - 2
+    pVals <- apply(screenResult$X, 2, function(x) pValComp(x, screenResult$y, n, suma))
   } else{
-    pVals = pValues
+    pVals <- pValues
   }
 
   a <- order(pVals, decreasing = FALSE)
@@ -56,7 +56,7 @@ clump_snps <- function(screenResult, rho = 0.5, pValues=NULL, verbose = TRUE){
       representatives[[i]] <- idx
       notClumped[ which(notClumped)[clump] ] <- FALSE
     }
-    i = i+1
+    i <- i+1
     if(verbose)
       setTxtProgressBar(pb, sqrt(i))
   }

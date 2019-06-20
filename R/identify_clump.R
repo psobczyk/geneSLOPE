@@ -68,11 +68,11 @@ identify_clump.selectionResult <- function(x, ...) {
   b <- plot.data$val
 
   downViewport("layout")
-  tmp = as.numeric(grid.locator(unit = "npc"))
+  tmp <- as.numeric(grid.locator(unit = "npc"))
   tmp.n <- as.numeric(tmp)*c(max(chromosome_limits_max)+1, 1.1*max(plot.data$val))
   diff.a <- (a-tmp.n[1])^2
   diff.b <- (b-tmp.n[2])^2
   upViewport(n = 0)
   paste("Selected SNP is in clump",
-        plot.data$clump[which.min((a-tmp.n[1])^2 + (b-tmp.n[2])^2)])
+        plot.data$clump[which.min((a - tmp.n[1])^2 + (b - tmp.n[2])^2)])
 }
