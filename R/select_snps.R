@@ -12,7 +12,7 @@
 #' @param type method for snp selection. slope (default value) is SLOPE
 #' on clump representatives, smt is Benjamini-Hochberg procedure on
 #' single marker test p-values for clump representatives
-#' @param lambda lambda for SLOPE. See \code{\link[SLOPE]{create_lambda}}
+#' @param lambda lambda for SLOPE. See \code{\link{create_lambda}}
 #' @param sigma numeric, sigma for SLOPE
 #' @param verbose logical, if TRUE progress bar is printed
 #' @return object of class \code{\link{selectionResult}}
@@ -32,7 +32,7 @@ select_snps <- function(clumpingResult, fdr = 0.1, type=c("slope", "smt"),
   }
 
   if(type=="slope"){
-    lambda <- SLOPE::create_lambda(length(clumpingResult$y),
+    lambda <- create_lambda(length(clumpingResult$y),
                                    clumpingResult$numberOfSnps, fdr, "gaussian")
     lambda <- lambda[1:ncol(clumpingResult$X)]
     lambda_diffs <- diff(lambda)
@@ -46,8 +46,8 @@ select_snps <- function(clumpingResult, fdr = 0.1, type=c("slope", "smt"),
       repeat {
         selected.prev = selected
         sigma = c(sigma, estimate_noise(clumpingResult$X[, selected], clumpingResult$y))
-        result = SLOPE::SLOPE(clumpingResult$X, clumpingResult$y, fdr = fdr,
-                              lambda = lambda, sigma = tail(sigma, 1))
+        result = SLOPE::SLOPE(x = clumpingResult$X, y = clumpingResult$y,
+                              lambda = lambda, alpha = tail(sigma, 1))
         selected = result$selected
         if (identical(selected, selected.prev))
           break
@@ -55,8 +55,8 @@ select_snps <- function(clumpingResult, fdr = 0.1, type=c("slope", "smt"),
       sigma = tail(sigma, 1)
     }
 
-    slopeResult <- SLOPE::SLOPE(X = clumpingResult$X, y = clumpingResult$y,
-                                fdr = fdr, lambda = lambda, sigma = sigma)
+    slopeResult <- SLOPE::SLOPE(x = clumpingResult$X, y = clumpingResult$y,
+                                lambda = lambda, alpha = sigma)
 
     selectedSNPs <- unlist(clumpingResult$SNPnumber)[slopeResult$selected]
     selected = slopeResult$selected

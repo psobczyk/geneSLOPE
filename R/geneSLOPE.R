@@ -14,14 +14,13 @@
 #' one representative (therefore we ensure that variables in linear model
 #' are not strognly correlated)
 #' }
-#' Version: 0.38.0
+#' Version: 0.38.1
 #'
 #' @docType package
 #' @name geneSLOPE
 #' @import ggplot2
 #' @importFrom grid downViewport grid.locator upViewport
 #' @importFrom SLOPE SLOPE
-#' @importFrom SLOPE create_lambda
 #' @importFrom stats aggregate cor lm lm.fit pf var
 #' @importFrom utils head read.table setTxtProgressBar tail txtProgressBar
 #' @importFrom bigmemory read.big.matrix
