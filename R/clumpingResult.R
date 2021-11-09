@@ -91,7 +91,7 @@ plot.clumpingResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...)
     }
 
     chromosome_limits_max <- cumsum(chromosome_limits$x)
-    chromosome_limits$x <- c(0,head(cumsum(chromosome_limits$x),-1))
+    chromosome_limits$x <- c(0, head(cumsum(chromosome_limits$x), -1))
 
     if(!is.null(chromosomeNumber)){
       plot.data <- subset(plot.data, plot.data$chromosome%in%chromosomeNumber)
