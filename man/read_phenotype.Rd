@@ -4,8 +4,7 @@
 \alias{read_phenotype}
 \title{Read phenotype from .fam file}
 \usage{
-read_phenotype(filename, sep = " ", header = FALSE,
-  stringAsFactors = FALSE)
+read_phenotype(filename, sep = " ", header = FALSE, stringAsFactors = FALSE)
 }
 \arguments{
 \item{filename}{character, name of file with phenotype}

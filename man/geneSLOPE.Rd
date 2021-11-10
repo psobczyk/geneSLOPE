@@ -3,7 +3,6 @@
 \docType{package}
 \name{geneSLOPE}
 \alias{geneSLOPE}
-\alias{geneSLOPE-package}
 \title{Genome-Wide Association Study with SLOPE}
 \description{
 Package geneSLOPE performes genome-wide association study (GWAS) with \pkg{\link{SLOPE}},
@@ -21,7 +20,7 @@ screened using marginal tests for each SNP
 one representative (therefore we ensure that variables in linear model
 are not strognly correlated)
 }
-Version: 0.38.0
+Version: 0.38.1
 }
 \examples{
 \donttest{

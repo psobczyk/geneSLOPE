@@ -4,8 +4,7 @@
 \alias{plot.clumpingResult}
 \title{Plot clumpingResult class object}
 \usage{
-\method{plot}{clumpingResult}(x, chromosomeNumber = NULL,
-  clumpNumber = NULL, ...)
+\method{plot}{clumpingResult}(x, chromosomeNumber = NULL, clumpNumber = NULL, ...)
 }
 \arguments{
 \item{x}{clumpingResult class object}

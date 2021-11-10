@@ -21,8 +21,8 @@
 #' \dontrun{
 #' slope.result <- select_snps(clumping.result, fdr=0.1)
 #' }
-select_snps <- function(clumpingResult, fdr = 0.1, type=c("slope", "smt"),
-                        lambda="gaussian", sigma=NULL, verbose = TRUE){
+select_snps <- function(clumpingResult, fdr = 0.1, type = c("slope", "smt"),
+                        lambda = "gaussian", sigma = NULL, verbose = TRUE){
   if(fdr>=1 | fdr <= 0){
     stop("FDR has to be within range (0,1)")
   }
@@ -31,7 +31,7 @@ select_snps <- function(clumpingResult, fdr = 0.1, type=c("slope", "smt"),
          number of rows in X")
   }
 
-  if(type=="slope"){
+  if(any(type=="slope")){
     lambda <- create_lambda(length(clumpingResult$y),
                                    clumpingResult$numberOfSnps, fdr, "gaussian")
     lambda <- lambda[1:ncol(clumpingResult$X)]
@@ -40,7 +40,10 @@ select_snps <- function(clumpingResult, fdr = 0.1, type=c("slope", "smt"),
       warning("All lambdas are equal. SLOPE does not guarantee
             False Discovery Rate control")
     }
-
+    # lambdas from the previous SLOPE implementation have to be divided by the sqrt(n)
+    # as LASSO scaling of the loss function is used
+    lambda <- lambda / sqrt(nrow(clumpingResult$X))
+    
     if (is.null(sigma) && (nrow(clumpingResult$X) >= ncol(clumpingResult$X) + 30)) {
       selected = NULL
       repeat {

@@ -21,7 +21,7 @@
 #' @import ggplot2
 #' @importFrom grid downViewport grid.locator upViewport
 #' @importFrom SLOPE SLOPE
-#' @importFrom stats aggregate cor lm lm.fit pf var
+#' @importFrom stats aggregate cor lm lm.fit pf var qnorm
 #' @importFrom utils head read.table setTxtProgressBar tail txtProgressBar
 #' @importFrom bigmemory read.big.matrix
 #' @author{
