@@ -16,10 +16,19 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r-version }})
+
     strategy:
+      fail-fast: false
       matrix:
-        r-version: ['3.6.3', '4.1.1']
+        config:
+          - {os: macos-latest,   r-version: 'release'}
+          - {os: windows-latest, r-version: 'release'}
+          - {os: ubuntu-18.04,   r-version: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest", http-user-agent: "R/4.1.0 (ubuntu-18.04) R (4.1.0 x86_64-pc-linux-gnu x86_64 linux-gnu) on GitHub Actions" }
+          - {os: ubuntu-18.04,   r-version: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
+          - {os: ubuntu-18.04,   r-version: 'oldrel',  rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
 
     steps:
       - uses: actions/checkout@v2
