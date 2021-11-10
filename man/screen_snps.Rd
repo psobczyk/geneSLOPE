@@ -4,8 +4,14 @@
 \alias{screen_snps}
 \title{Reading and screening SNPs from .raw file and}
 \usage{
-screen_snps(rawFile, mapFile = "", phenotype, pValMax = 0.05,
-  chunkSize = 100, verbose = TRUE)
+screen_snps(
+  rawFile,
+  mapFile = "",
+  phenotype,
+  pValMax = 0.05,
+  chunkSize = 100,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{rawFile}{character, name of .raw file}

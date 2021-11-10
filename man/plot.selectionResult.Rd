@@ -4,8 +4,7 @@
 \alias{plot.selectionResult}
 \title{Plot selectionResult class object}
 \usage{
-\method{plot}{selectionResult}(x, chromosomeNumber = NULL,
-  clumpNumber = NULL, ...)
+\method{plot}{selectionResult}(x, chromosomeNumber = NULL, clumpNumber = NULL, ...)
 }
 \arguments{
 \item{x}{selectionResult class object}

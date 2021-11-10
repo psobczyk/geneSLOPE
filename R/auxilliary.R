@@ -46,11 +46,10 @@ create_clumping_plot_data <- function(x){
     plot.data$snp <- plot.data$bp
   } else {
     chromosomes_limits <- aggregate(x$X_info[,3], list(x$X_info[,1]), max)
-    #granice_max <- cumsum(chromosomes_limits$x)
-    chromosomes_limits$x <- c(0,head(cumsum(chromosomes_limits$x),-1))
-    for(i in seq_along(unique(plot.data$chromosome))){
-      chromosome_idx <- unique(plot.data$chromosome)[i]
-      plot.data$snp[plot.data$chromosome==chromosome_idx] <- chromosomes_limits$x[i] +
+    chromosomes_limits$x <- c(0, head(cumsum(chromosomes_limits$x), -1))
+    for(i in seq_along(sort(unique(plot.data$chromosome)))){
+      chromosome_idx <- sort(unique(plot.data$chromosome))[i]
+      plot.data$snp[plot.data$chromosome==chromosome_idx] <- chromosomes_limits$x[chromosome_idx] +
         plot.data$snp[plot.data$chromosome==chromosome_idx]
     }
   }
@@ -89,13 +88,6 @@ create_slope_plot_data <- function(x){
     }
   }
 
-  # limits <- aggregate(x$X_info[,3], list(x$X_info[,1]), max)
-  # limits_max <- cumsum(limits$x)
-  # limits$x <- c(0,head(cumsum(limits$x),-1))
-  # for(i in unique(plot.data$chromosome)){
-  #   plot.data$snp[plot.data$chromosome==i] <- limits$x[i] +
-  #     plot.data$snp[plot.data$chromosome==i]
-  # }
   plot.data$val[plot.data$representatives] <- (x$effects^2/var(x$y))
   plot.data
 }
