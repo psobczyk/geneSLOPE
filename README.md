@@ -1,3 +1,4 @@
+[![R build status](https://github.com/psobczyk/geneSLOPE/workflows/R/badge.svg)](https://github.com/psobczyk/geneSLOPE/actions?query=workflow%3AR)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/geneSLOPE)](http://cran.r-project.org/package=geneSLOPE)
 [![Downloads](http://cranlogs.r-pkg.org/badges/geneSLOPE)](http://cran.rstudio.com/package=geneSLOPE)
 [![Build Status](https://api.travis-ci.org/psobczyk/geneSLOPE.png)](https://travis-ci.org/psobczyk/geneSLOPE)
