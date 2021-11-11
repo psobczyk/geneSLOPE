@@ -37,7 +37,6 @@ jobs:
         with:
           r-version: ${{ matrix.config.r-version }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
-          use-public-rspm: true
       - uses: r-lib/actions/setup-pandoc@v1
       
       - name: Install system dependencies
@@ -50,16 +49,13 @@ jobs:
         with:
           extra-packages: rcmdcheck
           
-      - uses: r-lib/actions/check-r-package@v1
-      
-      - name: Show testthat output
-        if: always()
-        run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
-        shell: bash
+      - name: Check
+        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
+        shell: Rscript {0}
 
       - name: Upload check results
         if: failure()
-        uses: actions/upload-artifact@main
+        uses: actions/upload-artifact@master
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r-version }}-results
           path: check
