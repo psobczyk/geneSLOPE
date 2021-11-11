@@ -10,7 +10,7 @@ name: R
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, fixing-workflow ]
   pull_request:
     branches: [ master ]
 
@@ -39,23 +39,4 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
       - uses: r-lib/actions/setup-pandoc@v1
       
-      - name: Install system dependencies
-        if: runner.os == 'Linux'
-        env:
-          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
-        run: sudo apt-get install -y libcurl4-openssl-dev
-          
-      - uses: r-lib/actions/setup-r-dependencies@v1
-        with:
-          extra-packages: rcmdcheck
-          
-      - name: Check
-        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
-        shell: Rscript {0}
-
-      - name: Upload check results
-        if: failure()
-        uses: actions/upload-artifact@master
-        with:
-          name: ${{ runner.os }}-r${{ matrix.config.r-version }}-results
-          path: check
+      
