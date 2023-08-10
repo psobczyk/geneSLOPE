@@ -41,6 +41,12 @@ one representative for each clump.
 }
 \examples{
 \donttest{
+famFile <- system.file("extdata", "plinkPhenotypeExample.fam", package = "geneSLOPE")
+mapFile <- system.file("extdata", "plinkMapExample.map", package = "geneSLOPE")
+snpsFile <- system.file("extdata", "plinkDataExample.raw", package = "geneSLOPE")
+phe <- read_phenotype(filename = famFile)
+screening.result <- screen_snps(snpsFile, mapFile, phe, pValMax = 0.05, chunkSize = 1e2)
+clumping.result <- clump_snps(screening.result, rho = 0.3, verbose = TRUE)
 slope.result <- select_snps(clumping.result, fdr=0.1)
 }
 }

@@ -17,8 +17,8 @@ Description: Genome-wide association study (GWAS) performed with SLOPE,
     one representative.
     Malgorzata Bogdan, Ewout van den Berg, Chiara Sabatti, Weijie Su 
     and Emmanuel Candes (2014) 
-    "SLOPE -- Adaptive Variable Selection via Convex Optimization" 
-    <arXiv:1407.3824>
+    "SLOPE - Adaptive Variable Selection via Convex Optimization" 
+    <arXiv:1407.3824>.
 License: GPL-3
 URL: https://github.com/psobczyk/geneSLOPE
 BugReports: https://github.com/psobczyk/geneSLOPE/issues
