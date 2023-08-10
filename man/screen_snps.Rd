@@ -14,22 +14,22 @@ screen_snps(
 )
 }
 \arguments{
-\item{rawFile}{character, name of .raw file}
+\item{rawFile}{character, name of .raw file.}
 
-\item{mapFile}{character, name of .map file}
+\item{mapFile}{character, name of .map file.}
 
-\item{phenotype}{numeric vector or an object of class \code{\link{phenotypeData}}}
+\item{phenotype}{numeric vector or an object of class \code{\link{phenotypeData}}.}
 
-\item{pValMax}{numeric, p-value threshold value used for screening}
+\item{pValMax}{numeric, p-value threshold value used for screening.}
 
 \item{chunkSize}{integer, number of snps that will be processed together.
-The bigger chunkSize is, the faster function works but
-computer might run out of RAM}
+The bigger the chunkSize is, the faster function works but
+computer might run out of RAM.}
 
-\item{verbose}{if TRUE (default) information about progress is printed}
+\item{verbose}{if TRUE (default) information about progress is printed.}
 }
 \value{
-object of class \code{\link{screeningResult}}
+object of class \code{\link{screeningResult}}.
 }
 \description{
 Reading .raw file that was previously exported from PLINK - see details.
@@ -42,5 +42,5 @@ PLINK using the option "--recodeAD"
 The PLINK command should therefore look like
 \code{plink --file input --recodeAD --out output}.
 For more information, please refer to:
-\url{http://pngu.mgh.harvard.edu/~purcell/plink/dataman.shtml}
+\url{https://zzz.bwh.harvard.edu/plink/dataman.shtml}
 }

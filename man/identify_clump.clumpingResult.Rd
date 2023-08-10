@@ -2,15 +2,18 @@
 % Please edit documentation in R/identify_clump.R
 \name{identify_clump.clumpingResult}
 \alias{identify_clump.clumpingResult}
-\title{Identify clump number in clumpingResult class plot}
+\title{Identify clump number in \code{\link{clumpingResult}} class plot}
 \usage{
 \method{identify_clump}{clumpingResult}(x, ...)
 }
 \arguments{
-\item{x}{clumpingResult class object}
+\item{x}{\code{\link{clumpingResult}} class object}
 
 \item{...}{Further arguments to be passed to or from other methods. They are ignored in this function.}
 }
+\value{
+No return value, called for side effects
+}
 \description{
-Identify clump number in clumpingResult class plot
+Identify clump number in \code{\link{clumpingResult}} class plot
 }

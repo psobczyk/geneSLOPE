@@ -20,7 +20,7 @@ screened using marginal tests for each SNP
 one representative (therefore we ensure that variables in linear model
 are not strognly correlated)
 }
-Version: 0.38.1
+Version: 0.38.2
 }
 \examples{
 \donttest{
@@ -31,6 +31,7 @@ phe <- read_phenotype(filename = famFile)
 screening.result <- screen_snps(snpsFile, mapFile, phe, pValMax = 0.05, chunkSize = 1e2)
 clumping.result <- clump_snps(screening.result, rho = 0.3, verbose = TRUE)
 slope.result <- select_snps(clumping.result, fdr=0.1)
+
 }
 \dontrun{
 gui_geneSLOPE()

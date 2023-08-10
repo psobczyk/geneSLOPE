@@ -6,13 +6,14 @@
 #' SNPs are clustered based on their correlations. For details see package vignette.
 #'
 #' @export
-#' @param screenResult object of class screeningResult
-#' @param rho numeric, minimal correlation between two SNPs to be assigned to one clump
+#' @param screenResult object of class \code{\link{screeningResult}}.
+#' @param rho numeric, minimal correlation between two SNPs to be assigned to one clump.
 #' @param pValues numeric vector, p-values for SNPs computed outside geneSLOPE,
-#' eg. with EMMAX
-#' @param verbose logical, if TRUE (default) progress bar is shown
+#' eg. with EMMAX.
+#' @param verbose logical, if TRUE (default) progress bar is shown.
 #'
-#' @return object of class \code{\link{clumpingResult}}
+#' @return object of class \code{\link{clumpingResult}}. 
+#' See the class documentation for details. 
 #'
 clump_snps <- function(screenResult, rho = 0.5, pValues=NULL, verbose = TRUE){
 
@@ -22,7 +23,7 @@ clump_snps <- function(screenResult, rho = 0.5, pValues=NULL, verbose = TRUE){
   if(length(screenResult$y) != nrow(screenResult$X))
     stop("Error: Length of phenotype must match number of observations in matrix with snps")
 
-  if(class(screenResult) != "screeningResult")
+  if(! "screeningResult" %in% class(screenResult))
     stop("Error: parameter screenResult has to be of class screeningResult")
 
   if(verbose){

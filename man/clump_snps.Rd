@@ -7,17 +7,18 @@
 clump_snps(screenResult, rho = 0.5, pValues = NULL, verbose = TRUE)
 }
 \arguments{
-\item{screenResult}{object of class screeningResult}
+\item{screenResult}{object of class \code{\link{screeningResult}}.}
 
-\item{rho}{numeric, minimal correlation between two SNPs to be assigned to one clump}
+\item{rho}{numeric, minimal correlation between two SNPs to be assigned to one clump.}
 
 \item{pValues}{numeric vector, p-values for SNPs computed outside geneSLOPE,
-eg. with EMMAX}
+eg. with EMMAX.}
 
-\item{verbose}{logical, if TRUE (default) progress bar is shown}
+\item{verbose}{logical, if TRUE (default) progress bar is shown.}
 }
 \value{
-object of class \code{\link{clumpingResult}}
+object of class \code{\link{clumpingResult}}. 
+See the class documentation for details.
 }
 \description{
 Clumping procedure performed on SNPs, columns of matrix \code{X}, from

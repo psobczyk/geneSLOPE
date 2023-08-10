@@ -2,12 +2,12 @@
 % Please edit documentation in R/clumpingResult.R
 \name{plot.clumpingResult}
 \alias{plot.clumpingResult}
-\title{Plot clumpingResult class object}
+\title{Plot \code{\link{clumpingResult}} class object}
 \usage{
 \method{plot}{clumpingResult}(x, chromosomeNumber = NULL, clumpNumber = NULL, ...)
 }
 \arguments{
-\item{x}{clumpingResult class object}
+\item{x}{\code{\link{clumpingResult}} class object}
 
 \item{chromosomeNumber}{optional parameter, only selected chromosome will be plotted}
 
@@ -15,7 +15,10 @@
 
 \item{...}{Further arguments to be passed to or from other methods. They are ignored in this function.}
 }
+\value{
+No return value, called for side effects
+}
 \description{
-Plot clumpingResult class object
+Plot \code{\link{clumpingResult}} class object
 }
 \keyword{internal}

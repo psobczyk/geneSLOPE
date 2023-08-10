@@ -7,18 +7,19 @@
 #' one representative for each clump.
 #'
 #' @export
-#' @param clumpingResult clumpProcedure output
-#' @param fdr, numeric, False Discovery Rate for SLOPE
+#' @param clumpingResult object of class \code{\link{clumpingResult}}, 
+#' clumpProcedure output.
+#' @param fdr, numeric, False Discovery Rate for SLOPE.
 #' @param type method for snp selection. slope (default value) is SLOPE
-#' on clump representatives, smt is Benjamini-Hochberg procedure on
-#' single marker test p-values for clump representatives
-#' @param lambda lambda for SLOPE. See \code{\link{create_lambda}}
-#' @param sigma numeric, sigma for SLOPE
-#' @param verbose logical, if TRUE progress bar is printed
-#' @return object of class \code{\link{selectionResult}}
+#' on clump representatives, smt is the Benjamini-Hochberg procedure on
+#' single marker test p-values for clump representatives.
+#' @param lambda lambda for SLOPE. See \code{\link{create_lambda}}.
+#' @param sigma numeric, sigma for SLOPE.
+#' @param verbose logical, if TRUE progress bar is printed.
+#' @return object of class \code{\link{selectionResult}}.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' slope.result <- select_snps(clumping.result, fdr=0.1)
 #' }
 select_snps <- function(clumpingResult, fdr = 0.1, type = c("slope", "smt"),

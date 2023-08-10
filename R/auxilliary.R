@@ -1,6 +1,6 @@
-# auxilliary functions
+# auxiliary functions
 
-#fast p-value computation for simple marginal lm fit test
+#fast p-value computation for simple marginal linear model (lm) fit test
 pValComp <- function(x, y, n, suma){
   a <- lm.fit(cbind(x,1), y)
   b <- sum(a$residuals^2)
@@ -15,7 +15,7 @@ replace_na_with_mean <- function(x) {
   x
 }
 
-#estimate noise in lm
+#estimate noise in linear model (lm)
 estimate_noise <- function (X, y, intercept = TRUE) {
   n = nrow(X)
   if (intercept)
@@ -79,7 +79,6 @@ create_slope_plot_data <- function(x){
     plot.data$snp <- plot.data$bp
   } else {
     chromosomes_limits <- aggregate(x$X_info[,3], list(x$X_info[,1]), max)
-    #granice_max <- cumsum(chromosomes_limits$x)
     chromosomes_limits$x <- c(0,head(cumsum(chromosomes_limits$x),-1))
     for(i in seq_along(unique(plot.data$chromosome))){
       chromosome_idx <- unique(plot.data$chromosome)[i]

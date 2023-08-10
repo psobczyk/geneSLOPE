@@ -7,16 +7,17 @@
 read_phenotype(filename, sep = " ", header = FALSE, stringAsFactors = FALSE)
 }
 \arguments{
-\item{filename}{character, name of file with phenotype}
+\item{filename}{character, name of file with phenotype.}
 
-\item{sep}{character, field seperator in file}
+\item{sep}{character, field seperator in file.}
 
-\item{header}{logical, does first row of file contain variables names}
+\item{header}{logical, does first row of file contain variables names.}
 
 \item{stringAsFactors}{logical, should character vectors be converted to factors?}
 }
 \value{
-object of class phenotypeData
+object of class \code{\link{phenotypeData}}. 
+See the class documentation for details.
 }
 \description{
 Reading phenotype data from file. It is assumed, that data is given in .fam file.

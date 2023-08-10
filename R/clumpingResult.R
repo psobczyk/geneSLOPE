@@ -25,10 +25,11 @@
 #' @name clumpingResult
 NULL
 
-#' Print clumpingResult class object
+#' Print \code{\link{clumpingResult}} class object
 #'
-#' @param x clumpingResult class object
+#' @param x \code{\link{clumpingResult}} class object
 #' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
+#' @return No return value, called for side effects
 #' @export
 #'
 #' @method print clumpingResult
@@ -58,8 +59,9 @@ print.clumpingResult <- function(x, ...){
 
 #' Summary clumpingResult class object
 #'
-#' @param object clumpingResult class object
+#' @param object \code{\link{clumpingResult}} class object
 #' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
+#' @return No return value, called for side effects
 #' @export
 #'
 #' @method summary clumpingResult
@@ -72,12 +74,13 @@ summary.clumpingResult <- function(object, ...){
 }
 
 
-#' Plot clumpingResult class object
+#' Plot \code{\link{clumpingResult}} class object
 #'
-#' @param x clumpingResult class object
+#' @param x \code{\link{clumpingResult}} class object
 #' @param chromosomeNumber optional parameter, only selected chromosome will be plotted
 #' @param clumpNumber optional parameter, only SNPs from selected clump will be plotted
 #' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
+#' @return No return value, called for side effects
 #' @export
 #' @keywords internal
 plot.clumpingResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...){

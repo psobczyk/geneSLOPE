@@ -1,8 +1,8 @@
 Package: geneSLOPE
 Type: Package
 Title: Genome-Wide Association Study with SLOPE
-Version: 0.38.1
-Date: 2021-11-08
+Version: 0.38.2
+Date: 2023-08-07
 Authors@R: c(person("Damian", "Brzyski", role = "aut"),
     person("Christine", "Peterson", role = "aut"),
     person("Emmanuel J.", "Candes", role = "aut"),
@@ -11,10 +11,14 @@ Authors@R: c(person("Damian", "Brzyski", role = "aut"),
     person("Piotr", "Sobczyk", email = "pj.sobczyk@gmail.com", role = c("cre", "aut")))
 Description: Genome-wide association study (GWAS) performed with SLOPE,
     short for Sorted L-One Penalized Estimation, a
-    method for estimating the vector of coefficients in linear model.
-    In the first step of GWAS, SNPs are clumped according to their correlations and
-    distances. Then, SLOPE is performed on data where each clump has
+    method for estimating the vector of coefficients in a linear model.
+    In the first step of GWAS, SNPs are clumped according to their correlations
+    and distances. Then, SLOPE is performed on the data where each clump has
     one representative.
+    Malgorzata Bogdan, Ewout van den Berg, Chiara Sabatti, Weijie Su 
+    and Emmanuel Candes (2014) 
+    "SLOPE -- Adaptive Variable Selection via Convex Optimization" 
+    <arXiv:1407.3824>
 License: GPL-3
 URL: https://github.com/psobczyk/geneSLOPE
 BugReports: https://github.com/psobczyk/geneSLOPE/issues
@@ -36,4 +40,4 @@ Suggests:
 VignetteBuilder: knitr
 Repository: CRAN
 Encoding: UTF-8
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
