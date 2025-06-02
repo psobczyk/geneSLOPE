@@ -51,7 +51,12 @@ select_snps <- function(clumpingResult, fdr = 0.1, type = c("slope", "smt"),
         sigma = c(sigma, estimate_noise(clumpingResult$X[, selected], clumpingResult$y))
         result = SLOPE::SLOPE(x = clumpingResult$X, y = clumpingResult$y,
                               q = fdr, lambda = lambda, alpha = tail(sigma, 1))
-        selected = which(result$nonzeros)
+        # TODO: Remove this workaround once SLOPE 1.0.0 is released and coefficients is a list
+        if (is.list(result$coefficients)) {
+          selected = which(as.vector(result$coefficients[[1]] != 0))
+        } else {
+          selected = which(result$nonzeros)
+        }
         if (identical(selected, selected.prev))
           break
       }
@@ -60,7 +65,12 @@ select_snps <- function(clumpingResult, fdr = 0.1, type = c("slope", "smt"),
 
     slopeResult <- SLOPE::SLOPE(x = clumpingResult$X, y = clumpingResult$y,
                                 q = fdr, lambda = lambda, alpha = sigma)
-    selected = which(slopeResult$nonzeros)
+    # TODO: Remove this workaround once SLOPE 1.0.0 is released and coefficients is a list
+    if (is.list(result$coefficients)) {
+      selected = which(as.vector(slopeResult$coefficients[[1]] != 0))
+    } else {
+      selected = which(slopeResult$nonzeros)
+    }
     selectedSNPs <- unlist(clumpingResult$SNPnumber)[selected]
     selectedSNPs <- sort(selectedSNPs)
   } else if(type=="smt"){
