@@ -62,9 +62,15 @@ jobs:
           rcmdcheck::rcmdcheck(args = c("--no-manual"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
           
-      - name: Show testthat output
-        if: always()
-        run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
+      - name: Show testthat output (Unix-like)
+        if: always() && runner.os != 'Windows'
+        run: find check -name 'testthat.Rout*' -exec cat '{}' \;
+          
+      - name: Show testthat output (Windows)
+        if: always() && runner.os == 'Windows'
+        run: |
+          Get-ChildItem -Path "check" -Recurse -Filter "testthat.Rout*" | ForEach-Object { Get-Content $_.FullName }
+        shell: pwsh
           
       - name: Upload check results
         if: failure()
