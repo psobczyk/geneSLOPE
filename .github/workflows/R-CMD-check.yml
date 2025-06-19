@@ -50,13 +50,11 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
-          needs: check
           
-      - name: Check
-        uses: r-lib/actions/check-r-package@v2
+      - uses: r-lib/actions/check-r-package@v2
         with:
           error-on: warning
-          check-dir: check
+          upload-snapshots: true
 
       - name: Upload check results
         if: failure()
