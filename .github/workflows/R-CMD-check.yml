@@ -18,43 +18,49 @@ jobs:
   build:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r-version }})
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
 
     strategy:
       fail-fast: false
       matrix:
         config:
-          - {os: macos-latest,   r-version: 'release'}
-          - {os: windows-latest, r-version: 'release'}
-          - {os: ubuntu-18.04,   r-version: 'devel'}
-          - {os: ubuntu-18.04,   r-version: 'release'}
-          - {os: ubuntu-18.04,   r-version: 'oldrel'}
+          - {os: macos-latest,   r: 'release'}
+          - {os: windows-latest, r: 'release'}
+          - {os: ubuntu-latest,  r: 'devel', http-user-agent: 'release'}
+          - {os: ubuntu-latest,  r: 'release'}
+          - {os: ubuntu-latest,  r: 'oldrel-1'}
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up R ${{ matrix.r-version }}
-        uses: r-lib/actions/setup-r@v1
+      - uses: actions/checkout@v4
+      
+      - name: Set up R ${{ matrix.config.r }}
+        uses: r-lib/actions/setup-r@v2
         with:
-          r-version: ${{ matrix.r-version }}
-      - uses: r-lib/actions/setup-pandoc@v1
+          r-version: ${{ matrix.config.r }}
+          http-user-agent: ${{ matrix.config.http-user-agent }}
+          
+      - uses: r-lib/actions/setup-pandoc@v2
       
       - name: Install system dependencies
         if: runner.os == 'Linux'
-        env:
-          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
-        run: sudo apt-get install -y libcurl4-openssl-dev
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcurl4-openssl-dev
           
-      - uses: r-lib/actions/setup-r-dependencies@v1
+      - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: rcmdcheck
+          extra-packages: any::rcmdcheck
+          needs: check
           
       - name: Check
-        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
-        shell: Rscript {0}
+        uses: r-lib/actions/check-r-package@v2
+        with:
+          error-on: warning
+          check-dir: check
 
       - name: Upload check results
         if: failure()
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@v3
         with:
-          name: ${{ runner.os }}-r${{ matrix.config.r-version }}-results
+          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
