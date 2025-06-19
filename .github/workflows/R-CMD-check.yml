@@ -51,11 +51,16 @@ jobs:
         with:
           extra-packages: any::rcmdcheck
           
-      - uses: r-lib/actions/check-r-package@v2
+      - name: Check
+        uses: r-lib/actions/check-r-package@v2
         with:
-          error-on: warning
-          upload-snapshots: true
-
+          args: --no-manual
+          error-on: "warning"
+          
+      - name: Show testthat output
+        if: always()
+        run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
+          
       - name: Upload check results
         if: failure()
         uses: actions/upload-artifact@v4
