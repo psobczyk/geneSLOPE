@@ -42,5 +42,5 @@ PLINK using the option "--recodeAD"
 The PLINK command should therefore look like
 \code{plink --file input --recodeAD --out output}.
 For more information, please refer to:
-\url{http://pngu.mgh.harvard.edu/~purcell/plink/dataman.shtml}
+\url{https://zzz.bwh.harvard.edu/plink/dataman.shtml}
 }

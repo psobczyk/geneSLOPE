@@ -1,7 +1,6 @@
 [![R build status](https://github.com/psobczyk/geneSLOPE/workflows/R-CMD-check/badge.svg)](https://github.com/psobczyk/geneSLOPE/actions?query=workflow%3AR-CMD-check)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/geneSLOPE)](http://cran.r-project.org/package=geneSLOPE)
-[![Downloads](http://cranlogs.r-pkg.org/badges/geneSLOPE)](http://cran.rstudio.com/package=geneSLOPE)
-[![Build Status](https://api.travis-ci.org/psobczyk/geneSLOPE.png)](https://travis-ci.org/psobczyk/geneSLOPE)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/geneSLOPE)](https://CRAN.R-project.org/package=geneSLOPE)
+[![Downloads](https://cranlogs.r-pkg.org/badges/geneSLOPE)](https://CRAN.R-project.org/package=geneSLOPE)
 
 [<img src="http://www.ideal.rwth-aachen.de/wp-content/uploads/2013/08/banner1.png">](http://www.ideal.rwth-aachen.de/)
 
@@ -11,7 +10,7 @@
 -------------------------
 
 Package **geneSLOPE** can be used to perform Genome-wide association study with 
-[SLOPE](http://statweb.stanford.edu/~candes/SortedL1/). 
+[SLOPE](https://candes.su.domains/software/SortedL1/). 
 
 Such an analysis  is split into three steps.
 

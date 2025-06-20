@@ -20,7 +20,7 @@
 #' The PLINK command should therefore look like
 #' \code{plink --file input --recodeAD --out output}.
 #' For more information, please refer to:
-#' \url{http://pngu.mgh.harvard.edu/~purcell/plink/dataman.shtml}
+#' \url{https://zzz.bwh.harvard.edu/plink/dataman.shtml}
 #'
 screen_snps <- function(rawFile, mapFile="", phenotype, pValMax=0.05, chunkSize=100,
                         verbose = TRUE){
@@ -39,7 +39,7 @@ screen_snps <- function(rawFile, mapFile="", phenotype, pValMax=0.05, chunkSize=
     message(".map file not found")
   }
 
-  if(class(phenotype)=="phenotypeData"){
+  if (inherits(phenotype, "phenotypeData")){
     phenotypeInfo <- phenotype$yInfo
     y <- phenotype$y
   } else{

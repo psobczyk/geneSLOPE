@@ -38,7 +38,7 @@ data.frame are related to snps that are clump represenatives
 data.frame are related to snps that passed screening
 \item \code{numberOfSnps} numeric, total number of SNPs before screening procedure
 \item \code{pValMax} numeric, p-value used in screening procedure
-\item \code{fdr} numeric, false discovery rate used by \code{\link{SLOPE}}
+\item \code{fdr} numeric, false discovery rate used by \code{\link[SLOPE]{SLOPE}}
 }
 }
 \seealso{

@@ -22,7 +22,7 @@ clump_snps <- function(screenResult, rho = 0.5, pValues=NULL, verbose = TRUE){
   if(length(screenResult$y) != nrow(screenResult$X))
     stop("Error: Length of phenotype must match number of observations in matrix with snps")
 
-  if(class(screenResult) != "screeningResult")
+  if (!inherits(screenResult, "screeningResult"))
     stop("Error: parameter screenResult has to be of class screeningResult")
 
   if(verbose){
