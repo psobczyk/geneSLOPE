@@ -1,6 +1,6 @@
 [![R build status](https://github.com/psobczyk/geneSLOPE/workflows/R-CMD-check/badge.svg)](https://github.com/psobczyk/geneSLOPE/actions?query=workflow%3AR-CMD-check)
-[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/geneSLOPE)](https://cran.r-project.org/package=geneSLOPE)
-[![Downloads](https://cranlogs.r-pkg.org/badges/geneSLOPE)](https://cran.rstudio.com/package=geneSLOPE)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/geneSLOPE)](https://CRAN.R-project.org/package=geneSLOPE)
+[![Downloads](https://cranlogs.r-pkg.org/badges/geneSLOPE)](https://CRAN.R-project.org/package=geneSLOPE)
 
 [<img src="http://www.ideal.rwth-aachen.de/wp-content/uploads/2013/08/banner1.png">](http://www.ideal.rwth-aachen.de/)
 
