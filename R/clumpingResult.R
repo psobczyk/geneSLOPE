@@ -183,14 +183,17 @@ clumpingResult_no_info_print <- function(x, ...){
           panel.grid.minor.x=element_blank())
 }
 
+clumping_theme <- NULL
 
-clumping_theme <- theme(panel.background=element_blank(),
-                        panel.grid.major.y=element_line(colour = "grey80"),
-                        panel.grid.minor.y=element_line(colour = "grey90"),
-                        panel.grid.major.x=element_blank(),
-                        panel.grid.minor.x=element_line(colour = "grey70", linetype = "dotted", size=0.5),
-                        axis.ticks.x=element_blank(),
-                        legend.text = element_text(size=15),
-                        legend.position="top",
-                        legend.key =element_rect(fill="white"))
+new_clumping_theme <- function() {
+  theme(panel.background=element_blank(),
+        panel.grid.major.y=element_line(colour = "grey80"),
+        panel.grid.minor.y=element_line(colour = "grey90"),
+        panel.grid.major.x=element_blank(),
+        panel.grid.minor.x=element_line(colour = "grey70", linetype = "dotted", linewidth=0.5),
+        axis.ticks.x=element_blank(),
+        legend.text = element_text(size=15),
+        legend.position="top",
+        legend.key =element_rect(fill="white"))
+}
 
