@@ -257,18 +257,26 @@ plot.selectionResult <- function(x, chromosomeNumber=NULL, clumpNumber=NULL, ...
     }
 }
 
-slope_result_theme <- theme(
-  plot.title = element_text(hjust = 0.5),
-  plot.subtitle = element_text(hjust = 0.5),
-  panel.background=element_blank(),
-  panel.grid.major.y=element_line(colour = "grey80"),
-  panel.grid.minor.y=element_line(colour = "grey90"),
-  panel.grid.major.x=element_blank(),
-  panel.grid.minor.x=element_line(colour = "grey70",
-                                  linetype = "dotted",
-                                  linewidth = 0.5),
-  axis.ticks.x=element_blank(),
-  legend.text = element_text(size=15),
-  legend.position="bottom",
-  legend.key =element_rect(fill="white"))
+slope_result_theme <- NULL
 
+new_slope_result_theme <- function() {
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    plot.subtitle = element_text(hjust = 0.5),
+    panel.background=element_blank(),
+    panel.grid.major.y=element_line(colour = "grey80"),
+    panel.grid.minor.y=element_line(colour = "grey90"),
+    panel.grid.major.x=element_blank(),
+    panel.grid.minor.x=element_line(colour = "grey70",
+                                    linetype = "dotted",
+                                    linewidth = 0.5),
+    axis.ticks.x=element_blank(),
+    legend.text = element_text(size=15),
+    legend.position="bottom",
+    legend.key =element_rect(fill="white"))
+}
+
+.onLoad <- function(...) {
+  slope_result_theme <<- new_slope_result_theme()
+  clumping_theme <<- new_clumping_theme()
+}
