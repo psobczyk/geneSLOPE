@@ -266,7 +266,7 @@ slope_result_theme <- theme(
   panel.grid.major.x=element_blank(),
   panel.grid.minor.x=element_line(colour = "grey70",
                                   linetype = "dotted",
-                                  size=0.5),
+                                  linewidth = 0.5),
   axis.ticks.x=element_blank(),
   legend.text = element_text(size=15),
   legend.position="bottom",
