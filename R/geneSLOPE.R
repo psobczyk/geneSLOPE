@@ -14,7 +14,7 @@
 #' one representative (therefore we ensure that variables in linear model
 #' are not strognly correlated)
 #' }
-#' Version: 0.38.3
+#' Version: 0.38.4
 #'
 #' @name geneSLOPE
 #' @aliases geneSLOPE-package
